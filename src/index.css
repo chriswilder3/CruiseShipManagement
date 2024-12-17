@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.poppins {
+    font-family: "Poppins", serif;
+  }
+.roboto-slab {
+    font-family: "Roboto Slab", serif;
+}
