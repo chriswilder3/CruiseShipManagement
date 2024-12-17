@@ -3,7 +3,7 @@ import React from 'react'
 function Navbar() {
   return (
     <div>
-        <ul className=' flex gap-20 justify-start text-blue-700'>
+        <ul className=' flex gap-20 mb-10 justify-start text-blue-700 text-xl font-medium poppins'>
             <li>
                 <a href="" className=''> Home </a>
             </li>
