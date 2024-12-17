@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-
+import Carousel from './components/Carousel'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -13,6 +13,7 @@ function App() {
       <div>
         <Navbar />
         <Hero />
+        <Carousel />
       </div>
     </>
   )
