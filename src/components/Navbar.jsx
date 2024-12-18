@@ -2,10 +2,10 @@ import React from 'react'
 
 function Navbar() {
   return (
-    <div>
-        <ul className=' flex gap-20 mb-10 justify-start text-blue-700 text-xl font-medium poppins'>
+    
+        <ul className=' flex gap-20 mb-10 justify-start px-16 pt-8 pb-2 text-blue-700 text-xl font-medium poppins'>
             <li>
-                <a href="" className=''> Home </a>
+                <a href="" > Home </a>
             </li>
             <li>
                 <a href=""> About</a>
@@ -17,7 +17,7 @@ function Navbar() {
                 <a href=""></a>
             </li>
         </ul>
-    </div>
+    
   )
 }
 

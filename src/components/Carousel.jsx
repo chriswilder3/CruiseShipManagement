@@ -28,7 +28,7 @@ function Carousel() {
             <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-rose-300 via-rose-500 to-gray-500 p-8 gap-6 rounded-lg shadow-lg'>
                 {/* Text */}
                 <div className='flex justify-center items-center text-center'>
-                    <h3 className='text-3xl italic playfair-display font-medium text-yellow-400 leading-relaxed'>
+                    <h3 className='text-3xl italic playfair-display font-medium text-white leading-relaxed'>
                         Catch the best entertainment at our state-of-the-art theaters.
                     </h3>
                 </div>
@@ -81,11 +81,11 @@ function Carousel() {
             </div> */}
 
             {/* Party and Banquet Halls Section */}
-            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-pink-200  to-pink-400 p-8 gap-6 rounded-lg shadow-lg'>
-                
+            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-sky-400 via-sky-500 to-gray-500  p-8 gap-6 rounded-lg shadow-lg'>
+                                        {/* from-pink-200  to-pink-400 */}
                 {/* Text */}
                 <div className='flex justify-center items-center text-center'>
-                    <h3 className='text-3xl italic playfair-display font-medium text-gray-800 leading-relaxed'>
+                    <h3 className='text-3xl italic playfair-display font-medium text-white leading-relaxed'>
                         Celebrate life's special moments in our lavish party and banquet halls
                     </h3>
                 </div>

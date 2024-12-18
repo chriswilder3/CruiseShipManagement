@@ -11,13 +11,13 @@ function App() {
 
   return (
     <>
-      <div>
+      
         <Navbar />
         <Hero />
         <Carousel />
 
         <Footer />
-      </div>
+      
     </>
   )
 }

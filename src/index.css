@@ -2,18 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  min-height: 100vh;
-  width: 100%;
-}
+/* html, body { margin: 0; padding: 0; box-sizing: border-box; min-height: 100vh; width: 100%; } 
 
-#root {
-  margin: 0;
-  padding: 0;
-}
+#root, .App { margin: 0; padding: 0; width: 100%;} */
+
 
 .poppins {
     font-family: "Poppins", serif;
