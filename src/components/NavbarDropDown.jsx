@@ -3,40 +3,40 @@ import React from 'react'
 function NavbarDropDown(  ) {
   
     return (
-    <div className='bg-slate-100 flex md:flex-row flex-col gap-3 p-4 roboto-slab rounded-md'>
+    <div className='bg-slate-100 flex md:flex-row flex-col gap-2 p-5 roboto-slab rounded-md'>
         <div className=''>
-            <h1 className='text-xl font-semibold my-1 text-slate-700'>
+            <h1 className='text-xl font-semibold my-1 text-left ml-2 text-slate-700'>
                 Catering:
             </h1>    
-            <div className='flex text-lg flex-col gap-1 text-left ml-5'>
+            <div className='flex text-lg flex-col gap-1 text-left ml-6 *:min-w-40'>
                 <p>  Snacks </p> 
                 <p>  Beverages </p> 
                 <p>  Desserts  </p> 
                 <p>  Fine Dining </p> 
-                <p>  Browse Full Menu </p> 
+                <p>  Browse Menu </p> 
             </div>
         </div>
 
         <div className=''>
-            <h1 className='text-xl font-semibold my-1'>
+            <h1 className='text-xl font-semibold my-1 ml-2 text-slate-700'>
                 Stationery:
             </h1> 
-            <div className='flex text-lg flex-col gap-1 text-left ml-1'>
-              <p>  Categories: </p>
+            <div className='flex text-lg flex-col gap-1 text-left ml-6 *:min-w-40'>
               <p>  Gifts </p>
-              <p>  Books </p>
-              <p>  Personalized Stationery </p>
-              <p> Explore Full Collection </p>
+              <p>  Daily Stationery </p>
+              <p>  Books & Art works </p>
+              <p>  Personal Stationery </p>
+              <p> Full Collection </p>
             </div>
             
         </div>
         <div className=''>
-            <h1 className='text-xl font-semibold my-1'>
+            <h1 className='text-xl font-semibold my-1 ml-2 text-slate-700'>
                 Facilities:
             </h1>
-            <div className='flex text-lg flex-col gap-1 text-left ml-1 *:min-w-44'>
+            <div className='flex text-lg flex-col gap-1 text-left ml-6 *:min-w-40'>
 
-              <p>  Resort-Movie Tickets </p>
+              <p>  Movie Tickets </p>
               <p>  Beauty Salon </p>
               <p>  Fitness Center </p>
               <p>  Party Hall </p>
