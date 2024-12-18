@@ -6,7 +6,7 @@ function Footer() {
         <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             {/* Left Section - Branding */}
             <div className="flex flex-col items-center md:items-start">
-                <h2 className="text-3xl text-white font-playfair-display italic">Celestia</h2>
+                <h2 className="text-3xl text-white playfair-display italic">Celestia</h2>
                 <p className="text-sm text-gray-400 mt-2">
                     Experience the ultimate in luxury and relaxation at sea.
                 </p>

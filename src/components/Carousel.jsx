@@ -3,11 +3,11 @@ import React from 'react'
 
 function Carousel() {
   return (
-    <div className=' p-4 flex flex-col gap-4 '>
+    <div className=' p-4 mx-10 flex flex-col gap-4 '>
         
         <div className='space-y-5'> {/* Wrap all sections with spacing */}
             {/* Food Section */}
-            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-yellow-50 to-orange-200 p-8 gap-6 rounded-lg shadow-lg'>
+            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-yellow-100 via-orange-200 to-orange-300 p-8 gap-6 rounded-lg shadow-lg'>
                 {/* Image */}
                 <div className='flex justify-center'>
                     <img 
@@ -19,17 +19,18 @@ function Carousel() {
                 {/* Text */}
                 <div className='flex justify-center items-center text-center'>
                     <h3 className='text-3xl italic playfair-display font-medium text-gray-800 leading-relaxed'>
-                        Indulge in gourmet meals prepared by world-class chefs, tailored to your tastes
+                        Indulge in gourmet meals prepared by world class chefs, tailored to your tastes
                     </h3>
                 </div>
             </div>
 
             {/* Theatre Section */}
-            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-rose-300 via-rose-500 to-gray-500 p-8 gap-6 rounded-lg shadow-lg'>
-                {/* Text */}
+            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-red-200 via-rose-300 to-rose-400 p-8 gap-6 rounded-lg shadow-lg'>
+                                                                    {/* from-rose-300 via-rose-500 to-gray-500 */}
+                {/* Text */}                                                            
                 <div className='flex justify-center items-center text-center'>
                     <h3 className='text-3xl italic playfair-display font-medium text-white leading-relaxed'>
-                        Catch the best entertainment at our state-of-the-art theaters.
+                        Catch the best entertainment at our state of the art theaters.
                     </h3>
                 </div>
                 {/* Image */}
@@ -43,8 +44,8 @@ function Carousel() {
             </div>
 
             {/* Fitness Section */}
-            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b  from-green-300 via-green-400 to-gray-500 p-8 gap-6 rounded-lg shadow-lg'>
-                
+            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b  from-green-200 via-green-300 to-green-400 p-8 gap-6 rounded-lg shadow-lg'>
+                                    {/* from-green-300 via-green-400 to-gray-500 */}
                 {/* Image */}
                 <div className='flex justify-center'>
                     <img 
@@ -56,36 +57,19 @@ function Carousel() {
 
                 {/* Text */}
                 <div className='flex justify-center items-center text-center'>
-                    <h3 className='text-3xl italic playfair-display font-medium text-white leading-relaxed'>
+                    <h3 className='text-3xl italic playfair-display font-medium  leading-relaxed'>
                         Stay active and energized with top-tier fitness equipment and sports centers
                     </h3>
                 </div>
             </div>
 
-            {/* Stationery and Gifts Section
-            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-purple-50 to-purple-300 p-8 gap-6 rounded-lg shadow-lg'>
-                
-                <div className='flex justify-center'>
-                    <img 
-                        className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
-                        src="src/assets/stationary.png" 
-                        alt="Stationery and Gifts"
-                    />
-                </div>
-                
-                <div className='flex justify-center items-center text-center'>
-                    <h3 className='text-3xl italic playfair-display font-medium text-gray-800 leading-relaxed'>
-                        From luxurious gifts to the finest stationery, find everything you need for an elegant stay
-                    </h3>
-                </div>
-            </div> */}
 
             {/* Party and Banquet Halls Section */}
-            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-sky-400 via-sky-500 to-gray-500  p-8 gap-6 rounded-lg shadow-lg'>
+            <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-sky-200 via-sky-300 to-blue-400  p-8 gap-6 rounded-lg shadow-lg'>
                                         {/* from-pink-200  to-pink-400 */}
                 {/* Text */}
                 <div className='flex justify-center items-center text-center'>
-                    <h3 className='text-3xl italic playfair-display font-medium text-white leading-relaxed'>
+                    <h3 className='text-3xl italic playfair-display font-medium  leading-relaxed'>
                         Celebrate life's special moments in our lavish party and banquet halls
                     </h3>
                 </div>
