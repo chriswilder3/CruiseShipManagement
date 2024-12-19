@@ -21,10 +21,10 @@ function Navbar() {
     
         <ul className=' flex gap-20 mb-10 justify-start px-16 pt-8 pb-2 text-blue-700 text-xl font-medium poppins'>
             <li>
-                <a href="" > Home </a>
+                <a href="/" className=' transition delay-75 hover:underline' > Home </a>
             </li>
             <li>
-                <a href=""> About </a>
+                <a href="/about"> About </a>
             </li>
             <li onMouseEnter={() => setServiceDropDown('inline')}
                 onMouseLeave={() => setServiceDropDown('hidden')}
@@ -37,7 +37,7 @@ function Navbar() {
                 
             </li>
             <li>
-                <a href=""></a>
+                <a href="/contact"> Contact</a>
             </li>
             <li className='ml-auto'>
                 <a href=""> Login</a>

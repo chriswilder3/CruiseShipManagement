@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-5  w-full ">
+    <footer className=" bg-gradient-to-b from-blue-900 to-gray-900 text-gray-300 py-5  w-full mt-auto ">
         <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             {/* Left Section - Branding */}
             <div className="flex flex-col items-center md:items-start ">

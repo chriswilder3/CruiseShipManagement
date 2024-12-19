@@ -18,7 +18,7 @@ function NavbarDropDown(  ) {
         </div>
 
         <div className=''>
-            <h1 className='text-xl font-semibold my-1 ml-2 text-slate-700'>
+            <h1 className='text-xl font-semibold my-1 text-left ml-2 text-slate-700'>
                 Stationery:
             </h1> 
             <div className='flex text-lg flex-col gap-1 text-left ml-6 *:min-w-40'>
@@ -31,7 +31,7 @@ function NavbarDropDown(  ) {
             
         </div>
         <div className=''>
-            <h1 className='text-xl font-semibold my-1 ml-2 text-slate-700'>
+            <h1 className='text-xl font-semibold my-1 text-left ml-2 text-slate-700'>
                 Facilities:
             </h1>
             <div className='flex text-lg flex-col gap-1 text-left ml-6 *:min-w-40'>
