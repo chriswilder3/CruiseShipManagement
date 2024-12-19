@@ -13,9 +13,9 @@ function About() {
       <p className="text-lg leading-relaxed text-center lg:text-left">
         Inspired by the celestial beauty of the stars, Celestia’s mission is to bring the magic of the heavens down to Earth—or rather, the sea. With world-class amenities and impeccable service, we invite you to experience the ultimate fusion of royalty, serenity, and adventure.
       </p>
-      <div className="mt-10">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Our Highlights</h2>
-        <ul className="flex flex-wrap justify-center lg:justify-start gap-4">
+      <div className="mt-10 poppins">
+        <h2 className="text-3xl font-semibold mb-4 text-center">Our Highlights</h2>
+        <ul className="flex flex-col flex-wrap justify-center lg:justify-start gap-4">
           <li className="bg-blue-100 text-blue-900 py-2 px-4 rounded-lg shadow-sm">🚢 Luxury Cruise Ships</li>
           <li className="bg-blue-100 text-blue-900 py-2 px-4 rounded-lg shadow-sm">🍽️ Gourmet Catering</li>
           <li className="bg-blue-100 text-blue-900 py-2 px-4 rounded-lg shadow-sm">🎥 Resort Movies</li>

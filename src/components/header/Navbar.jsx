@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import NavbarDropDown from './NavbarDropDown'
+import { Link, NavLink } from 'react-router-dom'
 
 function Navbar() {
     const [serviceDropDown, setServiceDropDown] = useState( 'hidden')
@@ -14,17 +15,15 @@ function Navbar() {
     //     navbardropdown.classList.add('hidden');
     // }
     // serviceDropDown ? hiddenToBlockChanger(): blockToHiddenChanger();
-       
-
-
+    
   return (
     
         <ul className=' flex gap-20 mb-10 justify-start px-16 pt-8 pb-2 text-blue-700 text-xl font-medium poppins'>
             <li>
-                <a href="/" className=' transition delay-75 hover:underline' > Home </a>
+                <NavLink to="/" className={({isActive})=>`${isActive?'text-slate-800':''}`} > Home </NavLink>
             </li>
             <li>
-                <a href="/about"> About </a>
+                <NavLink to="/about" className={({isActive})=>`${isActive?'text-slate-800':''}`}> About </NavLink>
             </li>
             <li onMouseEnter={() => setServiceDropDown('inline')}
                 onMouseLeave={() => setServiceDropDown('hidden')}
@@ -37,7 +36,7 @@ function Navbar() {
                 
             </li>
             <li>
-                <a href="/contact"> Contact</a>
+                <NavLink to="/contact" className={({isActive})=>`${isActive?'text-slate-800':''}`}> Contact</NavLink>
             </li>
             <li className='ml-auto'>
                 <a href=""> Login</a>
