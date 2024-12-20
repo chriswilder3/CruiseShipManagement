@@ -28,7 +28,7 @@ function Navbar() {
             <li onMouseEnter={() => setServiceDropDown('inline')}
                 onMouseLeave={() => setServiceDropDown('hidden')}
                 className='relative' >
-                <a href="/services" className='hover:underline'> Services </a>
+                <NavLink to="/services" className={({isActive})=>`${isActive?'text-slate-800':''}`}> Services </NavLink>
                 <div className={`navbar-drop-down absolute z-10 transition-all delay-100 ease-in-out 
                         -left-full top-7 ${serviceDropDown}`}>
                     < NavbarDropDown  />

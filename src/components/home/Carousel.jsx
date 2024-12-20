@@ -90,7 +90,7 @@ function Carousel() {
                     <h3 className='text-3xl italic playfair-display font-medium text-gray-800 leading-relaxed'>
                         Beauty Salons, Ocean views, Luxury shopping, <br /> and much more!
                     </h3>
-                    <a href='' className=' text-lg font-semibold text-amber-400 bg-slate-700 px-6 py-3 poppins rounded-full 
+                    <a href='/services' className=' text-lg font-semibold text-amber-400 bg-slate-700 px-6 py-3 poppins rounded-full 
                         transition delay-75  hover:bg-slate-950 hover:text-yellow-400 hover:scale-105 '>
                         Explore Now
                     </a>

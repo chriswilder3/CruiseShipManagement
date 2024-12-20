@@ -16,16 +16,16 @@ function Footer() {
             <div className="flex flex-col items-center">
                 <ul className="flex flex-wrap justify-center gap-6">
                     <li>
-                        <a href="#about" className="hover:text-white transition duration-300">About</a>
+                        <a href="/about" className="hover:text-white transition duration-300">About</a>
                     </li>
                     <li>
                         <a href="#destinations" className="hover:text-white transition duration-300">Destinations</a>
                     </li>
                     <li>
-                        <a href="#services" className="hover:text-white transition duration-300">Services</a>
+                        <a href="/services" className="hover:text-white transition duration-300">Services</a>
                     </li>
                     <li>
-                        <a href="#contact" className="hover:text-white transition duration-300">Contact</a>
+                        <a href="/contact" className="hover:text-white transition duration-300">Contact</a>
                     </li>
                 </ul>
             </div>
