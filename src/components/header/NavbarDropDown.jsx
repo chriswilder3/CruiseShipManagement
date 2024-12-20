@@ -3,7 +3,7 @@ import React from 'react'
 function NavbarDropDown(  ) {
   
     return (
-    <div className='bg-slate-100 flex md:flex-row flex-col gap-2 p-5 roboto-slab rounded-md'>
+    <div className='bg-slate-100 flex md:flex-row flex-col gap-2 p-5 poppins rounded-md'>
         <div className=''>
             <h1 className='text-xl font-semibold my-1 text-left ml-2 text-slate-700'>
                 Catering:
