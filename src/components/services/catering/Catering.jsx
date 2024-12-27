@@ -1,4 +1,5 @@
 import React from 'react'
+import FoodCard from './FoodCard'
 
 function Catering() {
   return (
@@ -29,7 +30,9 @@ function Catering() {
 
         {/* Food Items Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            
+            <FoodCard id="1" />
+            <FoodCard id="2" />
+            <FoodCard id="3" />
             {/* Add more FoodCard components as needed */}
         </div>
     </div>
