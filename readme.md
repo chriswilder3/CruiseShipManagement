@@ -1,4 +1,4 @@
-# This is Front End(Client Side) of the App.
+# Web App for Cruise Ship Operations: Project Breakdown
 
 ## Overview
     This project is a Cruise Ship Management System developed as a full stack web app for voyagers and staff to manage orders, reservations, and facility usage efficiently. Built using React, Tailwindcss, and Firebase, the system automates operations onboard the cruise ship, improving both passenger experience and staff workflows.
