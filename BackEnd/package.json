@@ -13,5 +13,10 @@
     "firebase"
   ],
   "author": "Sachin Shivaji Doddamani",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase-admin": "^13.0.2"
+  }
 }
