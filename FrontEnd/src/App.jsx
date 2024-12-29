@@ -7,6 +7,8 @@ import About from './components/about/About';
 import Contact from './components/contact/Contact';
 import Services from './components/services/Services';
 import Catering from './components/services/catering/Catering';
+import Signin from './components/users/Signin';
+import Dashboard from './components/users/Dashboard';
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
               <Route path='contact' element={ <Contact /> } />
               <Route path='services' element={ <Services />} />
               <Route path='services/catering' element={ <Catering />} />
+              <Route path='users/signin' element={ <Signin />} />
+              <Route path='users/dashboard' element={ <Dashboard />} />
              </Route>
           </Routes>
         </Router>
