@@ -7,8 +7,9 @@ import About from './components/about/About';
 import Contact from './components/contact/Contact';
 import Services from './components/services/Services';
 import Catering from './components/services/catering/Catering';
-import Signin from './components/users/Signin';
+import SignIn from './components/users/Signin';
 import Dashboard from './components/users/Dashboard';
+import SignUp from './components/users/Signup';
 
 function App() {
 
@@ -23,8 +24,9 @@ function App() {
               <Route path='contact' element={ <Contact /> } />
               <Route path='services' element={ <Services />} />
               <Route path='services/catering' element={ <Catering />} />
-              <Route path='users/signin' element={ <Signin />} />
+              <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
+              <Route path='/users/signup' element={ <SignUp /> } />
              </Route>
           </Routes>
         </Router>
