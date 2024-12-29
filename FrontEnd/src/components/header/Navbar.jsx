@@ -39,7 +39,7 @@ function Navbar() {
                 <NavLink to="/contact" className={({isActive})=>`${isActive?'text-slate-800':''}`}> Contact</NavLink>
             </li>
             <li className='ml-auto'>
-                <a href=""> Login</a>
+                <NavLink to="/users/signin" className={({isActive})=>isActive?'text-slate-800':''}> Login</NavLink>
             </li>
         </ul>
     
