@@ -28,9 +28,14 @@ app.get('/', async (req, res) =>{
 })
 
 app.post('/', async( req, res) => {
-    const {user,pass} =  req.body 
-
-    res.status(200).send(` User received details : ${user} , ${pass} `)
+    const {email,pass} =  req.body 
+    if(email === 'sachin@g.com' && pass === 'b')
+    {
+        res.status(200).json( { message : 'Login Successful', 'user-details': {email, pass}})
+    }
+    else{
+        res.status(400).json( {message : 'Wrong email or password'})
+    }
 })
 
 app.listen(port, () =>{
