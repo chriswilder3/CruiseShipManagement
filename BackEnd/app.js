@@ -1,4 +1,4 @@
-const admin = require('./firebase-admin')
+const {admin} = require('./firebase-admin')
 const express = require('express')
 const bodyparser = require('body-parser')
 const cors  = require('cors')
@@ -19,6 +19,8 @@ app.use( bodyparser.urlencoded({ extended : true}))
 app.use(bodyparser.json())
 
 app.get('/', async (req, res) =>{
+    // const userList = await admin.auth().listUsers()
+    // console.log(userList);
     res.send({
         message : 'backend is running'
     })
@@ -26,7 +28,8 @@ app.get('/', async (req, res) =>{
 
 app.post('/checkAdmin', async( req, res) => {
     const {uid, email} =  req.body 
-
+    
+    console.log(uid);
     try{
         // This gets all the users existing users
         const userList = await admin.auth().listUsers()
@@ -38,18 +41,18 @@ app.post('/checkAdmin', async( req, res) => {
 
         // If there is no such admin user, make the current one as admin
         if(!adminAlreadyExists){
-            await admin.auth().setCustomClaims(uid, { role : 'Admin'})
+            await admin.auth().setCustomUserClaims(uid, { role : 'Admin'})
             console.log(`User with uid : ${uid} is now Admin `);
             res.status(200).send( { isAdmin : true } )
 
         }else{
-            await admin.auth().setCustomClaims(uid, {role : "Guest"})
+            await admin.auth().setCustomUserClaims(uid, {role : "Guest"})
             console.log(`User with uid : ${uid} is now a guest `);
             res.status(200).send({ isAdmin: false})
         }
     }
     catch( err){
-        console.log(' Unable to check user role ');
+        console.log(' Unable to check user role ', err);
         return res.send({ message : "Unable to check user role "})
     }
 })

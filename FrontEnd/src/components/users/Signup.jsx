@@ -23,7 +23,7 @@ function SignUp() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
       const newUser = userCredential.user;
 
-      console.log("User was registered: ", newUser.id);
+      console.log("User was registered: ", newUser.uid);
 
       // Now check whether this is the first user (i.e., deserves admin rights)
       const response = await fetch(`${backEndUrl}/checkAdmin`, {
@@ -31,12 +31,17 @@ function SignUp() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ uid: newUser.id, email }),
+        body: JSON.stringify({ uid: newUser.uid, email }),
       });
 
       const data = await response.json();
-
+      
       if (response.ok) {
+
+        await newUser.getIdToken(true); 
+        // This forces API to update the fresh tokens. Its 
+        // usefull for signup forms( firebase takes time to update otherwise)
+
         setSuccessMsg(
           data.isAdmin
             ? "You are successfully registered as Admin"
