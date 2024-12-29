@@ -8,12 +8,24 @@ function Dashboard() {
         const getUserRole = async function () {
             const auth = getAuth()
             const currentUser = auth.currentUser
-            
+            console.log(currentUser.uid)    
             if(currentUser){
-                const idTokenInfo = currentUser.getIdTokenResult()
-                setRole(idTokenInfo.claims.role)
+                try{
+                
+                    const idTokenInfo = await currentUser.getIdTokenResult()
+                    setRole(idTokenInfo.claims.role)
+                    console.log(idTokenInfo.claims.role);
+                }
+                catch(error){
+                    console.log(" Failed to connect.", error);
+                }
             }
+            else{
+                alert("No user is currently signed in.");
+                window.open('/users/signin')
 
+            }
+            
         }
         getUserRole();
     },[])
