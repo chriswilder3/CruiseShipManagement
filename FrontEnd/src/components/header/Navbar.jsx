@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import NavbarDropDown from './NavbarDropDown'
 import { Link, NavLink } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 
 function Navbar() {
     const [serviceDropDown, setServiceDropDown] = useState( 'hidden')
+    const { currentUser, loading} = useAuth()
 
     // const navbardropdown = document.querySelector('.navbar-drop-down')
     // const hiddenToBlockChanger = () =>{
@@ -38,9 +40,15 @@ function Navbar() {
             <li>
                 <NavLink to="/contact" className={({isActive})=>`${isActive?'text-slate-800':''}`}> Contact</NavLink>
             </li>
-            <li className='ml-auto'>
-                <NavLink to="/users/signin" className={({isActive})=>isActive?'text-slate-800':''}> Login</NavLink>
-            </li>
+            {
+                currentUser? (<li className='ml-auto'>
+                <NavLink to="/users/dashboard" className={({isActive})=>isActive?'text-slate-800':''}> {currentUser.email}</NavLink>
+                </li>)
+            :
+            (<li className='ml-auto'>
+                <NavLink to="/users/signin" className={({isActive})=>isActive?'text-slate-800':''}> Login </NavLink>
+            </li>)
+            }   
         </ul>
     
   )
