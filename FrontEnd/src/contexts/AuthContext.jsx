@@ -21,7 +21,10 @@ export function AuthContextProvider ({children}) {
 
                 user.getIdTokenResult()
                 .then( (idTokenInfo) =>
-                    setCurrentUser({...user, role: idTokenInfo.claims.role || 'Guest'})
+                    { 
+                        setCurrentUser({...user, role: idTokenInfo.claims.role || 'Guest'})
+                        console.log('set the role now!');
+                    }
                 )
                 .catch( ( err) => console.log('Error while changing users : ',err))
 
@@ -30,16 +33,23 @@ export function AuthContextProvider ({children}) {
                 setCurrentUser(null)
             }
             setLoading(false); // The auth info finished loading
+            console.log('Loading State: ', loading); 
+            console.log('Current User: ', currentUser);
+            
         })
-
-        return unsubscribe();
+        
+        return () => {
+            
+            unsubscribe();
+            
+        }
 
     },[])
 
     return (
         
         <AuthContext.Provider value={{currentUser, loading}}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider >
     )
 } 
