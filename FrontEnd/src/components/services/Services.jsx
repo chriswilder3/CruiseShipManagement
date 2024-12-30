@@ -30,15 +30,15 @@ function Services() {
           <h1 className='text-2xl font-semibold my-1 px-4 text-center text-slate-700'>
             Stationery:
           </h1>
-          <Link to='/services/stationary'>
-            <img className='w-72 my-1 rounded-md hover:scale-105 mb-3 transition-transform duration-75' src="src/assets/stationary.png" alt="Stationery Services" />
+          <Link to='/services/stationery'>
+            <img className='w-72 my-1 rounded-md hover:scale-105 mb-3 transition-transform duration-75' src="src/assets/stationery.png" alt="Stationery Services" />
           </Link>    
           <div className='flex text-lg flex-col gap-2 font-semibold text-blue-500  rounded-lg p-2'>
-            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationary/gifts'> Gifts </Link> </p>
-            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationary/stationary'> Daily Stationery </Link> </p>
-            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationary/books_art'> Books & Art Works </Link> </p>
-            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationary/personal'> Personal Stationery </Link> </p>
-            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationary'>Full Collection </Link> </p>
+            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationery/gifts'> Gifts </Link> </p>
+            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationery/stationery'> Daily Stationery </Link> </p>
+            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationery/books_art'> Books & Art Works </Link> </p>
+            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationery/personal'> Personal Stationery </Link> </p>
+            <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationery'>Full Collection </Link> </p>
           </div>
         </div>
 

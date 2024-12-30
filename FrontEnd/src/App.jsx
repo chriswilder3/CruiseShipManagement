@@ -11,6 +11,8 @@ import SignIn from './components/users/Signin';
 import Dashboard from './components/users/Dashboard';
 import SignUp from './components/users/Signup';
 import { AuthContextProvider } from './contexts/AuthContext';
+import Stationery from './components/services/stationery/Stationery';
+
 
 function App() {
 
@@ -26,6 +28,7 @@ function App() {
               <Route path='contact' element={ <Contact /> } />
               <Route path='services' element={ <Services />} />
               <Route path='services/catering' element={ <Catering />} />
+              <Route path='services/stationery' element={<Stationery />} />
               <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
               <Route path='/users/signup' element={ <SignUp /> } />
