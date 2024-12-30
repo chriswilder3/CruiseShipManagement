@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 import NavbarDropDown from './NavbarDropDown';
+import { auth } from '../../firebase';
+import { signOut } from 'firebase/auth';
+
 
 function Navbar() {
   const [serviceDropDown, setServiceDropDown] = useState('hidden');
@@ -74,17 +77,31 @@ function Navbar() {
 
 
 function UserDropdownDiv() {
+
+  const {currentUser} = useAuth()
+  const handleLogout = async () => {
+    try {
+      const response = await signOut(auth)
+      
+        console.log(' Successfully loggedout!');
+      
+    }
+    catch{
+      console.log(' Could not log out!');
+    }
+  }
+
   return (
-    <ul className="flex flex-col">
+    <ul className="flex flex-col items-center text-lg ">
       <li>
-        <NavLink to="/users/dashboard" className="block px-4 mx-1 py-2 hover:bg-gray-200">
+        <NavLink to="/users/dashboard" className="block px-4 mx-1 py-2  hover:scale-105">
           My Profile
         </NavLink>
       </li>
       <li>
-        <NavLink to="/users/logout" className="block px-4 mx-1 py-2 hover:bg-gray-200">
+        <button type='button' onClick={handleLogout} className="block px-4  mx-1 py-2 hover:scale-105">
           Logout
-        </NavLink>
+        </button>
       </li>
     </ul>
   );
