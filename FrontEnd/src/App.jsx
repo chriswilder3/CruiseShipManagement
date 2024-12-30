@@ -10,12 +10,14 @@ import Catering from './components/services/catering/Catering';
 import SignIn from './components/users/Signin';
 import Dashboard from './components/users/Dashboard';
 import SignUp from './components/users/Signup';
+import { AuthContextProvider } from './contexts/AuthContext';
 
 function App() {
 
 
   return (
-    <>
+    <>  
+      
         <Router>
           <Routes>
              <Route path='/' element={ <Layout />} >

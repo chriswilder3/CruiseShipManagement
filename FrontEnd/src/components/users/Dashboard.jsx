@@ -1,60 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { getAuth } from 'firebase/auth'
+import React from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Dashboard() {
-    const [role, setRole] = useState(null)
-    const [loading, setLoading] = useState(true)
+  const { currentUser, loading } = useAuth();
 
-    useEffect( () => {
-        const getUserRole = async function () {
-            const auth = getAuth()
-            const currentUser = auth.currentUser
-            console.log(currentUser.uid)    
-            if(currentUser){
-                try{
-                
-                    const idTokenInfo = await currentUser.getIdTokenResult()
-                    const userRole = idTokenInfo.claims.role
-                    console.log(" user claims : ", idTokenInfo.claims);
-                    setRole(userRole)
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
+        <p className="text-lg font-semibold text-white">Loading...</p>
+      </div>
+    );
+  }
 
-                }
-                catch(error){
-                    console.log(" Failed to connect.", error);
-                }
-                finally{
-                    setLoading(false)
-                    console.log("your role : ",role);
-                }
-            }
-            else{
-                alert("No user is currently signed in.");
-                window.open('/users/signin', '_self')
-
-            }
-            
-        }
-        getUserRole();
-    },[])
-
-
-
-    if(loading){
-        return <p> Loading... </p>
-    }
+  if (!currentUser) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
+        <p className="text-lg font-semibold text-white">You are not logged in.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-        {
-            role === 'Admin' && <p> Admin Dashboard </p>
-        }
-        {
-            role === 'Guest' && <p>Voyager Dashboard </p>
-        }
-        
+    <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
+      <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-indigo-600 mb-4 text-center capitalize">
+          {currentUser.role} Dashboard
+        </h1>
+        <div className="text-center">
+          <p className="text-lg text-gray-700 mb-2">
+            Welcome, <span className="font-semibold text-indigo-600">{currentUser.email}</span>!
+          </p>
+          <p className="text-lg text-gray-700">
+            Your role is <span className="font-semibold text-indigo-600">{currentUser.role}</span>.
+          </p>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-
-export default Dashboard
+export default Dashboard;
