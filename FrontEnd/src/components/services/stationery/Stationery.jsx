@@ -60,6 +60,7 @@ function Stationery() {
                 {items.map((item) => (
                     <ItemCard
                         key={item.id}
+                        itemId={item.id}
                         name={item.name}
                         desc={item.description}
                         price={item.price}
