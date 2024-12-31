@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { db } from "../../firebase"
+import { reauthenticateWithPhoneNumber } from "firebase/auth";
+import { collection, getDoc } from 'firebase/firestore';
 
 function Dashboard() {
   const { currentUser, loading } = useAuth();
+  const [ cart, setCart ] = useState([])
+  
+
+  // If currentuser exists.
+  useEffect( () => {
+      const fetchCartsOrders = async () => {
+        
+        if(currentUser){
+              const colRef = collection(db,"Users")
+              try{
+                const docRef = doc(colRef,currentUser.uid)
+                const docSnap = await getDoc(colRef)
+                
+                console.log(docSnap);
+                // We got the data
+                if(docSnap.exists()){
+                  setCart(docSnap.data())
+                }
+              }
+              catch(err){
+                console.error('Database fetch error',err);
+              }
+        }
+        else{
+          console.log('current user is not logged in');
+        }
+
+      }
+      fetchCartsOrders()
+  },[])
+
+  if (!currentUser) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
+        <p className="text-lg font-semibold text-white">You are not logged in.</p>
+      </div>
+    );
+  }
+
 
   if (loading) {
     return (
@@ -12,13 +54,7 @@ function Dashboard() {
     );
   }
 
-  if (!currentUser) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
-        <p className="text-lg font-semibold text-white">You are not logged in.</p>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
@@ -35,6 +71,34 @@ function Dashboard() {
           </p>
         </div>
       </div>
+
+      {
+        currentUser.role === 'Guest' && <div>
+            <div className="grid grid-cols-4 gap-10 justify-center items-center" >
+                 
+                 {/* Cart Display */}
+                <div className=" p-3 ">
+                  <h1>
+                    Your cart :
+                  </h1>
+                  <div className="flex flex-col">
+                    <div className="cart">{cart}</div>
+                  </div>
+                </div>
+
+                {/* Orders Display  */}
+                <div className="p-3">
+                  <h1>
+                    Your orders :
+                  </h1>
+                  <div className="flex flex-col gap-2">
+                    <div className="orders"></div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+      }
     </div>
   );
 }
