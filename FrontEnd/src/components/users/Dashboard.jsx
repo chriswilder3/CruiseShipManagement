@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase"
-import { reauthenticateWithPhoneNumber } from "firebase/auth";
+
 import { collection, getDoc, doc } from 'firebase/firestore';
 
 function Dashboard() {
