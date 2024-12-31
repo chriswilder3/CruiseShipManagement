@@ -32,7 +32,7 @@ export function UserContextProvider({ children }) {
 
             // Combine all cart items into a single array
             const totalCart = [
-              ...(data.datacateringCart || []),
+              ...(data.cateringCart || []),
               ...(data.stationeryCart || []),
               ...(data.movieCart || []),
             ];
@@ -52,7 +52,7 @@ export function UserContextProvider({ children }) {
               orders: totalOrders,
             });
           } else {
-            console.log("No such user exists");
+            console.log("No cart and orders data exists for the user");
           }
         } catch (err) {
           console.error("Error fetching user data:", err);

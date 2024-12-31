@@ -45,7 +45,7 @@ function SignUp() {
         salonBookings : [],
         partyhallBookings : [],
       })
-      setSuccessMsg('User details added.')
+      
       // Now check whether this is the first user (i.e., deserves admin rights)
       const response = await fetch(`${backEndUrl}/checkAdmin`, {
         method: "post",
@@ -64,11 +64,11 @@ function SignUp() {
         // usefull for signup forms( firebase takes time to update otherwise)
 
         setSuccessMsg(
-          (msg) => msg.concat(
+          
           data.isAdmin
             ? "You are registered as Admin"
             : "You are registered as a guest."
-          )
+          
         );
         navigate("/users/dashboard");
       } else {

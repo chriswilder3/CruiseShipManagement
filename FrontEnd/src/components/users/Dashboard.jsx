@@ -6,7 +6,6 @@ function Dashboard() {
   const { currentUser, loading: authLoading } = useAuth();
   const { userData, loading: userLoading } = useUser();
 
-  
   if (!currentUser) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
@@ -47,11 +46,22 @@ function Dashboard() {
             {/* Cart Section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Your Cart</h2>
-              <div className="flex flex-col gap-2">
-                {userData.cart && userData.cart.length > 0 ? (
-                  userData.cart.map((item, index) => (
-                    <div key={index} className="border rounded p-3 text-gray-700">
-                      {item}
+              <div className="flex flex-col gap-4">
+                {userData.stationeryCart && userData.stationeryCart.length > 0 ? (
+                  userData.stationeryCart.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center border rounded p-3 gap-4"
+                    >
+                      <img
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                      <div>
+                        <p className="font-semibold text-gray-800">{item.name}</p>
+                        <p className="text-gray-600">₹{item.price}</p>
+                      </div>
                     </div>
                   ))
                 ) : (
@@ -63,11 +73,22 @@ function Dashboard() {
             {/* Orders Section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Your Orders</h2>
-              <div className="flex flex-col gap-2">
-                {userData.orders && userData.orders.length > 0 ? (
-                  userData.orders.map((order, index) => (
-                    <div key={index} className="border rounded p-3 text-gray-700">
-                      {order}
+              <div className="flex flex-col gap-4">
+                {userData.stationeryOrders && userData.stationeryOrders.length > 0 ? (
+                  userData.stationeryOrders.map((order, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center border rounded p-3 gap-4"
+                    >
+                      <img
+                        src={order.imageUrl}
+                        alt={order.name}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                      <div>
+                        <p className="font-semibold text-gray-800">{order.name}</p>
+                        <p className="text-gray-600">₹{order.price}</p>
+                      </div>
                     </div>
                   ))
                 ) : (
