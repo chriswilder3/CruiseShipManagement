@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase"
 import { reauthenticateWithPhoneNumber } from "firebase/auth";
-import { collection, getDoc } from 'firebase/firestore';
+import { collection, getDoc, doc } from 'firebase/firestore';
 
 function Dashboard() {
   const { currentUser, loading } = useAuth();
-  const [ cart, setCart ] = useState([])
+  const [ cart, setCart ] = useState(null)
   
 
   // If currentuser exists.
@@ -17,9 +17,9 @@ function Dashboard() {
               const colRef = collection(db,"Users")
               try{
                 const docRef = doc(colRef,currentUser.uid)
-                const docSnap = await getDoc(colRef)
+                const docSnap = await getDoc(docRef)
                 
-                console.log(docSnap);
+                
                 // We got the data
                 if(docSnap.exists()){
                   setCart(docSnap.data())
@@ -82,7 +82,15 @@ function Dashboard() {
                     Your cart :
                   </h1>
                   <div className="flex flex-col">
-                    <div className="cart">{cart}</div>
+                    {
+                      cart ===null ? "": (cart.stationeryCart.map( (item,index) =>
+                      <div key={index} className="cart">
+                          {item}
+                      </div>
+                      ))
+                      
+                    }
+                    
                   </div>
                 </div>
 
