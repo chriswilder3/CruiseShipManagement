@@ -57,7 +57,7 @@ function Navbar() {
           </button>
           {userDropdown && (
             <div
-              className="absolute right-0 mt-2 w-40 bg-slate-100 shadow-lg rounded-lg py-2 z-50"
+             onMouseLeave={toggleUserDropdown} className="absolute md:right-0 mt-2 w-40 bg-slate-100 shadow-lg rounded-lg py-2 z-50"
             >
               <UserDropdownDiv />
             </div>

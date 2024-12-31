@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase"; // Adjust path as needed
+import { auth, db } from "../../firebase"; // Adjust path as needed
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
+
 
 function SignUp() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -16,6 +18,7 @@ function SignUp() {
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const pass = formData.get("pass");
+    const name = formData.get("name");
 
     console.log("Submission happening!");
 
@@ -25,6 +28,24 @@ function SignUp() {
 
       console.log("User was registered: ", newUser.uid);
 
+      // Now we need to store the info regarding them in the database.
+      const colRef = collection(db, 'Users')
+      const docRef = doc(colRef, newUser.uid )
+      await setDoc(docRef, {
+        uid : newUser.uid ,
+        name : name,
+        email : email,
+        cateringCart : [],
+        cateringOrders : [],
+        stationeryCart : [],
+        stationeryOrders : [],
+        movieCart : [],
+        movieBookings : [],
+        gymBookings : [],
+        salonBookings : [],
+        partyhallBookings : [],
+      })
+      setSuccessMsg('User details added.')
       // Now check whether this is the first user (i.e., deserves admin rights)
       const response = await fetch(`${backEndUrl}/checkAdmin`, {
         method: "post",
@@ -43,9 +64,11 @@ function SignUp() {
         // usefull for signup forms( firebase takes time to update otherwise)
 
         setSuccessMsg(
+          (msg) => msg.concat(
           data.isAdmin
-            ? "You are successfully registered as Admin"
+            ? "You are registered as Admin"
             : "You are registered as a guest."
+          )
         );
         navigate("/users/dashboard");
       } else {
@@ -80,6 +103,13 @@ function SignUp() {
           </p>
         )}
         <form onSubmit={handleSignUp} className="flex flex-col gap-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            required
+            className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
           <input
             type="email"
             name="email"
