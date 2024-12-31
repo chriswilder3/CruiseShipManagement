@@ -12,7 +12,7 @@ function ItemCard({name, desc, price}) {
         {/* Item Image */}
         <img 
             className="w-36 h-36 object-cover rounded-lg" 
-            src="/src/assets/stationary.png" 
+            src="/src/assets/stationery.png" 
             alt="Food item image" 
         />
 
