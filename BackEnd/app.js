@@ -9,11 +9,11 @@ const app = express()
 
 app.use( cors(
     { 
-        origin : 'http://localhost:5173',   
+          
     }
 ))
 
-app.use( bodyparser.urlencoded({ extended : true}))
+// app.use( bodyparser.urlencoded({ extended : true}))
 // Used for accepting form data
 
 app.use(bodyparser.json())
@@ -59,12 +59,31 @@ app.post('/checkAdmin', async( req, res) => {
 
 app.post('/getAllUserRoles', async (req, res) => {
     const {uid} = req.body
-
-    const userList = admin.auth().listUsers()
+    try{
+        const userData = await admin.auth().getUser(uid)
+        console.log(userData.customClaims.role);
+        res.status(200).send({uid : userData.customClaims})
+    }
+    catch(err){
+        res.status(404).send({"err":err})
+    }
     
 
 })
 
+
 app.listen(port, () =>{
     console.log('Server running on port : 5000');
 })
+
+// app.post('/getAllUserRoles', async (req, res) => {
+//     const {uid} = req.body
+//     console.log( admin.auth().getUser(uid));
+  
+//     const userList = admin.auth().listUsers()
+//     print(userList)
+//     res.status(200).send('Admin ')
+
+// })
+
+
