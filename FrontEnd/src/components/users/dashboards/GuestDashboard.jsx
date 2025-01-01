@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useUser } from "../../../contexts/UserContext";
 
@@ -41,9 +42,9 @@ function GuestDashboard() {
       </div>
 
       {/* Role-Specific Content */}
-       <h1 className=" text-3xl p-3 font-medium ">
-            You must be voyager of Celestia to make orders/bookings. 
-            Please contact the <span> Admin </span> for your approval.
+       <h1 className=" text-2xl p-3 font-medium ">
+            You must be voyager of Celestia to make orders/bookings. <br /> 
+            Please contact the <span className="text-rose-400" > <Link to='/contact'> Admin</Link> </span> for your approval.
        </h1>
 
     </div>

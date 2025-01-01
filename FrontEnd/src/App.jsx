@@ -8,7 +8,7 @@ import Contact from './components/contact/Contact';
 import Services from './components/services/Services';
 import Catering from './components/services/catering/Catering';
 import SignIn from './components/users/Signin';
-import Dashboard from './components/users/Dashboard';
+import Dashboard from './components/users/dashboards/Dashboard';
 import SignUp from './components/users/Signup';
 import Stationery from './components/services/stationery/Stationery';
 import Facilities from './components/services/facilities/Facilities';
