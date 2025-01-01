@@ -7,11 +7,13 @@ function AdminDashboard() {
   const { userData, loading: userLoading } = useUser();
   const [ guestData, setGuestData ] = useState([]);
   const [ guestLoading, setGuestLoading ] = useState(true)
+  const [ successMsg, setSuccessMsg] = useState("")
 
+  const backEndUrl = "http://localhost:5000";
   useEffect(()=>{
       const fetchGuests = async () => {
           
-          const backEndUrl = "http://localhost:5000"; 
+           
           try{
               const res = await fetch(`${backEndUrl}/getAllGuests`,{
                 method : "post",
@@ -60,7 +62,21 @@ function AdminDashboard() {
   }
 
   if (currentUser.role === "Admin") {
-      
+      const approveUser = async (e) => {
+          console.log(e.target.getAttribute('adminapprovedrole')); 
+          console.log(e.target.getAttribute('adminapprovedguestid')); 
+
+          fetch(`${backEndUrl}/approveUser`,{
+            method : "post",
+            headers : {
+              "Content-Type": "application/json",
+            },
+            body : JSON.stringify({role : adminapprovedrole, uid : adminapprovedguestid })
+          })
+          .then((res) => (res.json()))
+          .then((data) => setSuccessMsg(data.msg))
+          .catch((err) => console.error(err))
+      }
 
 
     return (
@@ -80,7 +96,7 @@ function AdminDashboard() {
           </div>
         </div>
 
-        {/* Role-Specific Content */}
+        {/* Main Admin UI Content */}
         <div className="relative">
           {/* Popup */}
           <div className="voyager-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5">
@@ -91,26 +107,26 @@ function AdminDashboard() {
               {/* Listing all the guest requests. */}
               {
                 guestData.map( guest => (
-                  <div key={guest.id} className="flex flex-col md:flex-row justify-between items-center">
+                  <div key={guest.id} className="flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center p-3 rounded bg-gray-200">
                       <div>
-                        <p className="text-sm text-gray-700">Guest UID: {guest.id} </p>
-                        <p className="text-sm text-gray-700">Guest Email: {guest.email}</p>
+                        <p className="text-sm font-semibold text-gray-700">Guest uid : <br /> {guest.id} </p>
+                        <p className="text-sm font-semibold text-gray-700">Guest email: <br /> {guest.email}</p>
                       </div>
                       <div className=" flex flex-col gap-3">
                         <button 
-                          adminApprovedRole ="Voyager"
+                          adminapprovedrole ="Voyager" adminapprovedguestid ={guest.id} onClick={approveUser}
                           className="bg-rose-500 text-white px-5 py-1 rounded-md hover:bg-rose-600">
                           Add As Voyager
                         </button>
 
                         <button 
-                          adminApprovedRole ="Manager"
+                          adminapprovedrole ="Manager" adminapprovedguestid ={guest.id} onClick={approveUser}
                           className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600">
                           Add As Manager
                         </button>
 
                         <button 
-                          adminApprovedRole ="HeadCook"
+                          adminapprovedrole ="HeadCook" adminapprovedguestid ={guest.id} onClick={approveUser}
                           className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600">
                           Add As HeadCook
                         </button>
@@ -152,6 +168,12 @@ function AdminDashboard() {
             </button>
           </div>
         </div>
+
+
+        {/* Here Shows the Admin's own userData.
+        This is usefull if he wants to checkout his own orders for himself. */}
+
+
       </div>
     );
   }
