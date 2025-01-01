@@ -64,6 +64,7 @@ function Stationery() {
                         name={item.name}
                         desc={item.description}
                         price={item.price}
+                        imageUrl={item.imageUrl}
                     />
                 ))}
             </div>

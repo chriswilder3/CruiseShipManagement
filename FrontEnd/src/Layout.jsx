@@ -3,6 +3,7 @@ import Footer from './components/footer/Footer'
 import Header from './components/header/Header'
 import { Outlet } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext';
+import { UserContextProvider } from './contexts/UserContext';
 
 
 function Layout() {
@@ -10,9 +11,11 @@ function Layout() {
 
     <>
       <AuthContextProvider >
-        <Header />
+        <UserContextProvider>
+          <Header />
             <Outlet />
-        <Footer />
+          <Footer />
+        </UserContextProvider>
       </AuthContextProvider>
     </>
   )

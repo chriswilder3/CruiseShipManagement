@@ -1,17 +1,12 @@
 import React from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useUser } from "../../../contexts/UserContext";
 
-function Dashboard() {
-  const { currentUser, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
-        <p className="text-lg font-semibold text-white">Loading...</p>
-      </div>
-    );
-  }
-
+function GuestDashboard() {
+  const { currentUser, loading: authLoading } = useAuth();
+  const { userData, loading: userLoading } = useUser();
+  console.log(userData);
   if (!currentUser) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
@@ -20,8 +15,18 @@ function Dashboard() {
     );
   }
 
+  if (authLoading || userLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
+        <p className="text-lg font-semibold text-white">Loading...</p>
+      </div>
+    );
+  }
+  if( currentUser.role === 'Guest'){
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
+      {/* User Info Section */}
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-indigo-600 mb-4 text-center capitalize">
           {currentUser.role} Dashboard
@@ -35,8 +40,16 @@ function Dashboard() {
           </p>
         </div>
       </div>
+
+      {/* Role-Specific Content */}
+       <h1 className=" text-2xl p-3 font-medium ">
+            You must be voyager of Celestia to make orders/bookings. <br /> 
+            Please contact the <span className="text-rose-400" > <Link to='/contact'> Admin</Link> </span> for your approval.
+       </h1>
+
     </div>
-  );
+    )
+  }
 }
 
-export default Dashboard;
+export default GuestDashboard;

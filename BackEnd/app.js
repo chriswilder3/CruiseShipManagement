@@ -57,6 +57,14 @@ app.post('/checkAdmin', async( req, res) => {
     }
 })
 
+app.post('/getAllUserRoles', async (req, res) => {
+    const {uid} = req.body
+
+    const userList = admin.auth().listUsers()
+    
+
+})
+
 app.listen(port, () =>{
     console.log('Server running on port : 5000');
 })
