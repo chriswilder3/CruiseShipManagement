@@ -65,7 +65,7 @@ app.post('/getAllGuests', async (req, res) => {
         if(submitterData.customClaims.role === "Admin"){
            await admin.auth().listUsers()
            .then( (userList) => {
-                res.status(200).send({'guestDetails':userList.users.map(user => user.customClaims.role ==="Guest"?{id: user.uid,email : user.email }:"")})
+                res.status(200).send({'guestDetails':userList.users.filter(user =>user.customClaims && user.customClaims.role === "Guest").map( user => ({id: user.uid,email : user.email }))})
            })
            .catch((err)=> console.error(err))
         }

@@ -24,7 +24,7 @@ function AdminDashboard() {
               const data  = await res.json()
               console.log(data);
               if(data){
-                console.log(data.guestDetails);
+                
                 setGuestData(data.guestDetails)
                 setGuestLoading(false)
               }
@@ -32,6 +32,7 @@ function AdminDashboard() {
           catch(err){
             console.error(err);
           }
+          console.log(guestData);
       }
       fetchGuests()
   },[guestLoading])
@@ -82,33 +83,43 @@ function AdminDashboard() {
         {/* Role-Specific Content */}
         <div className="relative">
           {/* Popup */}
-          <div className="voyager-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg w-96">
+          <div className="voyager-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5">
             <h2 className="text-2xl font-semibold text-indigo-600 mb-4 text-center">
-              Approve Voyagers
+              Approve Guests
             </h2>
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-700">Guest Name: John Doe</p>
-                  <p className="text-sm text-gray-700">Guest Email: john@example.com</p>
-                </div>
-                <button
-                  className="bg-rose-500 text-white px-4 py-2 rounded-md hover:bg-rose-600"
-                >
-                  Add Voyager
-                </button>
-              </div>
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-700">Guest Name: Jane Doe</p>
-                  <p className="text-sm text-gray-700">Guest Email: jane@example.com</p>
-                </div>
-                <button
-                  className="bg-rose-500 text-white px-4 py-2 rounded-md hover:bg-rose-600"
-                >
-                  Add Voyager
-                </button>
-              </div>
+              {/* Listing all the guest requests. */}
+              {
+                guestData.map( guest => (
+                  <div key={guest.id} className="flex flex-col md:flex-row justify-between items-center">
+                      <div>
+                        <p className="text-sm text-gray-700">Guest UID: {guest.id} </p>
+                        <p className="text-sm text-gray-700">Guest Email: {guest.email}</p>
+                      </div>
+                      <div className=" flex flex-col gap-3">
+                        <button 
+                          adminApprovedRole ="Voyager"
+                          className="bg-rose-500 text-white px-5 py-1 rounded-md hover:bg-rose-600">
+                          Add As Voyager
+                        </button>
+
+                        <button 
+                          adminApprovedRole ="Manager"
+                          className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600">
+                          Add As Manager
+                        </button>
+
+                        <button 
+                          adminApprovedRole ="HeadCook"
+                          className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600">
+                          Add As HeadCook
+                        </button>
+                      </div>
+                  </div>
+                ))
+              }
+              
+              
             </div>
             <button
               onClick={toggleVoyagerPopup}
@@ -122,7 +133,7 @@ function AdminDashboard() {
         {/* Dashboard Actions */}
         <div className="flex flex-col md:flex-row my-5 gap-5 poppins">
           <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
-            <h1 className="text-xl text-rose-500">Guests awaiting approval: 10</h1>
+            <h1 className="text-xl text-rose-500">Guests awaiting approval: {guestData.length}</h1>
             <button
               type="button"
               onClick={toggleVoyagerPopup}
