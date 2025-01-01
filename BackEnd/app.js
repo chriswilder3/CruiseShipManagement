@@ -9,11 +9,11 @@ const app = express()
 
 app.use( cors(
     { 
-        origin : 'http://localhost:5173',   
+          
     }
 ))
 
-app.use( bodyparser.urlencoded({ extended : true}))
+// app.use( bodyparser.urlencoded({ extended : true}))
 // Used for accepting form data
 
 app.use(bodyparser.json())
@@ -57,14 +57,42 @@ app.post('/checkAdmin', async( req, res) => {
     }
 })
 
-app.post('/getAllUserRoles', async (req, res) => {
+app.post('/getAllGuests', async (req, res) => {
     const {uid} = req.body
-
-    const userList = admin.auth().listUsers()
+    console.log(uid);
+    try{
+        const submitterData = await admin.auth().getUser(uid)
+        if(submitterData.customClaims.role === "Admin"){
+           await admin.auth().listUsers()
+           .then( (userList) => {
+                res.status(200).send({'guestDetails':userList.users.filter(user =>user.customClaims && user.customClaims.role === "Guest").map( user => ({id: user.uid,email : user.email }))})
+           })
+           .catch((err)=> console.error(err))
+        }
+        else{
+            res.status(402).send({"err":"You dont have the permission to do this"})
+        }
+    }
+    catch(err){
+        res.status(404).send({"err":err})
+    }
     
 
 })
 
+
 app.listen(port, () =>{
     console.log('Server running on port : 5000');
 })
+
+// app.post('/getAllUserRoles', async (req, res) => {
+//     const {uid} = req.body
+//     console.log( admin.auth().getUser(uid));
+  
+//     const userList = admin.auth().listUsers()
+//     print(userList)
+//     res.status(200).send('Admin ')
+
+// })
+
+
