@@ -26,6 +26,9 @@ app.get('/', async (req, res) =>{
     })
 })
 
+// This is a request by signup page to check if the current user is 
+// an admin or not.
+
 app.post('/checkAdmin', async( req, res) => {
     const {uid, email} =  req.body 
     
@@ -76,8 +79,21 @@ app.post('/getAllGuests', async (req, res) => {
     catch(err){
         res.status(404).send({"err":err})
     }
-    
+})
 
+app.post("/approveUser", async (req, res) => {
+    const { role, uid } = req.body
+
+    console.log(role, uid);
+
+    admin.auth().setCustomUserClaims(uid,{
+        role : role
+    })
+    .then( () => {
+        res.status(200).send({"msg":"success"})
+    })
+    .catch( (err) => res.status(400).send({"msg":err}) )
+    
 })
 
 

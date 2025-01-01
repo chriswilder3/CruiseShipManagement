@@ -23,7 +23,7 @@ function Dashboard() {
       case "Guest":
         return <GuestDashboard />
       default:
-        <Navigate to='/users/signin'/>
+        return <GuestDashboard />
   }
 }
 
