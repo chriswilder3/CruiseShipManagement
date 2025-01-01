@@ -60,9 +60,17 @@ app.post('/checkAdmin', async( req, res) => {
 app.post('/getAllUserRoles', async (req, res) => {
     const {uid} = req.body
     try{
-        const userData = await admin.auth().getUser(uid)
-        console.log(userData.customClaims.role);
-        res.status(200).send({uid : userData.customClaims})
+        const submitterData = await admin.auth().getUser(uid)
+        if(submitterData.customClaims.role === "Admin"){
+           await admin.auth().listUsers()
+           .then( (userList) => {
+                res.status(200).send({'guestIds':userList.users.map(user => user.customClaims.role ==="Guest"?user.uid:"")})
+           })
+           .catch((err)=> console.error(err))
+        }
+        else{
+            res.status(402).send({"err":"You dont have the permission to do this"})
+        }
     }
     catch(err){
         res.status(404).send({"err":err})
