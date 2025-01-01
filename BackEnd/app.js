@@ -57,14 +57,15 @@ app.post('/checkAdmin', async( req, res) => {
     }
 })
 
-app.post('/getAllUserRoles', async (req, res) => {
+app.post('/getAllGuests', async (req, res) => {
     const {uid} = req.body
+    console.log(uid);
     try{
         const submitterData = await admin.auth().getUser(uid)
         if(submitterData.customClaims.role === "Admin"){
            await admin.auth().listUsers()
            .then( (userList) => {
-                res.status(200).send({'guestIds':userList.users.map(user => user.customClaims.role ==="Guest"?user.uid:"")})
+                res.status(200).send({'guestDetails':userList.users.map(user => user.customClaims.role ==="Guest"?{id: user.uid,email : user.email }:"")})
            })
            .catch((err)=> console.error(err))
         }

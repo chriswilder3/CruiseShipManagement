@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useUser } from "../../../contexts/UserContext";
 
 function AdminDashboard() {
   const { currentUser, loading: authLoading } = useAuth();
   const { userData, loading: userLoading } = useUser();
+  const [ guestData, setGuestData ] = useState([]);
+  const [ guestLoading, setGuestLoading ] = useState(true)
+
+  useEffect(()=>{
+      const fetchGuests = async () => {
+          
+          const backEndUrl = "http://localhost:5000"; 
+          try{
+              const res = await fetch(`${backEndUrl}/getAllGuests`,{
+                method : "post",
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+                body: JSON.stringify({ uid: currentUser.uid}),
+                } 
+              )
+              const data  = await res.json()
+              console.log(data);
+              if(data){
+                console.log(data.guestDetails);
+                setGuestData(data.guestDetails)
+                setGuestLoading(false)
+              }
+          }
+          catch(err){
+            console.error(err);
+          }
+      }
+      fetchGuests()
+  },[guestLoading])
 
   const toggleVoyagerPopup = () => {
     const popup = document.querySelector(".voyager-popup");
@@ -20,7 +50,7 @@ function AdminDashboard() {
     );
   }
 
-  if (authLoading || userLoading) {
+  if (authLoading || userLoading || guestLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
         <p className="text-lg font-semibold text-white">Loading...</p>
@@ -29,6 +59,9 @@ function AdminDashboard() {
   }
 
   if (currentUser.role === "Admin") {
+      
+
+
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
         {/* User Info Section */}
