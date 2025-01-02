@@ -38,6 +38,26 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
                     ? "Successfully added to cart."
                     : "Successfully added to orders.";
                 setMessage(successMessage);
+                if(cartOrOrder !== 'cart'){
+                    colRef = collection(db, "CateringOrders")
+                    addDoc(colRef, { 
+                        itemId, name, imageUrl, price, uid : currentUser.uid
+                    }
+                        
+                    )
+                    .then( () => {
+                        const successMessage =
+                            cartOrOrder === "cart"
+                                ? "Successfully added to cart."
+                                : "Successfully added to orders.";
+                            setMessage(successMessage);
+                    })
+                    .catch( (err) => {
+                        console.error("Error while updating Firestore:", err);
+                            setMessage("Failed to add item. Please try again.");
+                    })
+
+                }
               })
               .catch((err) => {
                 console.error("Error while updating Firestore:", err);
@@ -52,22 +72,7 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
           setMessage("Failed to add item. Please try again.");
         });
 
-        colRef = collection(db, "CateringOrders")
-        addDoc(colRef, {
-            ...newItem, uid : currentUser.uid
-        })
-        .then( () => {
-            const successMessage =
-                  cartOrOrder === "cart"
-                    ? "Successfully added to cart."
-                    : "Successfully added to orders.";
-                setMessage(successMessage);
-        })
-        .catch( (err) => {
-            console.error("Error while updating Firestore:", err);
-                setMessage("Failed to add item. Please try again.");
-        })
-
+        
     } else {
       setMessage("You are not logged in. Redirecting...");
       setTimeout(() => window.open("/users/signin", "_self"), 500);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { db } from "../../../firebase";
 import { useAuth } from "../../../contexts/AuthContext";
-import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, addDoc, getDoc, updateDoc } from "firebase/firestore";
 
 function ItemCard({ name, itemId, desc, price, imageUrl }) {
   const [message, setMessage] = useState("");
@@ -11,7 +11,7 @@ function ItemCard({ name, itemId, desc, price, imageUrl }) {
     const cartOrOrder = e.target.getAttribute("id");
 
     if (currentUser) {
-      const colRef = collection(db, "Users");
+      let colRef = collection(db, "Users");
       const docRef = doc(colRef, currentUser.uid);
 
       getDoc(docRef)
@@ -37,6 +37,26 @@ function ItemCard({ name, itemId, desc, price, imageUrl }) {
                     ? "Successfully added to cart."
                     : "Successfully added to orders.";
                 setMessage(successMessage);
+                if(cartOrOrder !== "cart"){
+                      colRef = collection(db, "StationeryOrders")
+                      addDoc(colRef, { 
+                          itemId, name, imageUrl, price, uid : currentUser.uid
+                      }
+                            
+                      )
+                      .then( () => {
+                          const successMessage =
+                                cartOrOrder === "cart"
+                                  ? "Successfully added to cart."
+                                  : "Successfully added to orders.";
+                              setMessage(successMessage);
+                      })
+                      .catch( (err) => {
+                          console.error("Error while updating Firestore:", err);
+                              setMessage("Failed to add item. Please try again.");
+                      })
+                }
+
               })
               .catch((err) => {
                 console.error("Error while updating Firestore:", err);
@@ -50,6 +70,9 @@ function ItemCard({ name, itemId, desc, price, imageUrl }) {
           console.error("Error while fetching user document:", err);
           setMessage("Failed to add item. Please try again.");
         });
+
+      
+
     } else {
       setMessage("You are not logged in. Redirecting...");
       setTimeout(() => window.open("/users/signin", "_self"), 500);
