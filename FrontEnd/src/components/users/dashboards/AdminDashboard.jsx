@@ -154,6 +154,14 @@ function AdminDashboard() {
                       Add As HeadCook
                     </button>
                     <button
+                      adminapprovedrole="Supervisor"
+                      adminapprovedguestid={guest.id}
+                      onClick={approveUser}
+                      className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600"
+                    >
+                      Add As Supervisor
+                    </button>
+                    <button
                       adminapprovedrole="Admin"
                       adminapprovedguestid={guest.id}
                       onClick={approveUser}
@@ -161,6 +169,7 @@ function AdminDashboard() {
                     >
                       Add As Admin
                     </button>
+                    
                   </div>
                 </div>
               ))}
@@ -203,7 +212,7 @@ function AdminDashboard() {
 
         {/* Here Shows the Admin's own userData.
         This is usefull if he wants to checkout his own orders for himself. */}
-
+  
 
       </div>
     );
