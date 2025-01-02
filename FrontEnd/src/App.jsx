@@ -14,6 +14,7 @@ import Stationery from './components/services/stationery/Stationery';
 import Facilities from './components/services/facilities/Facilities';
 import Movies from './components/services/facilities/movies/Movies';
 import AdminManageItems from './components/users/dashboards/AdminManageItems';
+import Salon from './components/services/facilities/salon/Salon';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path='services/stationery' element={<Stationery />} />
               <Route path='services/facilities' element={ <Facilities /> } />
               <Route path='services/facilities/movies' element={ <Movies /> } />
+              <Route path='services/facilities/salon' element={ <Salon /> } />
               <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
               <Route path='users/signup' element={ <SignUp /> } />
