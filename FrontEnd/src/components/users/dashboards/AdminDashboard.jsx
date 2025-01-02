@@ -1,43 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useUser } from "../../../contexts/UserContext";
+import { Link } from 'react-router-dom';
 
 function AdminDashboard() {
   const { currentUser, loading: authLoading } = useAuth();
   const { userData, loading: userLoading } = useUser();
-  const [ guestData, setGuestData ] = useState([]);
-  const [ guestLoading, setGuestLoading ] = useState(true)
-  const [ successMsg, setSuccessMsg] = useState("")
+  const [guestData, setGuestData] = useState([]);
+  const [guestLoading, setGuestLoading] = useState(true);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false); // State to control notification visibility
+  const [refreshGuests, setRefreshGuests] = useState(false); // State to trigger refetching of guests
 
   const backEndUrl = "http://localhost:5000";
-  useEffect(()=>{
-      const fetchGuests = async () => {
-          
-           
-          try{
-              const res = await fetch(`${backEndUrl}/getAllGuests`,{
-                method : "post",
-                headers: {
-                    "Content-Type": "application/json",
-                  },
-                body: JSON.stringify({ uid: currentUser.uid}),
-                } 
-              )
-              const data  = await res.json()
-              console.log(data);
-              if(data){
-                
-                setGuestData(data.guestDetails)
-                setGuestLoading(false)
-              }
-          }
-          catch(err){
-            console.error(err);
-          }
-          console.log(guestData);
+
+  // Fetch guest data whenever refreshGuests changes
+  useEffect(() => {
+    const fetchGuests = async () => {
+      setGuestLoading(true); // Show loading indicator while fetching
+      try {
+        const res = await fetch(`${backEndUrl}/getAllGuests`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ uid: currentUser.uid }),
+        });
+        const data = await res.json();
+        if (data) {
+          setGuestData(data.guestDetails);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setGuestLoading(false); // Hide loading indicator after fetching
       }
-      fetchGuests()
-  },[guestLoading])
+    };
+    fetchGuests();
+  }, [refreshGuests, currentUser.uid]); // Refetch when refreshGuests changes or user ID changes
+
+  const approveUser = async (e) => {
+    const adminapprovedrole = e.target.getAttribute("adminapprovedrole");
+    const adminapprovedguestid = e.target.getAttribute("adminapprovedguestid");
+
+    fetch(`${backEndUrl}/approveUser`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ role: adminapprovedrole, uid: adminapprovedguestid }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSuccessMsg(data.msg); // Set success message
+        setShowSuccess(true);   // Show notification
+        setTimeout(() => setShowSuccess(false), 3000); // Auto-hide after 3 seconds
+        setRefreshGuests((prev) => !prev); // Trigger a refetch of guests
+      })
+      .catch((err) => console.error(err));
+  };
 
   const toggleVoyagerPopup = () => {
     const popup = document.querySelector(".voyager-popup");
@@ -62,25 +83,15 @@ function AdminDashboard() {
   }
 
   if (currentUser.role === "Admin") {
-      const approveUser = async (e) => {
-          console.log(e.target.getAttribute('adminapprovedrole')); 
-          console.log(e.target.getAttribute('adminapprovedguestid')); 
-
-          fetch(`${backEndUrl}/approveUser`,{
-            method : "post",
-            headers : {
-              "Content-Type": "application/json",
-            },
-            body : JSON.stringify({role : adminapprovedrole, uid : adminapprovedguestid })
-          })
-          .then((res) => (res.json()))
-          .then((data) => setSuccessMsg(data.msg))
-          .catch((err) => console.error(err))
-      }
-
-
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
+        {/* Success Message Notification */}
+        {showSuccess && (
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+            {successMsg}
+          </div>
+        )}
+
         {/* User Info Section */}
         <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
           <h1 className="text-3xl font-bold text-indigo-600 mb-4 text-center capitalize">
@@ -99,43 +110,70 @@ function AdminDashboard() {
         {/* Main Admin UI Content */}
         <div className="relative">
           {/* Popup */}
-          <div className="voyager-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5">
+          <div className="voyager-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5 max-h-[80vh] overflow-y-auto">
             <h2 className="text-2xl font-semibold text-indigo-600 mb-4 text-center">
               Approve Guests
             </h2>
             <div className="space-y-4">
-              {/* Listing all the guest requests. */}
-              {
-                guestData.map( guest => (
-                  <div key={guest.id} className="flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center p-3 rounded bg-gray-200">
-                      <div>
-                        <p className="text-sm font-semibold text-gray-700">Guest uid : <br /> {guest.id} </p>
-                        <p className="text-sm font-semibold text-gray-700">Guest email: <br /> {guest.email}</p>
-                      </div>
-                      <div className=" flex flex-col gap-3">
-                        <button 
-                          adminapprovedrole ="Voyager" adminapprovedguestid ={guest.id} onClick={approveUser}
-                          className="bg-rose-500 text-white px-5 py-1 rounded-md hover:bg-rose-600">
-                          Add As Voyager
-                        </button>
-
-                        <button 
-                          adminapprovedrole ="Manager" adminapprovedguestid ={guest.id} onClick={approveUser}
-                          className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600">
-                          Add As Manager
-                        </button>
-
-                        <button 
-                          adminapprovedrole ="HeadCook" adminapprovedguestid ={guest.id} onClick={approveUser}
-                          className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600">
-                          Add As HeadCook
-                        </button>
-                      </div>
+              {/* Listing all the guest requests */}
+              {guestData.map((guest) => (
+                <div
+                  key={guest.id}
+                  className="flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center p-3 rounded bg-gray-200"
+                >
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700">
+                      Guest uid: <br /> {guest.id}
+                    </p>
+                    <p className="text-sm font-semibold text-gray-700">
+                      Guest email: <br /> {guest.email}
+                    </p>
                   </div>
-                ))
-              }
-              
-              
+                  <div className="flex flex-col gap-3">
+                    <button
+                      adminapprovedrole="Voyager"
+                      adminapprovedguestid={guest.id}
+                      onClick={approveUser}
+                      className="bg-rose-500 text-white px-5 py-1 rounded-md hover:bg-rose-600"
+                    >
+                      Add As Voyager
+                    </button>
+                    <button
+                      adminapprovedrole="Manager"
+                      adminapprovedguestid={guest.id}
+                      onClick={approveUser}
+                      className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600"
+                    >
+                      Add As Manager
+                    </button>
+                    <button
+                      adminapprovedrole="HeadCook"
+                      adminapprovedguestid={guest.id}
+                      onClick={approveUser}
+                      className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600"
+                    >
+                      Add As HeadCook
+                    </button>
+                    <button
+                      adminapprovedrole="Supervisor"
+                      adminapprovedguestid={guest.id}
+                      onClick={approveUser}
+                      className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600"
+                    >
+                      Add As Supervisor
+                    </button>
+                    <button
+                      adminapprovedrole="Admin"
+                      adminapprovedguestid={guest.id}
+                      onClick={approveUser}
+                      className="bg-rose-500 text-white px-4 py-1 rounded-md hover:bg-rose-600"
+                    >
+                      Add As Admin
+                    </button>
+                    
+                  </div>
+                </div>
+              ))}
             </div>
             <button
               onClick={toggleVoyagerPopup}
@@ -145,6 +183,9 @@ function AdminDashboard() {
             </button>
           </div>
         </div>
+  
+  
+
 
         {/* Dashboard Actions */}
         <div className="flex flex-col md:flex-row my-5 gap-5 poppins">
@@ -167,12 +208,22 @@ function AdminDashboard() {
               Manage People
             </button>
           </div>
+
+          <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
+            <h1 className="text-xl text-rose-500">Manage items and services</h1>
+            <Link
+              to="/users/adminManageItems"
+              className="p-2 my-2 bg-rose-500 text-white rounded-md hover:bg-rose-600"
+            >
+              Manage Items & Services
+            </Link>
+          </div>
         </div>
 
 
         {/* Here Shows the Admin's own userData.
         This is usefull if he wants to checkout his own orders for himself. */}
-
+  
 
       </div>
     );
