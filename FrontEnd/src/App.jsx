@@ -13,6 +13,7 @@ import SignUp from './components/users/Signup';
 import Stationery from './components/services/stationery/Stationery';
 import Facilities from './components/services/facilities/Facilities';
 import Movies from './components/services/facilities/movies/Movies';
+import AdminManageItems from './components/users/dashboards/AdminManageItems';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
               <Route path='users/signup' element={ <SignUp /> } />
+              <Route path='users/adminManageItems' element={<AdminManageItems />} />
              </Route>
           </Routes>
         </Router>

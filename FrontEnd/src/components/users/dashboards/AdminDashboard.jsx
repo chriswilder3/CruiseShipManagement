@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useUser } from "../../../contexts/UserContext";
+import { Link } from 'react-router-dom';
 
 function AdminDashboard() {
   const { currentUser, loading: authLoading } = useAuth();
@@ -206,6 +207,16 @@ function AdminDashboard() {
             >
               Manage People
             </button>
+          </div>
+
+          <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
+            <h1 className="text-xl text-rose-500">Manage items and services</h1>
+            <Link
+              to="/users/adminManageItems"
+              className="p-2 my-2 bg-rose-500 text-white rounded-md hover:bg-rose-600"
+            >
+              Manage Items & Services
+            </Link>
           </div>
         </div>
 
