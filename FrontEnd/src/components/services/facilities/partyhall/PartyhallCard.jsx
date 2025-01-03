@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { useAuth } from '../../../../contexts/AuthContext';
+import { db } from '../../../../firebase';
+
 
 function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}) {
+  const {currentuser} = useAuth()
+  const [message, setMessage] =  useState("") 
 
   const handleAddCart = (e) => {
     if(!currentuser || currentuser.role === "Guest"){

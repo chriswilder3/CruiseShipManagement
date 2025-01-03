@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../../../contexts/AuthContext'
-import { collection, updateDoc } from 'firebase/firestore'
+import { collection, updateDoc, addDoc, getDoc, doc } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 
 function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}) {

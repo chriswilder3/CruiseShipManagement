@@ -82,7 +82,7 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
   return (
     <div className="flex flex-col justify-between items-center bg-white rounded-lg shadow-lg p-4 space-y-4 transform transition hover:scale-105 hover:shadow-lg">
       {/* Item Name */}
-      <p className="text-blue-500 text-sm">{message}</p>
+      <p className="text-blue-500 text-sm my-1">{message}</p>
       <h1 className="text-lg font-semibold roboto text-gray-800 text-center">{name}</h1>
 
       {/* Item Image */}
