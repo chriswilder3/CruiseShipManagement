@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../../../contexts/AuthContext'
-import { collection } from 'firebase/firestore'
+import { collection, updateDoc } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 
 function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}) {
@@ -17,7 +17,7 @@ function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}
           // First we will add it to the FitnessOrders collection
           let colRef = collection(db,"FitnessOrders")
           addDoc(colRef, {
-            id: itemId,
+            itemId,
             name,
             price,
             duration,
@@ -34,8 +34,38 @@ function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}
           })
 
           // Now lets also update the Users collection
-          // specifically the fitnessOrders field.
-          
+          // specifically the fitnessBookings  field.
+          colRef = collection(db, "Users")
+          const docRef = doc(colRef, currentuser.uid)
+          getDoc(docRef)
+          .then( (userData) => {
+            const fitnessBookingsArray = userData.data()['fitnessBookings']
+            fitnessBookingsArray.push( {
+              itemId,
+              name,
+              price,
+              duration,
+              imageUrl,
+            })
+
+            updateDoc(docRef, {
+              "fitnessBookings" : fitnessBookingsArray
+            })
+            .then( () => {
+              const successMessage = "Successfully added the booking to user profile. ";
+              setMessage(successMessage);
+            })
+            .catch(  (err) => {
+              console.error("Error while updating Firestore:", err);
+              setMessage("Failed to add item to users profile. Please try again.");
+            })
+
+          })
+          .catch((err) => {
+            console.error("Error while updating Firestore:", err);
+            setMessage("Failed to add item to fitnessorders. Please try again.");
+          })
+
       }
   }
     
