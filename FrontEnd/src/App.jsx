@@ -15,6 +15,8 @@ import Facilities from './components/services/facilities/Facilities';
 import Movies from './components/services/facilities/movies/Movies';
 import AdminManageItems from './components/users/dashboards/AdminManageItems';
 import Salon from './components/services/facilities/salon/Salon';
+import Fitness from './components/services/facilities/fitness/Fitness';
+import Partyhall from './components/services/facilities/partyhall/Partyhall';
 
 
 function App() {
@@ -35,6 +37,9 @@ function App() {
               <Route path='services/facilities' element={ <Facilities /> } />
               <Route path='services/facilities/movies' element={ <Movies /> } />
               <Route path='services/facilities/salon' element={ <Salon /> } />
+              <Route path='services/facilities/fitness' element={ <Fitness /> } />
+              <Route path='services/facilities/partyhall' element={ <Partyhall /> } />
+
               <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
               <Route path='users/signup' element={ <SignUp /> } />
