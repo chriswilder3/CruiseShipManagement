@@ -39,7 +39,7 @@ function Fitness() {
 
         {/* Fitness Header and Search bar  */}
         <h1 className="text-5xl font-bold text-center text-rose-400 poppins">
-            Welcome to the <span className="text-rose-500">Beauty Fitness</span> of Celestia
+            Welcome to the <span className="text-slate-500"> Fitness Center</span> of Celestia
         </h1>
         <p className="text-center text-lg text-rose-600">
             Experience best Fitness experiance with our specially curated selection of beauty services.
@@ -61,11 +61,11 @@ function Fitness() {
             </button>
             </form>
         </div>
-        <div className='flex flex-col md:flex-row p-3'>
+        <div className='flex flex-col md:flex-row gap-3 p-3'>
             {
                 
                 FitnessItems.map( (item) => 
-                    <FitnessCard key={item.id} itemId={item.id} price={item.price} duration={item.duration} name={item.name} imageUrl={item.imageUrl} desc={item.description}  />
+                    <FitnessCard key={item.id} itemId={item.id} price={item.price} duration={item.duration} name={item.name} imageUrl={item.imageUrl} desc={item.description} equipments={item.equipments}  />
                 )
             }
         </div>

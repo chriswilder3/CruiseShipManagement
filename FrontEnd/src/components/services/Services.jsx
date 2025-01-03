@@ -52,7 +52,7 @@ function Services() {
           <div className='flex text-lg flex-col gap-2 font-semibold text-green-500  rounded-lg p-2'>
             <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities/movies'> Movie Tickets </Link> </p>
             <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities/salon'> Beauty Salon </Link> </p>
-            <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities/gym'> Fitness Center </Link> </p>
+            <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities/fitness'> Fitness Center </Link> </p>
             <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities/partyhall'> Party Hall </Link> </p>
             <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities'> More Facilities </Link> </p>
           </div>

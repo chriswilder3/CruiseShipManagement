@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 function SalonCard({itemId, name, desc, price, duration, imageUrl}) {
 
   const handleAddCart = () => {
-
+    
   }
     
   return (
