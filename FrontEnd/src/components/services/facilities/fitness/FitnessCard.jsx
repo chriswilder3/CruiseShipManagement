@@ -1,9 +1,42 @@
 import React, { useState } from 'react'
+import { useAuth } from '../../../../contexts/AuthContext'
+import { collection } from 'firebase/firestore'
+import { db } from '../../../../firebase'
 
 function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}) {
+  const {currentuser} = useAuth()
+  const [message, setMessage] =  useState("")
 
-  const handleAddCart = () => {
+  const handleAddCart = (e) => {
+      if(!currentuser || currentuser.role === "Guest"){
+        setMessage('You must be registered as voyager to use services')
+        window.open('/users/dashboard','_self')
+      }
+      else{
+          
+          // First we will add it to the FitnessOrders collection
+          let colRef = collection(db,"FitnessOrders")
+          addDoc(colRef, {
+            id: itemId,
+            name,
+            price,
+            duration,
+            imageUrl,
+            uid : currentuser.uid
+          })
+          .then( () => {
+            const successMessage = "Successfully booked the service";
+            setMessage(successMessage);
+          })
+          .catch( (err) => {
+            console.error("Error while updating Firestore:", err);
+            setMessage("Failed to add item. Please try again.");
+          })
 
+          // Now lets also update the Users collection
+          // specifically the fitnessOrders field.
+          
+      }
   }
     
   return (
@@ -17,7 +50,7 @@ function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}
 
         {/* Fitness service description */}
         <p className="text-sm self-center text-gray-600 text-center mb-2 text-wrap w-3/4">
-            {desc.length > 100 ? `${description.substring(0, 100)}...` : desc}
+            {desc.length > 100 ? `${desc.substring(0, 100)}...` : desc}
         </p>
 
         {/* Fitness service duration */}

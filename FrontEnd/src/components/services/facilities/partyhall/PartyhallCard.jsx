@@ -24,7 +24,7 @@ function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}
 
         {/* Partyhall service description */}
         <p className="text-sm self-center text-gray-600 text-center mb-2 text-wrap w-3/4">
-            {desc.length > 100 ? `${description.substring(0, 100)}...` : desc}
+            {desc.length > 100 ? `${desc.substring(0, 100)}...` : desc}
         </p>
 
         {/* Partyhall service duration */}
