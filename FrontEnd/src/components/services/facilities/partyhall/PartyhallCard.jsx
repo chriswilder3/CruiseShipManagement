@@ -2,8 +2,68 @@ import React, { useState } from 'react'
 
 function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}) {
 
-  const handleAddCart = () => {
+  const handleAddCart = (e) => {
+    if(!currentuser || currentuser.role === "Guest"){
+      setMessage('You must be registered as voyager to use services')
+      window.open('/users/dashboard','_self')
+    }
+    else{
+        
+        // First we will add it to the PartyhallOrders collection
+        let colRef = collection(db,"PartyhallOrders")
+        addDoc(colRef, {
+          itemId,
+          name,
+          price,
+          duration,
+          category,
+          imageUrl,
+          uid : currentuser.uid
+        })
+        .then( () => {
+          const successMessage = "Successfully booked the service";
+          setMessage(successMessage);
+        })
+        .catch( (err) => {
+          console.error("Error while updating Firestore:", err);
+          setMessage("Failed to add item. Please try again.");
+        })
 
+        // Now lets also update the Users collection
+        // specifically the PartyhallBookings  field.
+        colRef = collection(db, "Users")
+        const docRef = doc(colRef, currentuser.uid)
+        getDoc(docRef)
+        .then( (userData) => {
+          const PartyhallBookingsArray = userData.data()['partyhallBookings']
+          PartyhallBookingsArray.push( {
+            itemId,
+            name,
+            price,
+            category,
+            duration,
+            imageUrl,
+          })
+
+          updateDoc(docRef, {
+            "partyhallBookings" : PartyhallBookingsArray
+          })
+          .then( () => {
+            const successMessage = "Successfully added the booking to user profile. ";
+            setMessage(successMessage);
+          })
+          .catch(  (err) => {
+            console.error("Error while updating Firestore:", err);
+            setMessage("Failed to add item to users profile. Please try again.");
+          })
+
+        })
+        .catch((err) => {
+          console.error("Error while updating Firestore:", err);
+          setMessage("Failed to add item to Partyhallorders. Please try again.");
+        })
+
+    }
   }
     
   return (
