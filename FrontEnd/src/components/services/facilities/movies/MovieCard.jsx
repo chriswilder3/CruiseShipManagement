@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { doc,getDoc, updateDoc, addDoc,collection } from 'firebase/firestore';
+import { db } from '../../../../firebase'
 
 function MovieCard({ itemId, name, description, imageUrl, duration, price }) {
   const [message, setMessage] = useState("");
@@ -88,6 +89,9 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price }) {
 
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg">
+      
+      <p className="text-blue-500 text-sm my-1">{message}</p>
+      
       {/* Movie Poster */}
       <img
         className="rounded-lg mb-4 w-full h-60 object-cover"

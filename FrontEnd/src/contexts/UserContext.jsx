@@ -44,7 +44,7 @@ export function UserContextProvider({ children }) {
               ...(data.movieBookings || []),
               ...(data.salonBookings || []),
               ...(data.partyhallBookings || []),
-              ...(data.gymBookings || []),
+              ...(data.fitnessBookings || []),
             ];
 
             setUserData({

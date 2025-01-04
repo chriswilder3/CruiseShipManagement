@@ -5,11 +5,11 @@ import { db } from '../../../../firebase';
 
 
 function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}) {
-  const {currentuser} = useAuth()
+  const {currentUser} = useAuth()
   const [message, setMessage] =  useState("") 
 
   const handleAddCart = (e) => {
-    if(!currentuser || currentuser.role === "Guest"){
+    if(!currentUser || currentUser.role === "Guest"){
       setMessage("You must be voyager to use services. Redirecting...");
       setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
     }
@@ -24,7 +24,7 @@ function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}
           duration,
           category,
           imageUrl,
-          uid : currentuser.uid
+          uid : currentUser.uid
         })
         .then( () => {
           const successMessage = "Successfully booked the service";
@@ -38,7 +38,7 @@ function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}
         // Now lets also update the Users collection
         // specifically the PartyhallBookings  field.
         colRef = collection(db, "Users")
-        const docRef = doc(colRef, currentuser.uid)
+        const docRef = doc(colRef, currentUser.uid)
         getDoc(docRef)
         .then( (userData) => {
           const PartyhallBookingsArray = userData.data()['partyhallBookings']
@@ -74,8 +74,11 @@ function PartyhallCard({itemId, name, desc, price, duration, imageUrl, category}
     
   return (
     <div className='flex flex-col p-5 bg-slate-200 rounded-md '>
+
+        <p className="text-blue-500 text-sm my-1">{message}</p>
+
+        {/* Image  */}
         <img src={imageUrl} className='w-32 rounded self-center' alt="" />
-        
         
         {/* Partyhall service category */}
         <p className='text-sm text-blue-500 text-center mb-2 '>

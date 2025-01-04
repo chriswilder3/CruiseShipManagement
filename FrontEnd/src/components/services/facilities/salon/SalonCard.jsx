@@ -5,11 +5,11 @@ import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 
 
 function SalonCard({itemId, name, desc, price, duration, imageUrl}) {
-  const {currentuser} = useAuth()
+  const {currentUser} = useAuth()
   const [message, setMessage] =  useState("")
 
   const handleAddCart = (e) => {
-    if(!currentuser || currentuser.role === "Guest"){
+    if(!currentUser || currentUser.role === "Guest"){
       setMessage("You must be voyager to use services. Redirecting...");
       setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
     }
@@ -23,7 +23,7 @@ function SalonCard({itemId, name, desc, price, duration, imageUrl}) {
           price,
           duration,
           imageUrl,
-          uid : currentuser.uid
+          uid : currentUser.uid
         })
         .then( () => {
           const successMessage = "Successfully booked the service";
@@ -37,7 +37,7 @@ function SalonCard({itemId, name, desc, price, duration, imageUrl}) {
         // Now lets also update the Users collection
         // specifically the SalonBookings  field.
         colRef = collection(db, "Users")
-        const docRef = doc(colRef, currentuser.uid)
+        const docRef = doc(colRef, currentUser.uid)
         getDoc(docRef)
         .then( (userData) => {
           const SalonBookingsArray = userData.data()['salonBookings']

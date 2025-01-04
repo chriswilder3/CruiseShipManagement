@@ -21,7 +21,7 @@ function VoyagerDashboard() {
       </div>
     );
   }
-
+  console.log(userData);
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
       {/* User Info Section */}
@@ -40,7 +40,7 @@ function VoyagerDashboard() {
       </div>
 
       {/* Role-Specific Content */}
-      {currentUser.role === "Guest" && (
+      
         <div className="w-full max-w-4xl mt-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {/* Cart Section */}
@@ -98,7 +98,7 @@ function VoyagerDashboard() {
             </div>
           </div>
         </div>
-      )}
+      
     </div>
   );
 }
