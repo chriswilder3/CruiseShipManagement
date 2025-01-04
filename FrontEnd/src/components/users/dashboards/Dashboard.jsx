@@ -1,29 +1,37 @@
 import React from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { Navigate } from 'react-router-dom'
-import AdminDashboard from './AdminDashboard';
+import { Navigate } from "react-router-dom";
+import AdminDashboard from "./AdminDashboard";
 import VoyagerDashboard from "./VoyagerDashboard";
 import GuestDashboard from "./GuestDashboard";
 
-
 function Dashboard() {
-  const { currentUser,loading: authLoading  } = useAuth()
+  const { currentUser, loading: authLoading } = useAuth(); // Handle loading state for auth
 
-  
+  // Show a loading screen while `currentUser` is being fetched
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-lg font-semibold text-gray-700">Loading...</p>
+      </div>
+    );
+  }
 
-    if(!currentUser){
-      return <Navigate to="/users/signin" />
-    }
+  // If no user is logged in, redirect to the sign-in page
+  if (!currentUser) {
+    return <Navigate to="/users/signin" />;
+  }
 
-    switch( currentUser.role){
-      case "Admin":
-        return <AdminDashboard />
-      case "Voyager":
-        return <VoyagerDashboard />
-      case "Guest":
-        return <GuestDashboard />
-      default:
-        return <GuestDashboard />
+  // Render the appropriate dashboard based on the user's role
+  switch (currentUser.role) {
+    case "Admin":
+      return <AdminDashboard />;
+    case "Voyager":
+      return <VoyagerDashboard />;
+    case "Guest":
+      return <GuestDashboard />;
+    default:
+      return <GuestDashboard />;
   }
 }
 

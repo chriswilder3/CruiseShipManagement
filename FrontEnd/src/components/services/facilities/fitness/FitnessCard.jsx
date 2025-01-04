@@ -4,13 +4,14 @@ import { collection, updateDoc, addDoc, getDoc, doc } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 
 function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}) {
-  const {currentuser} = useAuth()
+  const {currentUser} = useAuth()
   const [message, setMessage] =  useState("")
 
   const handleAddCart = (e) => {
-      if(!currentuser || currentuser.role === "Guest"){
-        setMessage('You must be registered as voyager to use services')
-        window.open('/users/dashboard','_self')
+    
+      if(!currentUser || currentUser.role === "Guest"){
+        setMessage("You must be voyager to use services. Redirecting...");
+        setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
       }
       else{
           
@@ -22,7 +23,7 @@ function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}
             price,
             duration,
             imageUrl,
-            uid : currentuser.uid
+            uid : currentUser.uid
           })
           .then( () => {
             const successMessage = "Successfully booked the service";
@@ -36,7 +37,7 @@ function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}
           // Now lets also update the Users collection
           // specifically the fitnessBookings  field.
           colRef = collection(db, "Users")
-          const docRef = doc(colRef, currentuser.uid)
+          const docRef = doc(colRef, currentUser.uid)
           getDoc(docRef)
           .then( (userData) => {
             const fitnessBookingsArray = userData.data()['fitnessBookings']
@@ -71,6 +72,10 @@ function FitnessCard({itemId, name, desc, price, duration, imageUrl, equipments}
     
   return (
     <div className='flex flex-col p-5 bg-slate-200 rounded-md '>
+
+        <p className="text-blue-500 text-sm my-1">{message}</p>
+
+        {/* Image  */}
         <img src={imageUrl} className='w-32 rounded self-center' alt="" />
         
         {/* Fitness service name */}

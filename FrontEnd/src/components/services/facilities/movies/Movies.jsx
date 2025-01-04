@@ -64,10 +64,12 @@ function Movies() {
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}
-            title={movie.title}
+            itemId={movie.id}
+            name={movie.name}
             description={movie.description}
-            poster={movie.poster}
+            imageUrl={movie.imageUrl}
             duration={movie.duration}
+            price={movie.price}
           />
         ))}
       </div>

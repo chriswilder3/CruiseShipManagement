@@ -11,7 +11,15 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
   const handleAddCart = (e) => {
     const cartOrOrder = e.target.getAttribute("id");
 
-    if (currentUser) {
+    if (!currentUser) {
+      setMessage("You are not logged in. Redirecting...");
+      setTimeout(() => window.open("/users/signin", "_self"), 2000);
+    }
+    else if(currentUser.role === 'Guest'){
+      setMessage("You must be voyager to use services. Redirecting...");
+      setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
+    }
+    else{
       let colRef = collection(db, "Users");
       const docRef = doc(colRef, currentUser.uid);
       let newItem;
@@ -73,9 +81,6 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
         });
 
         
-    } else {
-      setMessage("You are not logged in. Redirecting...");
-      setTimeout(() => window.open("/users/signin", "_self"), 500);
     }
   };
 
