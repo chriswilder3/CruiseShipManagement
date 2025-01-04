@@ -5,7 +5,7 @@ import { useUser } from "../../../contexts/UserContext";
 function VoyagerDashboard() {
   const { currentUser, loading: authLoading } = useAuth();
   const { userData, loading: userLoading } = useUser();
-  console.log(userData);
+  
   if (!currentUser) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">

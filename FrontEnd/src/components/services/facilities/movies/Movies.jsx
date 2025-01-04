@@ -69,6 +69,7 @@ function Movies() {
             description={movie.description}
             imageUrl={movie.imageUrl}
             duration={movie.duration}
+            price={movie.price}
           />
         ))}
       </div>

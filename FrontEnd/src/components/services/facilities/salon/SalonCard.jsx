@@ -10,8 +10,8 @@ function SalonCard({itemId, name, desc, price, duration, imageUrl}) {
 
   const handleAddCart = (e) => {
     if(!currentuser || currentuser.role === "Guest"){
-      setMessage('You must be registered as voyager to use services')
-      window.open('/users/dashboard','_self')
+      setMessage("You must be voyager to use services. Redirecting...");
+      setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
     }
     else{
         

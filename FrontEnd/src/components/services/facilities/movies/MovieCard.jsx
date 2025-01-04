@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAuth } from '../../../../contexts/AuthContext';
+import { doc,getDoc, updateDoc, addDoc,collection } from 'firebase/firestore';
 
 function MovieCard({ itemId, name, description, imageUrl, duration, price }) {
   const [message, setMessage] = useState("");
@@ -7,13 +9,13 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price }) {
   const handleAddCart = (e) => {
     const cartOrOrder = e.target.getAttribute("id");
 
-    if (currentUser) {
+    if (!currentUser) {
       setMessage("You are not logged in. Redirecting...");
-      setTimeout(() => window.open("/users/signin", "_self"), 400);
+      setTimeout(() => window.open("/users/signin", "_self"), 2000);
     }
     else if(currentUser.role === 'Guest'){
       setMessage("You must be voyager to use services. Redirecting...");
-      setTimeout(() => window.open("/users/dashboard", "_self"), 400);
+      setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
     }
     else{
 
@@ -116,7 +118,7 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price }) {
 
       <button onClick={handleAddCart}
         id="order"
-      className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition text-sm">
+      className="px-4 py-2 my-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition text-sm">
         Book Now
       </button>
     </div>
