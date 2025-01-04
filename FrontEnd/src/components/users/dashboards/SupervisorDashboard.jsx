@@ -4,7 +4,7 @@ import { collection, getDocs, doc, deleteDoc  } from 'firebase/firestore';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useUser } from '../../../contexts/UserContext';
 
-function HeadCookDashboard() {
+function SupervisorDashboard() {
   const { currentUser, loading: authLoading } = useAuth();
   const { userData, loading: userLoading } = useUser();
   const [ordersData, setOrdersData ] = useState([])
@@ -15,7 +15,7 @@ function HeadCookDashboard() {
 
   useEffect( () => {
     const fetchOrders = async () => {
-      const colRef = collection(db, "CateringOrders")
+      const colRef = collection(db, "StationeryOrders")
       getDocs(colRef)
       .then( (querySnap) => {
           const data = querySnap.docs.map( (doc) => ({
@@ -37,7 +37,7 @@ function HeadCookDashboard() {
 
     const orderID = e.target.id
 
-      const colRef = collection(db,"CateringOrders")
+      const colRef = collection(db,"StationeryOrders")
       const docRef = doc(colRef,orderID)
       deleteDoc(docRef)
       .then(() => {
@@ -73,7 +73,7 @@ function HeadCookDashboard() {
   }
 
 
-  if( currentUser.role === "HeadCook"){
+  if( currentUser.role === "Supervisor"){
     
   
   return (
@@ -101,7 +101,7 @@ function HeadCookDashboard() {
         </div>
       </div>
 
-      {/* HeadCook's popup showing orders  */}
+      {/* Supervisor's popup showing orders  */}
       <div className="relative">
           {/* Popup */}
           <div className="orders-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5 max-h-[80vh] overflow-y-auto">
@@ -154,7 +154,7 @@ function HeadCookDashboard() {
         </div>
 
 
-      {/* HeadCook's duty related Buttons  */}
+      {/* Supervisor's duty related Buttons  */}
       <div className="flex flex-col md:flex-row my-5 gap-5 poppins">
           <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
             <h1 className="text-xl text-rose-500">Orders awaiting : {ordersData.length}</h1>
@@ -239,4 +239,4 @@ function HeadCookDashboard() {
   }
 }
 
-export default HeadCookDashboard
+export default SupervisorDashboard
