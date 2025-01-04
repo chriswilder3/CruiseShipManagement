@@ -62,15 +62,17 @@ function SignUp() {
         await newUser.getIdToken(true); 
         // This forces API to update the fresh tokens. Its 
         // usefull for signup forms( firebase takes time to update otherwise)
-
-        setSuccessMsg(
+        setTimeout( () => {
+          setSuccessMsg(
           
-          data.isAdmin
-            ? "You are registered as Admin"
-            : "You are registered as a guest."
-          
-        );
-        navigate("/users/dashboard");
+            data.isAdmin
+              ? "You are registered as Admin. Signin again to get admin dashboard"
+              : "You are registered as a guest."
+            
+          );
+          navigate("/users/signin");
+        }, 2000)
+        
       } else {
         setErrorMsg(data.message || "Registration failed. Please try again.");
       }

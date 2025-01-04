@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import VoyagerDashboard from "./VoyagerDashboard";
 import GuestDashboard from "./GuestDashboard";
+import HeadCookDashboard from './HeadCookDashboard';
 
 function Dashboard() {
   const { currentUser, loading: authLoading } = useAuth(); // Handle loading state for auth
@@ -28,6 +29,10 @@ function Dashboard() {
       return <AdminDashboard />;
     case "Voyager":
       return <VoyagerDashboard />;
+    case "HeadCook":
+      return <HeadCookDashboard />
+    case "Supervisor":
+      return <HeadCookDashboard />
     case "Guest":
       return <GuestDashboard />;
     default:
