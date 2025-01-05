@@ -286,15 +286,15 @@ function AdminAddItems() {
   
     return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-800 to-purple-900 text-white">
-      <div className="p-3 w-3/4">
+      <div className="p-3 w-full md:w-3/4">
       
         <h1 className="text-3xl font-bold mb-6 poppins text-indigo-300">Manage Items/Services </h1>
 
         
           
-        <div className="flex flex-col space-y-4 w-3/4 justify-center mx-auto items-center">
+        <div className="flex flex-col space-y-4 w-full  md:w-3/4 justify-center mx-auto items-center">
           
-            <div className="flex flex-col space-y-4 w-1/3">
+            <div className="flex flex-col space-y-4 w-1/2 md:w-1/3">
                 <Link to="/users/adminManageItems"
                   className="w-full py-2 px-4 bg-red-500 text-white rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                 >

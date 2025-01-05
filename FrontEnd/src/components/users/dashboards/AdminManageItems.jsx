@@ -76,17 +76,17 @@ function AdminManageItems() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-800 to-purple-900 text-white flex items-center justify-center">
-      <div className="w-4/5 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-800 to-purple-900 text-slate-100 flex justify-center">
+      <div className="w-4/5  p-6">
         <h1 className="text-3xl font-bold mb-6 text-indigo-300">Manage Category Items</h1>
 
-        <div className="mb-6">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-300 mb-1">
+        <div className="mb-6 md:w-1/3 self-center mx-auto">
+          <label htmlFor="category" className="block text-lg my-1 font-medium text-gray-300 mb-1">
             Select Category
           </label>
           <select
             id="category"
-            className="w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full rounded-md text-black poppins border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -132,7 +132,7 @@ function AdminManageItems() {
         {/* Update Popup */}
         {showUpdatePopup && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg p-6 shadow-lg w-96">
+            <div className="bg-white text-slate-700 rounded-lg p-6 shadow-lg w-96">
               <h3 className="text-lg font-bold mb-4 text-gray-900">Update Item</h3>
               {Object.keys(updatedFields).map((key) => (
                 <div key={key} className="mb-4">
