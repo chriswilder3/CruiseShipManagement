@@ -1,8 +1,133 @@
 import React, { useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useUser } from "../../../contexts/UserContext";
+import { Link } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from "../../../firebase";
+
 
 function AdminManageItems() {
   const [formFields, setFormFields] = useState([]);
   const [selectedService, setSelectedService] = useState("");
+  const [successMsg, setSuccessmsg] = useState("")
+  const [showMsg, setShowmsg] = useState(false)
+
+  const addItemToService = async( col, data) =>{
+      const colRef = collection(db, col)
+      addDoc(colRef, data)
+      .then( ()=> {
+          setSuccessmsg("Success")
+          setShowmsg(true)
+          setTimeout( () => setShowmsg(false), 3000)
+      })
+      .catch((err) => {
+        console.error(err)
+        setSuccessmsg("Error")
+        setShowmsg(true)
+        setTimeout( () => setShowmsg(false), 3000)
+      })
+  }
+
+  const handleAddItem = async (e) => {
+      e.preventDefault()
+      const servicetype = document.getElementById('servicetype').value
+      console.log(servicetype);
+
+      let name, price, description, imageUrl, duration,equipments, category, data;
+      
+      const formData = new FormData(e.target)
+
+      switch (servicetype) {
+        case "Catering":
+         name = formData.get('serviceName')
+         price = formData.get('price')
+         description = formData.get('description')
+         imageUrl = formData.get('imageUrl')
+         console.log(name, price, description, imageUrl);
+         data={
+            name, price, description, imageUrl
+         }
+         addItemToService("Catering", data)
+         e.target.reset()
+          break;
+  
+        case "Stationery":
+         name = formData.get('serviceName')
+         price = formData.get('price')
+         description = formData.get('description')
+         imageUrl = formData.get('imageUrl')
+         console.log(name, price, description, imageUrl);
+         data={
+            name, price, description, imageUrl
+         }
+         addItemToService("Stationery", data)
+         e.target.reset()
+         break;
+  
+        case "Movies":
+          name = formData.get('serviceName')
+          price = formData.get('price')
+          description = formData.get('description')
+          duration = formData.get('duration')
+          imageUrl = formData.get('imageUrl')
+          console.log(name, price, description, duration, imageUrl);
+          data={
+            name, price, description, duration, imageUrl
+          }
+          addItemToService("Movies", data)
+          e.target.reset()
+          break;
+  
+        case "Salon":
+          name = formData.get('serviceName')
+          price = formData.get('price')
+          description = formData.get('description')
+          duration = formData.get('duration')
+          imageUrl = formData.get('imageUrl')
+          console.log(name, price, description, duration, imageUrl);
+          data={
+            name, price, description, duration, imageUrl
+          }
+          addItemToService("Salon", data)
+          e.target.reset()
+          break;
+  
+        case "Fitness":
+          name = formData.get('serviceName')
+          price = formData.get('price')
+          description = formData.get('description')
+          duration = formData.get('duration')
+          imageUrl = formData.get('imageUrl')
+          equipments = formData.get('equipments')
+          console.log(name, price, description, duration, equipments, imageUrl);
+          data={
+            name, price, description, duration,equipments, imageUrl
+          }
+          addItemToService("Fitness", data)
+          e.target.reset()
+          break;
+  
+        case "Partyhall":
+          name = formData.get('serviceName')
+          price = formData.get('price')
+          description = formData.get('description')
+          duration = formData.get('duration')
+          imageUrl = formData.get('imageUrl')
+          category = formData.get('category')
+          console.log(name, price, description, duration,category, imageUrl);
+          data={
+            name, price, description, duration, category, imageUrl
+          }
+          addItemToService("Partyhall", data)
+          e.target.reset()
+
+          break;
+        default:
+          console.log("FormError");
+
+      }
+
+  }
 
   const handleServiceChange = (e) => {
     const selectedValue = e.target.value;
@@ -11,7 +136,7 @@ function AdminManageItems() {
     switch (selectedValue) {
       case "Catering":
         setFormFields([
-          { name: "itemName", label: "Item Name", type: "text" },
+          { name: "serviceName", label: "Item Name", type: "text" },
           { name: "price", label: "Price", type: "number" },
           { name: "description", label: "Description", type: "textarea" },
           { name: "imageUrl", label: "Image URL", type: "text" },
@@ -20,7 +145,7 @@ function AdminManageItems() {
 
       case "Stationery":
         setFormFields([
-          { name: "itemName", label: "Item Name", type: "text" },
+          { name: "serviceName", label: "Item Name", type: "text" },
           { name: "price", label: "Price", type: "number" },
           { name: "description", label: "Description", type: "textarea" },
           { name: "imageUrl", label: "Image URL", type: "text" },
@@ -29,49 +154,50 @@ function AdminManageItems() {
 
       case "Movies":
         setFormFields([
-          { name: "title", label: "Title", type: "text" },
-          { name: "duration", label: "Duration", type: "text" },
+          { name: "serviceName", label: "Title", type: "text" },
+          { name: "duration", label: "Duration", type: "number" },
           { name: "description", label: "Description", type: "textarea" },
-          { name: "posterUrl", label: "Poster URL", type: "text" },
+          { name: "price", label : "Price", type: "number"},
+          { name: "imageUrl", label: "Poster URL", type: "text" },
         ]);
         break;
 
-      case "Beauty Salon":
+      case "Salon":
         setFormFields([
           { name: "serviceName", label: "Service Name", type: "text" },
           { name: "price", label: "Price", type: "number" },
-          { name: "duration", label: "Duration", type: "text" },
+          { name: "duration", label: "Duration", type: "number" },
           { name: "description", label: "Description", type: "textarea" },
           { name: "imageUrl", label: "Image URL", type: "text" },
         ]);
         break;
 
-      case "Fitness Center":
+      case "Fitness":
         setFormFields([
           { name: "serviceName", label: "Service Name", type: "text" },
           { name: "price", label: "Price", type: "number" },
-          { name: "duration", label: "Duration", type: "text" },
+          { name: "duration", label: "Duration", type: "number" },
           { name: "description", label: "Description", type: "textarea" },
           { name: "imageUrl", label: "Image URL", type: "text" },
-          { name: "equipmentType", label: "Equipment Type", type: "text" },
+          { name: "equipments", label: "Equipments", type: "text" },
         ]);
         break;
 
       case "Partyhall":
         setFormFields([
-          { name: "packageName", label: "Package Name", type: "text" },
+          { name: "serviceName", label: "Package Name", type: "text" },
           { name: "price", label: "Price", type: "number" },
-          { name: "duration", label: "Duration", type: "text" },
+          { name: "duration", label: "Duration", type: "number" },
           { name: "description", label: "Description", type: "textarea" },
           { name: "imageUrl", label: "Image URL", type: "text" },
           {
-            name: "packageCategory",
+            name: "category",
             label: "Package Category",
             type: "select",
             options: [
-              "Birthday Package",
-              "Wedding Package",
-              "Corporate Event Package",
+              "Birthday",
+              "Wedding",
+              "Corporate Event",
             ],
           },
         ]);
@@ -83,16 +209,17 @@ function AdminManageItems() {
   };
 
   const renderFormFields = () => {
-    return formFields.map((field) => {
+    return formFields.map((field,index) => {
       if (field.type === "textarea") {
         return (
-          <div key={field.name} className="mb-4">
+          <div key={index} className="mb-4">
             <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
               {field.label}
             </label>
             <textarea
               id={field.name}
               name={field.name}
+              required
               className="w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               placeholder={`Enter ${field.label}`}
             ></textarea>
@@ -100,13 +227,14 @@ function AdminManageItems() {
         );
       } else if (field.type === "select") {
         return (
-          <div key={field.name} className="mb-4">
+          <div key={index} className="mb-4">
             <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
               {field.label}
             </label>
             <select
               id={field.name}
               name={field.name}
+              required
               className="w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             >
               <option value="">Select {field.label}</option>
@@ -120,7 +248,7 @@ function AdminManageItems() {
         );
       } else {
         return (
-          <div key={field.name} className="mb-4">
+          <div key={index} className="mb-4">
             <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
               {field.label}
             </label>
@@ -128,6 +256,7 @@ function AdminManageItems() {
               type={field.type}
               id={field.name}
               name={field.name}
+              required
               placeholder={`Enter ${field.label}`}
               className="w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             />
@@ -140,9 +269,10 @@ function AdminManageItems() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-800 to-purple-900 text-white">
       <div className="p-3 w-3/4">
-        
+      
         <h1 className="text-3xl font-bold mb-6 poppins text-indigo-300">Manage Items/Services </h1>
 
+        
           
         <div className="flex flex-col space-y-4 w-3/4 justify-center mx-auto items-center">
           
@@ -161,7 +291,13 @@ function AdminManageItems() {
 
           <div className="p-3 bg-white rounded-lg shadow-lg text-gray-900 w-4/5">
             <h2 className="text-lg font-semibold mb-4 text-sky-600">Add New Item</h2>
-            <form>
+            
+            <div className={`w-20 text-center mx-auto ${showMsg===true?"block":"hidden"}  bg-green-500 text-lg p-1 rounded-md text-slate-100`}>
+                  {successMsg} 
+            </div>
+            
+
+            <form onSubmit={handleAddItem} id="submitform">
               <div className="mb-6">
                 <label htmlFor="servicetype" className="block text-sm font-medium text-gray-700 mb-1">
                   Type of Service
@@ -173,8 +309,8 @@ function AdminManageItems() {
                   className="w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <option value="">Select a service</option>
-                  <option value="Beauty Salon">Beauty Salon</option>
-                  <option value="Fitness Center">Fitness Center</option>
+                  <option value="Salon">Beauty Salon</option>
+                  <option value="Fitness">Fitness Center</option>
                   <option value="Partyhall">Partyhall</option>
                   <option value="Catering">Catering</option>
                   <option value="Stationery">Stationery</option>
@@ -185,7 +321,7 @@ function AdminManageItems() {
               <div>{renderFormFields()}</div>
 
               <button
-                type="submit"
+                type="submit" 
                 className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 Submit
