@@ -13,10 +13,12 @@ import SignUp from './components/users/Signup';
 import Stationery from './components/services/stationery/Stationery';
 import Facilities from './components/services/facilities/Facilities';
 import Movies from './components/services/facilities/movies/Movies';
-import AdminManageItems from './components/users/dashboards/AdminManageItems';
 import Salon from './components/services/facilities/salon/Salon';
 import Fitness from './components/services/facilities/fitness/Fitness';
 import Partyhall from './components/services/facilities/partyhall/Partyhall';
+import AdminAddItems from './components/users/dashboards/AdminAddItems';
+import AdminManageItems from './components/users/dashboards/AdminManageItems';
+
 
 
 function App() {
@@ -43,7 +45,9 @@ function App() {
               <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
               <Route path='users/signup' element={ <SignUp /> } />
+              <Route path='users/adminAddItems' element={<AdminAddItems />} />
               <Route path='users/adminManageItems' element={<AdminManageItems />} />
+
              </Route>
           </Routes>
         </Router>
