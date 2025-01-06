@@ -9,18 +9,48 @@ import { useUser } from '../../contexts/UserContext';
 
 
 function Navbar() {
-  const [serviceDropDown, setServiceDropDown] = useState('hidden');
-  const [userDropdown, setUserDropdown] = useState(false);
-  const [mobileMenuOpen, SetMobileMenuOpen] = useState(false);
+  const [ serviceDropDown, setServiceDropDown ] = useState('hidden');
+  const [ userDropdown, setUserDropdown ] = useState(false);
+  const [ mobileMenuOpen, SetMobileMenuOpen ] = useState(false);
   const { currentUser,loading:authLoading } = useAuth();
   const { userData, loading:userLoading } = useUser();
-  const [cartContents, setCartContents ] = useState()
+  const [ cartContents, setCartContents ] = useState([])
+  const [ cartCount, setCartCount] = useState(0)
+  const [ showCartPopup, setShowCartPopUp] = useState(false)
+  const [ cartSubTotal, setCartSubTotal] = useState(null)
 
   useEffect(()=>{
     if(userData){
       setCartContents(userData.cart)
+      
+      // if(cartContents === []){
+      //   setCartCount(0)
+      // }
+      // else{
+      //   setCartCount(cartContents.length)
+      // }
     }
   },[userData])
+
+  useEffect(()=>{
+    if(cartContents){
+      console.log("cart",cartContents);
+      if(cartContents === []){
+        setCartCount(0)
+      }
+      else{
+        setCartCount(cartContents.length)
+        let total = 0
+        cartContents.forEach( (item) => {
+          total = total + item.price
+        })
+        setCartSubTotal(total)
+
+      }
+    }
+  },[cartContents])
+  
+  
 
   const toggleUserDropdown = () => setUserDropdown((prev) => !prev);
   const handleMobileMenuOpen = () => SetMobileMenuOpen((prev) => !prev)
@@ -30,12 +60,14 @@ function Navbar() {
     },1000)
   }
 
-  const handleClickCartBtn = () => {
+  const togglePopUp = () => {
     
-    console.log("userData : ",userData);
-    console.log("userLoading : ",userLoading);
-    console.log("cart Contents : ", cartContents);
-      
+    if(!currentUser){
+      window.open("/users/signin/","_self")
+    }
+
+    setShowCartPopUp((prev) => !prev)
+
   }
   
   
@@ -83,10 +115,39 @@ function Navbar() {
       </li>
 
       {/* Cart Btn  */}
-      <li className="ml-auto">
-        <button onClick={handleClickCartBtn} className='text-slate-800'>
+      <li className="ml-auto relative">
+        <button onClick={togglePopUp}  className='text-3xl sm:text-3xl text-slate-800'>
           <i className="text-slate-800 fa badge fa-lg"  > &#xf07a;</i>
+         <p className='z-10 w-8 h-8 text-sm sm:text-base rounded-full flex items-center justify-center bg-red-500 text-white absolute left-48 -top-2 sm:left-3 sm:-top-4'> <span className='my-auto self-center'> {cartCount}</span> </p>
         </button>
+
+        <div className={`z-10 absolute ${showCartPopup?"hidden":"flex flex-col gap-2 "} p-3 min-w-96 cartshow sm:-left-44 bg-blue-100 rounded-md shadow-lg `}> 
+          
+            <div onClick={togglePopUp} className=' p-0.5 px-2 w-fit  text-md text-red-400 ml-auto rounded-md transition-transform duration-100 hover:scale-105 hover:cursor-pointer'>
+              <i class="fa fa-window-close"></i>
+            </div>
+            <div className='flex flex-col gap-1 overflow-y-auto max-h-96'>
+            {
+              cartContents && cartContents.map( (item) =>{
+              return <div className='p-1  bg-white text-base rounded-md shadow-sm'>
+                  <p>
+                    { item.name}
+                  </p>
+                  <p className="text-lg font-bold roboto  text-green-600">₹{item.price}</p>
+                </div>
+              })
+            }
+          </div>
+          <div className='flex flex-row roboto  p-1 '>
+              <h2 className='ml-auto p-1  text-slate-700 '>
+                Cart subtotal : ₹{cartSubTotal}
+              </h2>
+              <button className='ml-auto p-1  text-lg bg-blue-600 text-gray-100 rounded-md transition-transform duration-100 hover:scale-105'>
+                Checkout
+              </button>
+          </div>
+          
+        </div>
       </li>
 
 
