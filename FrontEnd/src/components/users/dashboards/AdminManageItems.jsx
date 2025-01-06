@@ -136,8 +136,8 @@ function AdminManageItems() {
               <h3 className="text-lg font-bold mb-4 text-gray-900">Update Item</h3>
               {Object.keys(updatedFields).map((key) => (
                 <div key={key} className="mb-4">
-                  <label htmlFor={key} className="block text-sm font-medium text-gray-700 mb-1">
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  <label htmlFor={key} className="block text-left font-medium text-blue-400 mb-1">
+                    {key}
                   </label>
                   <input
                     id={key}
@@ -145,7 +145,7 @@ function AdminManageItems() {
                     type="text"
                     value={updatedFields[key] || ""}
                     onChange={handleFieldChange}
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full rounded-md border-gray-300 text-base shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
               ))}

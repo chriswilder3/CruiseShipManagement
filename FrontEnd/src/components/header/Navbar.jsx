@@ -36,7 +36,7 @@ function Navbar() {
         </NavLink>
         <div
           className={`navbar-drop-down absolute z-10 transition-all delay-100 ease-in-out 
-                        -left-full top-7 ${serviceDropDown}`}
+                        -left-16 top-7 ${serviceDropDown}`}
         >
           <NavbarDropDown />
         </div>
