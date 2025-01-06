@@ -18,6 +18,7 @@ import Fitness from './components/services/facilities/fitness/Fitness';
 import Partyhall from './components/services/facilities/partyhall/Partyhall';
 import AdminAddItems from './components/users/dashboards/AdminAddItems';
 import AdminManageItems from './components/users/dashboards/AdminManageItems';
+import Checkout from './components/users/Checkout';
 
 
 
@@ -41,12 +42,12 @@ function App() {
               <Route path='services/facilities/salon' element={ <Salon /> } />
               <Route path='services/facilities/fitness' element={ <Fitness /> } />
               <Route path='services/facilities/partyhall' element={ <Partyhall /> } />
-
               <Route path='users/signin' element={ <SignIn />} />
               <Route path='users/dashboard' element={ <Dashboard />} />
               <Route path='users/signup' element={ <SignUp /> } />
               <Route path='users/adminAddItems' element={<AdminAddItems />} />
               <Route path='users/adminManageItems' element={<AdminManageItems />} />
+              <Route path='users/checkout' element={<Checkout />} />
 
              </Route>
           </Routes>

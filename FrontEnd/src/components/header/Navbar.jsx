@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 import NavbarDropDown from './NavbarDropDown';
@@ -23,12 +23,6 @@ function Navbar() {
     if(userData){
       setCartContents(userData.cart)
       
-      // if(cartContents === []){
-      //   setCartCount(0)
-      // }
-      // else{
-      //   setCartCount(cartContents.length)
-      // }
     }
   },[userData])
 
@@ -67,6 +61,13 @@ function Navbar() {
     }
 
     setShowCartPopUp((prev) => !prev)
+
+  }
+
+  const handlepopUpFade = () => {
+    setTimeout( () => {
+      setShowCartPopUp(false)
+    },1500)
 
   }
   
@@ -115,21 +116,22 @@ function Navbar() {
       </li>
 
       {/* Cart Btn  */}
-      <li className="ml-auto relative">
+      <li className="ml-auto relative" onMouseLeave={handlepopUpFade}>
         <button onClick={togglePopUp}  className='text-3xl sm:text-3xl text-slate-800'>
           <i className="text-slate-800 fa badge fa-lg"  > &#xf07a;</i>
          <p className='z-10 w-8 h-8 text-sm sm:text-base rounded-full flex items-center justify-center bg-red-500 text-white absolute left-48 -top-2 sm:left-3 sm:-top-4'> <span className='my-auto self-center'> {cartCount}</span> </p>
         </button>
 
-        <div className={`z-10 absolute ${showCartPopup?"hidden":"flex flex-col gap-2 "} p-3 min-w-96 cartshow sm:-left-44 bg-blue-100 rounded-md shadow-lg `}> 
+        <div className={`z-10 absolute ${showCartPopup?"flex flex-col gap-2 ":"hidden"} p-3 min-w-96 cartshow sm:-left-44 bg-blue-100 rounded-md shadow-lg `}
+           > 
           
             <div onClick={togglePopUp} className=' p-0.5 px-2 w-fit  text-md text-red-400 ml-auto rounded-md transition-transform duration-100 hover:scale-105 hover:cursor-pointer'>
-              <i class="fa fa-window-close"></i>
+              <i className="fa fa-window-close"></i>
             </div>
             <div className='flex flex-col gap-1 overflow-y-auto max-h-96'>
             {
-              cartContents && cartContents.map( (item) =>{
-              return <div className='p-1  bg-white text-base rounded-md shadow-sm'>
+              cartContents && cartContents.map( (item,index) =>{
+              return <div key={index} className='p-1  bg-white text-base rounded-md shadow-sm'>
                   <p>
                     { item.name}
                   </p>
@@ -138,13 +140,13 @@ function Navbar() {
               })
             }
           </div>
-          <div className='flex flex-row roboto  p-1 '>
+          <div className='flex flex-row items-center font-sans p-1 '>
               <h2 className='ml-auto p-1  text-slate-700 '>
                 Cart subtotal : ₹{cartSubTotal}
               </h2>
-              <button className='ml-auto p-1  text-lg bg-blue-600 text-gray-100 rounded-md transition-transform duration-100 hover:scale-105'>
+              <Link to="/users/checkout" className='ml-auto py-1 px-2 font-normal text-lg bg-blue-500 text-gray-100 rounded-lg transition-transform duration-100 hover:scale-105'>
                 Checkout
-              </button>
+              </Link>
           </div>
           
         </div>
