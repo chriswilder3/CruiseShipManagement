@@ -86,14 +86,14 @@ function ItemCard({ name, itemId, desc, price, imageUrl }) {
   };
 
   return (
-    <div className="flex flex-col justify-between items-center bg-white rounded-lg shadow-lg p-4 space-y-4 transform transition hover:scale-105 hover:shadow-lg">
+    <div className="flex flex-col justify-between items-center bg-white rounded-lg shadow-lg p-3 space-y-4 transform transition hover:scale-105 hover:shadow-lg">
       {/* Item Name */}
       <p className="text-blue-500 text-sm">{message}</p>
       <h1 className="text-lg font-semibold roboto text-gray-800 text-center">{name}</h1>
 
       {/* Item Image */}
       <img
-        className="w-36 h-36 object-cover rounded-lg"
+        className="w-40 h-40 object-cover rounded-lg"
         src={imageUrl}
         alt="Item image"
       />

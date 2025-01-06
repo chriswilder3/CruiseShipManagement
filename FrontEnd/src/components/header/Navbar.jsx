@@ -42,7 +42,7 @@ function Navbar() {
         setCartCount(cartContents.length)
         let total = 0
         cartContents.forEach( (item) => {
-          total = total + item.price
+          total = total + Number(item.price)
         })
         setCartSubTotal(total)
 
