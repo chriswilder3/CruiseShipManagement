@@ -10,12 +10,25 @@ import { signOut } from 'firebase/auth';
 function Navbar() {
   const [serviceDropDown, setServiceDropDown] = useState('hidden');
   const [userDropdown, setUserDropdown] = useState(false);
+  const [mobileMenuOpen, SetMobileMenuOpen] = useState(false);
   const { currentUser } = useAuth();
 
   const toggleUserDropdown = () => setUserDropdown((prev) => !prev);
+  const handleMobileMenuOpen = () => SetMobileMenuOpen((prev) => !prev)
+  const handleMobileMenuClose = () => {
+    setTimeout( () =>{
+      SetMobileMenuOpen(false)
+    },1000)
+  }
 
   return (
-    <ul className="sm:flex gap-20 mb-10 items-center px-16 pt-8 pb-2 text-blue-700 text-xl font-medium poppins">
+    <div onMouseLeave={handleMobileMenuClose}>
+
+        <svg xmlns="http://www.w3.org/2000/svg" onClick={handleMobileMenuOpen} fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 font-medium my-2 ml-1 text-blue-600 hover:text-slate-400 sm:hidden">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+        </svg>
+      
+    <ul className={`sm:flex sm:flex-row  ${mobileMenuOpen?"flex-col":"hidden"} gap-20 mb-10 items-center px-16 pt-6 pb-1 text-blue-700 text-xl font-medium poppins`}>
       <li>
         <NavLink to="/" className={({ isActive }) => `${isActive ? 'text-slate-800' : ''}`}>
           Home
@@ -36,7 +49,7 @@ function Navbar() {
         </NavLink>
         <div
           className={`navbar-drop-down absolute z-10 transition-all delay-100 ease-in-out 
-                        -left-16 top-7 ${serviceDropDown}`}
+                        left-24 md:-left-16 top-7 ${serviceDropDown}`}
         >
           <NavbarDropDown />
         </div>
@@ -51,9 +64,16 @@ function Navbar() {
           <button
             type="button"
             onClick={toggleUserDropdown}
-            className="text-slate-100 w-12 h-12 rounded-full bg-blue-700 flex items-center justify-center"
+            className="text-slate-100 hidden w-12 h-12 rounded-full bg-blue-700 sm:flex items-center justify-center"
           >
             {currentUser.email.slice(0, 2)}
+          </button>
+          <button
+            type="button"
+            onClick={toggleUserDropdown}
+            className="text-blue-600 sm:hidden text-center mx-auto flex items-center justify-center"
+          >
+            {currentUser.email.slice(0,currentUser.email.length-4)}
           </button>
           {userDropdown && (
             <div
@@ -71,6 +91,7 @@ function Navbar() {
         </li>
       )}
     </ul>
+    </div>
   );
 }
 
