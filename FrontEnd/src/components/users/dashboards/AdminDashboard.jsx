@@ -83,6 +83,7 @@ function AdminDashboard() {
   }
 
   if (currentUser.role === "Admin") {
+    console.log("userData",userData);
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-300 via-indigo-200 to-blue-100 flex flex-col items-center py-10">
         {/* Success Message Notification */}

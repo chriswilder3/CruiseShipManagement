@@ -27,14 +27,16 @@ export function AuthContextProvider ({children}) {
                     }
                 )
                 .catch( ( err) => console.log('Error while changing users : ',err))
-
+                .finally(() => {
+                    console.log('Loading State: ', loading); 
+                    console.log('Current User: ', currentUser);
+                })
             }
             else{
                 setCurrentUser(null)
             }
             setLoading(false); // The auth info finished loading
-            console.log('Loading State: ', loading); 
-            console.log('Current User: ', currentUser);
+            
             
         })
         
