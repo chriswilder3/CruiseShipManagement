@@ -71,12 +71,26 @@ function AdminAddItems() {
           description = formData.get('description')
           duration = formData.get('duration')
           imageUrl = formData.get('imageUrl')
-          console.log(name, price, description, duration, imageUrl);
-          data={
-            name, price, description, duration, imageUrl
-          }
-          addItemToService("Movies", data)
-          e.target.reset()
+          getDocs(collection(db,"Movies"))
+          .then((querySnap)=>{
+
+            let maxScreenNumber =0;
+            querySnap.forEach((item) => {
+              const currentScreenNumber = item.data().screenNumber
+              if( currentScreenNumber > maxScreenNumber){
+                maxScreenNumber = currentScreenNumber;
+              }
+            })
+            console.log("new maxScreenNumber : ", maxScreenNumber);
+            console.log(name, price, description, duration, imageUrl);
+            data={
+              name, price, description, duration, imageUrl, "screenNumber":maxScreenNumber
+            }
+            addItemToService("Movies", data)
+            e.target.reset()
+          })
+          .catch((err)=>{console.error("couldnt fetch Screen Number : ",err);})
+          
           break;
   
         case "Salon":

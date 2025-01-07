@@ -27,50 +27,84 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
         .then((docSnap) => {
           if (docSnap.exists()) {
             const userData = docSnap.data();
-            const cartOrOrderArray = cartOrOrder === "cart" ? "cateringCart" : "cateringOrders";
-            const currentArray = userData[cartOrOrderArray] || [];
+            const existingCateringCart = userData.cateringCart
+            console.log('existing cart : ',existingCateringCart);
+            // const cartOrOrderArray = "cateringCart"
+            // const currentArray = userData[cartOrOrderArray] || [];
+            let itemExistAlready = false
+            let itemIndex;
+
+            existingCateringCart.forEach( (item,index) => {
+              if(item.itemId === itemId){
+                itemExistAlready = true
+                itemIndex = index
+                console.log("item :", item);
+              }
+            })
+
+            if(itemExistAlready){
+              existingCateringCart[itemIndex].quantity +=1
+            }
+            else{
+              newItem = { itemId, name, imageUrl, price, quantity:1 };
+              existingCateringCart.push(newItem)
+            }
+            console.log('existing cart : ',existingCateringCart);
+
+            updateDoc(docRef,{
+              cateringCart : existingCateringCart
+            })
+            .then(()=>{
+              
+              const successMessage = "Successfully added to cart."
+              setMessage(successMessage);
+
+              if(cartOrOrder === 'order'){
+                window.open('/users/checkout',"_self")
+              }
+            })
+            .catch((err) => {console.error(err);})
 
             // Prepare the new item data
-            newItem = { itemId, name, imageUrl, price };
+            
+            // // Add the new item to the array
+            // currentArray.push(newItem);
 
-            // Add the new item to the array
-            currentArray.push(newItem);
-
-            // Update the user's cart or orders in Firestore
-            updateDoc(docRef, {
-              [cartOrOrderArray]: currentArray,
-            })
-              .then(() => {
-                const successMessage =
-                  cartOrOrder === "cart"
-                    ? "Successfully added to cart."
-                    : "Successfully added to orders.";
-                setMessage(successMessage);
-                if(cartOrOrder !== 'cart'){
-                    colRef = collection(db, "CateringOrders")
-                    addDoc(colRef, { 
-                        itemId, name, imageUrl, price, uid : currentUser.uid
-                    }
+            // // Update the user's cart or orders in Firestore
+            // updateDoc(docRef, {
+            //   [cartOrOrderArray]: currentArray,
+            // })
+            //   .then(() => {
+            //     const successMessage =
+            //       cartOrOrder === "cart"
+            //         ? "Successfully added to cart."
+            //         : "Successfully added to orders.";
+            //     setMessage(successMessage);
+            //     if(cartOrOrder !== 'cart'){
+            //         colRef = collection(db, "CateringOrders")
+            //         addDoc(colRef, { 
+            //             itemId, name, imageUrl, price, uid : currentUser.uid
+            //         }
                         
-                    )
-                    .then( () => {
-                        const successMessage =
-                            cartOrOrder === "cart"
-                                ? "Successfully added to cart."
-                                : "Successfully added to orders.";
-                            setMessage(successMessage);
-                    })
-                    .catch( (err) => {
-                        console.error("Error while updating Firestore:", err);
-                            setMessage("Failed to add item. Please try again.");
-                    })
+            //         )
+            //         .then( () => {
+            //             const successMessage =
+            //                 cartOrOrder === "cart"
+            //                     ? "Successfully added to cart."
+            //                     : "Successfully added to orders.";
+            //                 setMessage(successMessage);
+            //         })
+            //         .catch( (err) => {
+            //             console.error("Error while updating Firestore:", err);
+            //                 setMessage("Failed to add item. Please try again.");
+            //         })
 
-                }
-              })
-              .catch((err) => {
-                console.error("Error while updating Firestore:", err);
-                setMessage("Failed to add item. Please try again.");
-              });
+              //  }
+              // })
+              // .catch((err) => {
+              //   console.error("Error while updating Firestore:", err);
+              //   setMessage("Failed to add item. Please try again.");
+              // });
           } else {
             setMessage("User document not found.");
           }
@@ -118,7 +152,7 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
         id="order"
         className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition text-sm"
       >
-        Place Order
+        Buy Now
       </button>
     </div>
   );

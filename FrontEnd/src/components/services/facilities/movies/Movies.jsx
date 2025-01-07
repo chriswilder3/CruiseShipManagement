@@ -37,33 +37,39 @@ function Movies() {
       <h1 className="text-5xl font-bold text-center text-indigo-700 poppins">
         Welcome to the <span className="text-indigo-500">Movie Theatre</span> of Celestia
       </h1>
-      <p className="text-center text-lg text-gray-600">
+      {/* <p className="text-center text-lg text-indigo-600">
         Experience the magic of cinema with our specially curated selection of movies.
-      </p>
+      </p> */}
 
-      {/* Search Bar */}
-      <div className="flex justify-center">
-        <form className="flex w-full max-w-md items-center">
-          <input
-            type="search"
-            placeholder="Search for movies..."
-            className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 text-gray-800 focus:ring-2 focus:ring-indigo-300 focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="px-6 py-2 bg-indigo-500 text-white rounded-r-md hover:bg-indigo-600 transition"
-          >
-            Search
-          </button>
-        </form>
+      {/* Show times */}
+      
+      <h1 className='text-3xl text-gray-600 roboto font-medium'>
+          Show Times :
+      </h1>
+      <div className='flex flex-row gap-3 text-green-500 font-bold justify-center text-2xl roboto'>
+            <div>
+              12:00 PM
+            </div>
+            <div>
+              3:00 PM
+            </div>
+            <div>
+              6:00 PM
+            </div>
+            <div>
+              9:00 PM
+            </div>
       </div>
+      
+
 
       {/* Movie Cards Grid */}
       <h2 className="text-2xl font-semibold text-indigo-700 text-center">Currently Showing</h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {movies.map((movie) => (
+        {movies.map((movie,index) => (
           <MovieCard
             key={movie.id}
+            screenNumber={movie.screenNumber}
             itemId={movie.id}
             name={movie.name}
             description={movie.description}
