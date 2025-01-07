@@ -135,7 +135,8 @@ function Navbar() {
                   <p>
                     { item.name}
                   </p>
-                  <p className="text-lg font-bold roboto  text-green-600">₹{item.price}</p>
+                  
+                  <p className='flex justify-center roboto items-center text-base gap-5'>Quant : { item.quantity} <span className="text-lg font-bold   text-green-600">₹{item.price}</span> </p>
                 </div>
               })
             }
