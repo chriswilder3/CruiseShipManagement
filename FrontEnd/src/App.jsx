@@ -19,6 +19,7 @@ import Partyhall from './components/services/facilities/partyhall/Partyhall';
 import AdminAddItems from './components/users/dashboards/AdminAddItems';
 import AdminManageItems from './components/users/dashboards/AdminManageItems';
 import Checkout from './components/users/Checkout';
+import FacilityCheckout from './components/users/FacilityCheckout';
 
 
 
@@ -48,6 +49,7 @@ function App() {
               <Route path='users/adminAddItems' element={<AdminAddItems />} />
               <Route path='users/adminManageItems' element={<AdminManageItems />} />
               <Route path='users/checkout' element={<Checkout />} />
+              <Route path='users/facilityCheckout' element={<FacilityCheckout />} />
 
              </Route>
           </Routes>

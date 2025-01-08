@@ -71,7 +71,7 @@ function Checkout() {
 
           // Update the quantity of changed item 
           changedData[index].quantity = changedQuantityVal
-          console.log(" The data is ", changedData);
+          // console.log(" The data is ", changedData);
 
           // update the same in DB as well
           updateQuantity("cateringCart",changedData)
@@ -110,8 +110,9 @@ function Checkout() {
   }
 
   const handleDeleteItem = (index) => {
-      
+      console.log(index, cartContents[index]);
   }
+  
 
   if (authLoading || userLoading) {
     return (
