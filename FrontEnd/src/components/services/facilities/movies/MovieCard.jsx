@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
-import { doc, getDoc, updateDoc, collection } from "firebase/firestore";
+import { doc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../../../firebase";
 
 function MovieCard({ itemId, name, description, imageUrl, duration, price, screenNumber }) {
@@ -70,7 +70,7 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
     }
 
     const bookingData = {
-      category : "Movies",
+      category: "Movies",
       movieId: itemId,
       name,
       screenNumber,
@@ -81,7 +81,6 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
     console.log(bookingData);
 
     // Redirect to FacilityCheckout with booking data
-
     const queryParams = new URLSearchParams(bookingData).toString();
     window.open(`/users/facilityCheckout?${queryParams}`, "_self");
   };
@@ -163,21 +162,27 @@ function TicketBookingPopUp({
     return date.toISOString().split("T")[0];
   });
 
-  const availableSlots = ["12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM"];
+  const availableSlots = ["12:00PM", "3:00PM", "6:00PM", "9:00PM"];
 
+  // Fetch seating data when the date or slot changes
   useEffect(() => {
-    const fetchSeatings = () => {
-      const docRef = doc(collection(db, "movieSeatings"), "screens");
+    if (selectedDate && selectedSlot) {
+      const seatingDocId = `${selectedDate}_${selectedSlot}`; // Combine date and slot as docId
+      const docRef = doc(db, "movieSeatings", seatingDocId); // Fetching seating data for the specific date and slot
       getDoc(docRef)
-        .then((seating) => {
-          const seatingData = seating.data()[screenNumber];
-          setSeatingsArray(seatingData);
+        .then((seatingDoc) => {
+          if (seatingDoc.exists()) {
+            const seatingData = seatingDoc.data();
+            const screenData = seatingData[`screen${screenNumber}`]; // Fetch seating data for selected screen (e.g., screen1, screen2, etc.)
+            setSeatingsArray(screenData || []); // Set seating array based on screen number
+          } else {
+            setSeatingsArray([]); // If no seating data exists, set as empty
+          }
         })
-        .catch((err) => console.error(err))
+        .catch((err) => console.error("Error fetching seating data:", err))
         .finally(() => setSeatingsLoading(false));
-    };
-    fetchSeatings();
-  }, [screenNumber]);
+    }
+  }, [selectedDate, selectedSlot, screenNumber]);
 
   const toggleSeatSelection = (seatNumber) => {
     if (seatingsArray[seatNumber].occupied) return;
@@ -205,9 +210,7 @@ function TicketBookingPopUp({
           {seatingsArray.map((seat, index) => (
             <div
               key={index}
-              className={`p-2 w-8 h-8 border-2 border-slate-700 rounded ${
-                seat.occupied ? "bg-red-500" : selectedSeats.includes(index) ? "bg-yellow-500" : "bg-green-500"
-              } cursor-pointer`}
+              className={`p-2 w-8 h-8 border-2 border-slate-700 rounded ${seat.occupied ? "bg-red-500" : selectedSeats.includes(index) ? "bg-yellow-500" : "bg-green-500"} cursor-pointer`}
               onClick={() => toggleSeatSelection(index)}
               title={seat.occupied ? "Occupied" : "Available"}
             >
@@ -241,9 +244,7 @@ function TicketBookingPopUp({
           <button
             key={slot}
             onClick={() => setSelectedSlot(slot)}
-            className={`px-4 py-2 rounded ${
-              selectedSlot === slot ? "bg-indigo-500 text-white" : "bg-gray-200"
-            } hover:bg-indigo-400 transition`}
+            className={`px-4 py-2 rounded ${selectedSlot === slot ? "bg-indigo-500 text-white" : "bg-gray-200"} hover:bg-indigo-400 transition`}
           >
             {slot}
           </button>
