@@ -36,7 +36,7 @@ function Navbar() {
         setCartCount(cartContents.length)
         let total = 0
         cartContents.forEach( (item) => {
-          total = total + Number(item.price)
+          total = total + Number(item.price) * Number(item.quantity)
         })
         setCartSubTotal(total)
 
@@ -133,8 +133,10 @@ function Navbar() {
               cartContents && cartContents.map( (item,index) =>{
               return <div key={index} className='p-1  bg-white text-base rounded-md shadow-sm'>
                   <p>
-                    { item.name}
+                    { item.name} 
                   </p>
+                  <span className='text-sm roboto text-slate-600'> { item.category} </span>
+                  
                   
                   <p className='flex justify-center roboto items-center text-base gap-5'>Quant : { item.quantity} <span className="text-lg font-bold   text-green-600">₹{item.price}</span> </p>
                 </div>

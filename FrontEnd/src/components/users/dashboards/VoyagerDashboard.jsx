@@ -1,6 +1,8 @@
 import React from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useUser } from "../../../contexts/UserContext";
+import { Link } from "react-router-dom";
+
 
 function VoyagerDashboard() {
   const { currentUser, loading: authLoading } = useAuth();
@@ -43,6 +45,8 @@ function VoyagerDashboard() {
       
         <div className="w-full max-w-4xl mt-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+
+
             {/* Cart Section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Your Cart</h2>
@@ -51,15 +55,16 @@ function VoyagerDashboard() {
                   userData.cart.map((item, index) => (
                     <div
                       key={index}
-                      className="flex items-center border rounded p-3 gap-4"
+                      className="flex justify-start items-center border rounded p-3 gap-4"
                     >
                       <img
                         src={item.imageUrl}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded"
                       />
-                      <div>
-                        <p className="font-semibold text-gray-800">{item.name}</p>
+                      <div className="flex flex-col justify-center text-left">
+                        <p className="font-semibold text-indigo-600">{item.name}</p>
+                        <p className="text-sm text-slate-500"> <span>category : </span> {item.category} </p>
                         <p className="text-gray-600">₹{item.price}</p>
                       </div>
                     </div>
@@ -68,6 +73,10 @@ function VoyagerDashboard() {
                   <p className="text-gray-500">Your cart is empty.</p>
                 )}
               </div>
+
+              <Link to='/users/checkout' className="bg-indigo-600 mt-auto text-white rounded-lg px-4 py-2" >
+                  Checkout
+              </Link>
             </div>
 
             {/* Orders Section */}

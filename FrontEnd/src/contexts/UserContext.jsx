@@ -31,11 +31,19 @@ export function UserContextProvider({ children }) {
             const data = docSnap.data();
 
             // Combine all cart items into a single array
-            const totalCart = [
-              ...(data.cateringCart || []),
-              ...(data.stationeryCart || []),
-              ...(data.movieCart || []),
-            ];
+            const totalCart =[ 
+                ...(data.cateringCart.map((item) => {
+                  return {...item,category : "catering"}
+                })),
+                ...(data.stationeryCart.map((item) => {
+                  return {...item,category : "stationery"}
+                })),
+                ...(data.movieCart.map((item) => {
+                  return {...item,category : "movie"}
+                }))
+
+              ]
+        
 
             // Combine all orders/bookings into a single array
             const totalOrders = [
