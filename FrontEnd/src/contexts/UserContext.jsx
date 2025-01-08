@@ -33,13 +33,13 @@ export function UserContextProvider({ children }) {
             // Combine all cart items into a single array
             const totalCart =[ 
                 ...(data.cateringCart.map((item) => {
-                  return {...item,category : "catering"}
+                  return {...item,category : "Catering"}
                 })),
                 ...(data.stationeryCart.map((item) => {
-                  return {...item,category : "stationery"}
+                  return {...item,category : "Stationery"}
                 })),
                 ...(data.movieCart.map((item) => {
-                  return {...item,category : "movie"}
+                  return {...item,category : "Movie"}
                 }))
 
               ]

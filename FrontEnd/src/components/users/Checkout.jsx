@@ -85,8 +85,9 @@ function Checkout() {
                 key={index}
                 className="flex justify-between items-center bg-white p-4 shadow-sm rounded-lg"
               >
-                <div>
-                  <p className="text-lg font-semibold text-gray-800">{item.name}</p>
+                <div className="flex flex-col text-left">
+                  <p className="text-lg font-semibold text-indigo-600">{item.name}</p>
+                  <p className="text-sm font- text-gray-600">{item.category}</p>
                   <p className="text-md font-bold text-green-600">₹{item.price}</p>
                 </div>
                 <div className="flex items-center gap-4">
@@ -103,7 +104,7 @@ function Checkout() {
                     defaultValue={item.quantity}
                     min={1}
                   />
-                  <button className="p-2 bg-rose-500 text-white rounded-lg shadow hover:bg-rose-600 transition">
+                  <button  className="p-2 bg-rose-500 text-white rounded-lg shadow hover:bg-rose-600 transition">
                     Delete
                   </button>
                 </div>

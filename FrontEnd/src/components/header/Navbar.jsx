@@ -131,14 +131,23 @@ function Navbar() {
             <div className='flex flex-col gap-1 overflow-y-auto max-h-96'>
             {
               cartContents && cartContents.map( (item,index) =>{
-              return <div key={index} className='p-1  bg-white text-base rounded-md shadow-sm'>
-                  <p>
+              return <div key={index} className='p-1 flex flex-col bg-white text-base rounded-md shadow-sm'>
+                  <span className='self-start roboto text-sm ml-1 text-indigo-500'> 
+                      { item.category} 
+                  </span> 
+                  <p className=''>
                     { item.name} 
                   </p>
-                  <span className='text-sm roboto text-slate-600'> { item.category} </span>
+                  <p className='flex gap-5 justify-center text-sm roboto text-slate-600'> 
+                     
+                    <span className='text-gray-500'>
+                      Quantity : { item.quantity} 
+                    </span>
+                  </p>
+                  <p className="text-lg font-semibold    text-green-600">
+                    ₹{item.price}
+                  </p> 
                   
-                  
-                  <p className='flex justify-center roboto items-center text-base gap-5'>Quant : { item.quantity} <span className="text-lg font-bold   text-green-600">₹{item.price}</span> </p>
                 </div>
               })
             }

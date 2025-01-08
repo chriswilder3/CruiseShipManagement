@@ -49,7 +49,13 @@ function VoyagerDashboard() {
 
             {/* Cart Section */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Your Cart</h2>
+              
+              <div className="my-2 flex gap-3 justify-center">
+              <h2 className="text-2xl font-semibold text-indigo-600 ">Your Cart</h2>
+                <Link to='/users/checkout' className="bg-indigo-600  text-white rounded-lg px-4 py-2" >
+                    Checkout
+                </Link>
+              </div>
               <div className="flex flex-col gap-4">
                 {userData.cart && userData.cart.length > 0 ? (
                   userData.cart.map((item, index) => (
@@ -64,8 +70,9 @@ function VoyagerDashboard() {
                       />
                       <div className="flex flex-col justify-center text-left">
                         <p className="font-semibold text-indigo-600">{item.name}</p>
-                        <p className="text-sm text-slate-500"> <span>category : </span> {item.category} </p>
-                        <p className="text-gray-600">₹{item.price}</p>
+                        <p className="text-sm text-blue-600"> <span className="text-slate-500">category : </span> {item.category} </p>
+                        <p className="text-blue-600 text-sm"> <span className="text-slate-500">Quant :</span>  {item.quantity}</p>
+                        <p className="text-green-500 font-semibold">₹{item.price}</p>
                       </div>
                     </div>
                   ))
@@ -74,9 +81,7 @@ function VoyagerDashboard() {
                 )}
               </div>
 
-              <Link to='/users/checkout' className="bg-indigo-600 mt-auto text-white rounded-lg px-4 py-2" >
-                  Checkout
-              </Link>
+              
             </div>
 
             {/* Orders Section */}
