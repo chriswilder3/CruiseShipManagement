@@ -37,11 +37,7 @@ export function UserContextProvider({ children }) {
                 })),
                 ...(data.stationeryCart.map((item) => {
                   return {...item,category : "Stationery"}
-                })),
-                ...(data.movieCart.map((item) => {
-                  return {...item,category : "Movies"}
                 }))
-
               ]
         
 
