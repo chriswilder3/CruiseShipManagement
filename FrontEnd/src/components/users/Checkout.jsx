@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { useAuth } from "../../contexts/AuthContext";
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 function Checkout() {
   const { userData, loading: userLoading } = useUser();
@@ -8,6 +10,8 @@ function Checkout() {
   const [cartSubTotal, setCartSubTotal] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [cartContents, setCartContents] = useState([]);
+  const [ successMsg, setSuccessMsg ] = useState("")
+  const [ showMsg, setShowMsg ] = useState(false)
   const quantityRefs = useRef([])
 
   useEffect(() => {
@@ -27,27 +31,86 @@ function Checkout() {
     }
   }, [cartContents]);
 
+  const updateQuantity = (cartCategory, changedData ) => {
+      updateDoc(doc(collection(db,"Users"), currentUser.uid), {
+           [cartCategory] : changedData
+      })
+      .then(() => { 
+          setSuccessMsg("Success")
+          setShowMsg(true)
+          setTimeout(() => {
+            setShowMsg(false)
+          },2000)
+          
+      })
+      .catch((err) => {
+          console.log(err);
+      })
+  }
+
   const handleChangeQuantity = (index) => {
     
     const changedQuantityVal = Number(quantityRefs.current[index].value)
+    const currentItem = cartContents[index]
 
-    console.log(index, changedQuantityVal);
+    if(currentItem.quantity === changedQuantityVal){
+        console.log('No change detec  ted in quantity');
+    }
+    else{
+      
+      console.log(currentItem.quantity, changedQuantityVal);
 
-    // const prevCartContents = cartContents
+      const colRef = collection(db,"Users")
+      getDoc(doc(colRef,currentUser.uid))
+      .then((data) => {
 
-    // prevCartContents[index] = {...prevCartContents[index],quantity : changedQuantityVal }
+        if(currentItem.category === "Catering"){
 
-    // console.log(cartContents);
-    // console.log(prevCartContents);
+          // Get the prev values of cart data.
+          const changedData = data.data().cateringCart
 
+          // Update the quantity of changed item 
+          changedData[index].quantity = changedQuantityVal
+          console.log(" The data is ", changedData);
 
-    // cartContents.forEach( (item))
+          // update the same in DB as well
+          updateQuantity("cateringCart",changedData)
+        }
+        else if(currentItem.category === "Stationery"){
 
-    // const docRef = doc(collection(db, "Users"),currentUser.uid)
+          // Get the prev values of cart data.
+          const changedData = data.data().stationeryCart
 
-    // updateDoc(docRef, {
+          // Update the quantity of changed item 
+          changedData[index].quantity = changedQuantityVal
+          console.log(" The data is ", changedData);
 
-    // })
+          // update the same in DB as well
+          updateQuantity("stationeryCart",changedData)
+        }
+        else if(currentItem.category === "Movies"){
+
+          // Get the prev values of cart data.
+          const changedData = data.data().movieCart
+
+          // Update the quantity of changed item 
+          changedData[index].quantity = changedQuantityVal
+          console.log(" The data is ", changedData);
+
+          // update the same in DB as well
+          updateQuantity("movieCart",changedData)
+        }
+        
+      })
+      .catch((err)=> {
+        console.log(err);
+      })
+
+    }
+  }
+
+  const handleDeleteItem = (index) => {
+      
   }
 
   if (authLoading || userLoading) {
@@ -57,6 +120,9 @@ function Checkout() {
       </div>
     );
   }
+  
+  // console.log(currentUser.uid);
+
 
   if (currentUser) {
     return (
@@ -66,7 +132,7 @@ function Checkout() {
         </h1>
 
         {/* Cart Summary */}
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-11/12 max-w-4xl">
+        <div className="bg-white shadow-md rounded-lg p-6 mb-3 w-11/12 max-w-4xl">
           <div className="flex justify-between items-center">
             <p className="text-lg font-medium text-gray-700">
               Total Items: <span className="font-bold text-indigo-600">{cartCount}</span>
@@ -76,6 +142,10 @@ function Checkout() {
             </p>
           </div>
         </div>
+
+        <p className={`${showMsg?"block":"hidden"} mb-3 text-lg p-2 bg-green-600 text-white rounded-lg`}>
+          Success
+        </p>
 
         {/* Cart Items */}
         <div className="flex flex-col gap-4 w-11/12 max-w-4xl overflow-y-auto max-h-96">
@@ -104,7 +174,7 @@ function Checkout() {
                     defaultValue={item.quantity}
                     min={1}
                   />
-                  <button  className="p-2 bg-rose-500 text-white rounded-lg shadow hover:bg-rose-600 transition">
+                  <button onClick={() =>handleDeleteItem(index)}  className="p-2 bg-rose-500 text-white rounded-lg shadow hover:bg-rose-600 transition">
                     Delete
                   </button>
                 </div>

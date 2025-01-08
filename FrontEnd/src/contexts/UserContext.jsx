@@ -39,7 +39,7 @@ export function UserContextProvider({ children }) {
                   return {...item,category : "Stationery"}
                 })),
                 ...(data.movieCart.map((item) => {
-                  return {...item,category : "Movie"}
+                  return {...item,category : "Movies"}
                 }))
 
               ]
