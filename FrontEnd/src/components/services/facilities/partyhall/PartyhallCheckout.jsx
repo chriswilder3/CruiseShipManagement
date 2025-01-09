@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../../../../contexts/UserContext';
 import { useAuth } from '../../../../contexts/AuthContext';
 
-function FitnessCheckout() {
+function PartyhallCheckout() {
   const { userData, loading: userLoading } = useUser();
   const { currentUser, loading: authLoading } = useAuth();
 
@@ -15,7 +15,7 @@ function FitnessCheckout() {
 
   if (!bookingDetails) {
     // Redirect the user back if no data is found (optional safeguard)
-    navigate('/services/facilities/salon');
+    navigate('/services/facilities/partyhall');
     return null;
   }
 
@@ -23,7 +23,7 @@ function FitnessCheckout() {
 
   }
 
-  const { itemId, name, price, duration, imageUrl, date, batch } = bookingDetails;
+  const { itemId, name, price, duration, imageUrl, date, timeSlot } = bookingDetails;
   
   if (authLoading || userLoading ) {
     return (
@@ -37,7 +37,7 @@ function FitnessCheckout() {
   return(
     <div className="min-h-screen bg-gradient-to-b from-orange-200 via-orange-200 to-orange-100 flex flex-col items-center py-10">
         <h1 className="text-4xl font-bold text-indigo-600 mb-6 text-center capitalize">
-          Fitness Service Checkout
+          Partyhall Service Checkout
         </h1>
 
         <div className="bg-white shadow-md rounded-lg p-6 mb-3 w-11/12 max-w-4xl">
@@ -56,10 +56,10 @@ function FitnessCheckout() {
             <strong>Date:</strong> {date}
           </p>
           <p className="text-lg font-medium text-gray-700">
-            <strong>Batch:</strong> {batch}
+            <strong>Timings:</strong> {timeSlot}
           </p>
           <p className="text-lg font-medium text-gray-700">
-            <strong>Duration:</strong> {duration} Mins
+            <strong>Duration:</strong> {duration} hours
           </p>
           <p className="text-lg font-medium text-gray-700">
             <strong>Price:</strong> {price}
@@ -85,4 +85,4 @@ function FitnessCheckout() {
 
 }
 
-export default FitnessCheckout;
+export default PartyhallCheckout;

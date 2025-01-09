@@ -23,7 +23,7 @@ function SalonCheckout() {
 
   }
 
-  const { itemId, name, price, duration, imageUrl, date, batch } = bookingDetails;
+  const { itemId, name, price, duration, imageUrl, date, timeSlot } = bookingDetails;
   
   if (authLoading || userLoading ) {
     return (
@@ -56,7 +56,7 @@ function SalonCheckout() {
             <strong>Date:</strong> {date}
           </p>
           <p className="text-lg font-medium text-gray-700">
-            <strong>Batch:</strong> {batch}
+            <strong>Timings:</strong> {timeSlot}
           </p>
           <p className="text-lg font-medium text-gray-700">
             <strong>Duration:</strong> {duration} Mins
