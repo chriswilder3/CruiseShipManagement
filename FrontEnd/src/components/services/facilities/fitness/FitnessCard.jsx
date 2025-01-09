@@ -21,27 +21,13 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
     }
   };
 
-  const handleConfirmBooking = async () => {
+  const handleConfirmBooking = () => {
     if (!selectedDate || !selectedBatch) {
       setMessage('Please fill in all the details.');
       return;
     }
 
-    try {
-      // Add booking details to Firestore
-      const colRef = collection(db, 'FitnessOrders');
-      await addDoc(colRef, {
-        itemId,
-        name,
-        price,
-        duration,
-        imageUrl,
-        date: selectedDate,
-        batch: selectedBatch,
-        uid: currentUser.uid,
-      });
-
-      setMessage('Booking confirmed. Redirecting to checkout...');
+    setMessage('Booking selected. Redirecting to checkout...');
       
       // Pass the booking details to the checkout page
       navigate('/services/facilities/fitness/fitnessCheckout', {
@@ -55,11 +41,6 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
           batch: selectedBatch,
         },
       });
-
-    } catch (err) {
-      console.error('Error while booking service:', err);
-      setMessage('Failed to book the service. Please try again.');
-    }
   };
 
   return (
