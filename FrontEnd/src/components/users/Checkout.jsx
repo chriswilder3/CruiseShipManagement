@@ -88,18 +88,6 @@ function Checkout() {
           // update the same in DB as well
           updateQuantity("stationeryCart",changedData)
         }
-        else if(currentItem.category === "Movies"){
-
-          // Get the prev values of cart data.
-          const changedData = data.data().movieCart
-
-          // Update the quantity of changed item 
-          changedData[index].quantity = changedQuantityVal
-          console.log(" The data is ", changedData);
-
-          // update the same in DB as well
-          updateQuantity("movieCart",changedData)
-        }
         
       })
       .catch((err)=> {
