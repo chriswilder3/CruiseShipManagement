@@ -89,7 +89,7 @@ function MovieCheckout() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-orange-200 via-orange-200 to-orange-100 flex flex-col items-center py-10">
         <h1 className="text-4xl font-bold text-indigo-600 mb-6 text-center capitalize">
-          Movie Checkout
+          Facility Checkout
         </h1>
 
         <div className="bg-white shadow-md rounded-lg p-6 mb-3 w-11/12 max-w-4xl">

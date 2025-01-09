@@ -63,7 +63,7 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
   };
 
   return (
-    <div className="flex flex-col p-5 bg-slate-200 rounded-md">
+    <div className="flex flex-col p-5 bg-gray-200 rounded-md">
       {/* Message */}
       <p className="text-blue-500 text-sm my-1">{message}</p>
 
@@ -71,7 +71,7 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
       <img src={imageUrl} className="w-32 rounded self-center" alt="" />
 
       {/* Fitness service name */}
-      <h1 className="p-1 text-gray-700">{name}</h1>
+      <h1 className="p-1 text-xl text-indigo-600">{name}</h1>
 
       {/* Fitness service description */}
       <p className="text-sm self-center text-gray-600 text-center mb-2 text-wrap w-3/4">

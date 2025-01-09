@@ -1,7 +1,12 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useUser } from '../../../../contexts/UserContext';
+import { useAuth } from '../../../../contexts/AuthContext';
 
 function FitnessCheckout() {
+  const { userData, loading: userLoading } = useUser();
+  const { currentUser, loading: authLoading } = useAuth();
+
   const location = useLocation(); // Access the passed state
   const navigate = useNavigate();
 
@@ -10,16 +15,25 @@ function FitnessCheckout() {
 
   if (!bookingDetails) {
     // Redirect the user back if no data is found (optional safeguard)
-    navigate('/fitness');
+    navigate('/services/facilities/fitness');
     return null;
   }
 
   const confirmBooking = () => {
 
-
   }
 
   const { itemId, name, price, duration, imageUrl, date, batch } = bookingDetails;
+  
+  if (authLoading || userLoading ) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
+        <p className="text-lg font-semibold text-white">Loading...</p>
+      </div>
+    );
+  }
+
+  if( currentUser && currentUser.role !== "Guest" ){
   return(
     <div className="min-h-screen bg-gradient-to-b from-orange-200 via-orange-200 to-orange-100 flex flex-col items-center py-10">
         <h1 className="text-4xl font-bold text-indigo-600 mb-6 text-center capitalize">
@@ -51,9 +65,7 @@ function FitnessCheckout() {
             <strong>Price:</strong> {price}
           </p>
                 
-          <p className="text-lg font-medium text-gray-700">
-            <strong>Batch:</strong> {batch}
-          </p>
+          
         </div>
 
         {/* <p className={`${showMsg ? "block" : "hidden"} mb-3 text-lg p-2 bg-green-600 text-white rounded-lg`}>
@@ -69,6 +81,7 @@ function FitnessCheckout() {
         </button>
       </div>
   )
+  }
 
 }
 

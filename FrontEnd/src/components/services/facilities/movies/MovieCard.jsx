@@ -50,9 +50,9 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
 
   // Handle Booking Popup
   const handleBookingPopUp = () => {
-    if (!currentUser) {
+    if (!currentUser || currentUser.role === "Guest") {
       setMessage("You are not logged in. Redirecting...");
-      setTimeout(() => window.open("/users/signin", "_self"), 2000);
+      setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
       return;
     }
     setShowBookingPopup(true);

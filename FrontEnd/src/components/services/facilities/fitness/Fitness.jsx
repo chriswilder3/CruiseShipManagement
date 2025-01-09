@@ -61,7 +61,7 @@ function Fitness() {
             </button>
             </form>
         </div>
-        <div className='flex flex-col md:flex-row gap-3 p-3'>
+        <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
             {
                 
                 FitnessItems.map( (item) => 
