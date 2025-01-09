@@ -20,6 +20,7 @@ import AdminAddItems from './components/users/dashboards/AdminAddItems';
 import AdminManageItems from './components/users/dashboards/AdminManageItems';
 import Checkout from './components/users/Checkout';
 import MovieCheckout from './components/services/facilities/movies/MovieCheckout';
+import FitnessCheckout from './components/services/facilities/fitness/FitnessCheckout';
 
 
 
@@ -50,7 +51,8 @@ function App() {
               <Route path='users/adminManageItems' element={<AdminManageItems />} />
               <Route path='users/checkout' element={<Checkout />} />
               <Route path='services/facilities/movies/movieCheckout' element={<MovieCheckout />} />
-
+              <Route path='services/facilities/fitness/fitnessCheckout' element={<FitnessCheckout />} />
+              
              </Route>
           </Routes>
         </Router>
