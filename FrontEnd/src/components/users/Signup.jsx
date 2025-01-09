@@ -39,7 +39,6 @@ function SignUp() {
         cateringOrders : [],
         stationeryCart : [],
         stationeryOrders : [],
-        movieCart : [],
         movieBookings : [],
         fitnessBookings : [],
         salonBookings : [],

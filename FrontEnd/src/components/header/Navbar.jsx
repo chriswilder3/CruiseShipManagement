@@ -36,7 +36,7 @@ function Navbar() {
         setCartCount(cartContents.length)
         let total = 0
         cartContents.forEach( (item) => {
-          total = total + Number(item.price)
+          total = total + Number(item.price) * Number(item.quantity)
         })
         setCartSubTotal(total)
 
@@ -116,7 +116,7 @@ function Navbar() {
       </li>
 
       {/* Cart Btn  */}
-      <li className="ml-auto relative" onMouseLeave={handlepopUpFade}>
+      <li className="ml-auto relative" >
         <button onClick={togglePopUp}  className='text-3xl sm:text-3xl text-slate-800'>
           <i className="text-slate-800 fa badge fa-lg"  > &#xf07a;</i>
          <p className='z-10 w-8 h-8 text-sm sm:text-base rounded-full flex items-center justify-center bg-red-500 text-white absolute left-48 -top-2 sm:left-3 sm:-top-4'> <span className='my-auto self-center'> {cartCount}</span> </p>
@@ -128,15 +128,26 @@ function Navbar() {
             <div onClick={togglePopUp} className=' p-0.5 px-2 w-fit  text-md text-red-400 ml-auto rounded-md transition-transform duration-100 hover:scale-105 hover:cursor-pointer'>
               <i className="fa fa-window-close"></i>
             </div>
-            <div className='flex flex-col gap-1 overflow-y-auto max-h-96'>
+            <div onMouseLeave={handlepopUpFade} className='flex flex-col gap-1 overflow-y-auto max-h-96'>
             {
               cartContents && cartContents.map( (item,index) =>{
-              return <div key={index} className='p-1  bg-white text-base rounded-md shadow-sm'>
-                  <p>
-                    { item.name}
+              return <div key={index} className='p-1 flex flex-col bg-white text-base rounded-md shadow-sm'>
+                  <span className='self-start roboto text-sm ml-1 text-indigo-500'> 
+                      { item.category} 
+                  </span> 
+                  <p className=''>
+                    { item.name} 
                   </p>
+                  <p className='flex gap-5 justify-center text-sm roboto text-slate-600'> 
+                     
+                    <span className='text-gray-500'>
+                      Quantity : { item.quantity} 
+                    </span>
+                  </p>
+                  <p className="text-lg font-semibold    text-green-600">
+                    ₹{item.price}
+                  </p> 
                   
-                  <p className='flex justify-center roboto items-center text-base gap-5'>Quant : { item.quantity} <span className="text-lg font-bold   text-green-600">₹{item.price}</span> </p>
                 </div>
               })
             }
