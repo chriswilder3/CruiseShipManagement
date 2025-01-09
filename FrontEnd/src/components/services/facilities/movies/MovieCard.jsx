@@ -82,7 +82,7 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
 
     // Redirect to FacilityCheckout with booking data
     const queryParams = new URLSearchParams(bookingData).toString();
-    window.open(`/users/facilityCheckout?${queryParams}`, "_self");
+    window.open(`/services/facilities/movies/movieCheckout?${queryParams}`, "_self");
   };
 
   return (

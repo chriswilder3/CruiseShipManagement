@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "../../contexts/UserContext";
-import { useAuth } from "../../contexts/AuthContext";
+import { useUser } from "../../../../contexts/UserContext";
+import { useAuth } from "../../../../contexts/AuthContext";
 import { collection, doc, getDoc , setDoc } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
-import { db } from "../../firebase";
+import { db } from "../../../../firebase";
 
-function FacilityCheckout() {
+function MovieCheckout() {
   const { userData, loading: userLoading } = useUser();
   const { currentUser, loading: authLoading } = useAuth();
 
@@ -134,4 +134,4 @@ function FacilityCheckout() {
   return null;
 }
 
-export default FacilityCheckout;
+export default MovieCheckout;

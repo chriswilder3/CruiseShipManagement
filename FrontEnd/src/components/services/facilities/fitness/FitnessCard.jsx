@@ -44,7 +44,7 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
       setMessage('Booking confirmed. Redirecting to checkout...');
       
       // Pass the booking details to the checkout page
-      navigate('/users/facilityCheckout', {
+      navigate('/services/facilities/fitness/fitnessCheckout', {
         state: {
           itemId,
           name,
