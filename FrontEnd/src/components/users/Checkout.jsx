@@ -100,6 +100,40 @@ function Checkout() {
   const handleDeleteItem = (index) => {
       console.log(index, cartContents[index]);
   }
+
+  const confirmBooking = () => {
+    cartContents.forEach( (currentItem) => {
+      console.log( currentItem);
+      const colName = currentItem.category.concat("Orders")
+
+      let colRef = collection(db, colName)
+
+      // First add it to Global Orders List
+      addDoc(colRef, {
+        uid : currentUser.uid,
+        ...currentItem
+      })
+      .then(() => {
+
+        // Now We need to add this item to Users collection 
+        colRef = collection(db, "Users")
+
+        // But first need to get the existing Orders
+        const userOrders = userData.orders
+        console.log(userOrders);
+
+        if(userOrders.category)
+        
+
+
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+
+    })
+  }
+  
   
 
   if (authLoading || userLoading) {
@@ -138,7 +172,7 @@ function Checkout() {
 
         {/* Cart Items */}
         <div className="flex flex-col gap-4 w-11/12 max-w-4xl overflow-y-auto max-h-96">
-          {cartContents && cartContents.length > 0 ? (
+        {cartContents && cartContents.length > 0 ? (
             cartContents.map((item, index) => (
               <div
                 key={index}
@@ -173,7 +207,28 @@ function Checkout() {
             <p className="text-center text-gray-600 text-lg">Your cart is empty.</p>
           )}
         </div>
-      </div>
+      
+      {cartContents && cartContents.length > 0 ? (
+        <div>
+          <p className={`${showMsg ? "block" : "hidden"} mb-3 text-lg p-2 bg-green-600 text-white rounded-lg`}>
+            {successMsg}
+          </p>
+
+          {/* {bookingStatus && (
+            <p className="text-lg text-red-500 mb-3">{bookingStatus}</p>
+          )} */}
+
+
+            <button
+              onClick={confirmBooking}
+              className="mt-6 px-6 py-2 bg-green-500 shadow-md text-white rounded-lg hover:opacity-90 transition"
+            >
+              Confirm Booking
+            </button>
+          
+        </div>
+      ):""}
+    </div>
     );
   }
 

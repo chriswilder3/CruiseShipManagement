@@ -43,8 +43,12 @@ export function UserContextProvider({ children }) {
 
             // Combine all orders/bookings into a single array
             const totalOrders = [
-              ...(data.cateringOrders || []),
-              ...(data.stationeryOrders || []),
+              ...(data.cateringOrders.map((item) => {
+                return {...item,category : "Catering"}
+              })),
+              ...(data.stationeryOrders.map((item) => {
+                return {...item,category : "Stationery"}
+              })),
               ...(data.movieBookings || []),
               ...(data.salonBookings || []),
               ...(data.partyhallBookings || []),
