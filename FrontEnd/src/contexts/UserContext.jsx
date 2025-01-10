@@ -49,10 +49,18 @@ export function UserContextProvider({ children }) {
               ...(data.stationeryOrders.map((item) => {
                 return {...item,category : "Stationery"}
               })),
-              ...(data.movieBookings || []),
-              ...(data.salonBookings || []),
-              ...(data.partyhallBookings || []),
-              ...(data.fitnessBookings || []),
+              ...(data.movieBookings.map((item) => {
+                return {...item,category : "Movies"}
+              })),
+              ...(data.salonBookings.map((item) => {
+                return {...item,category : "Salon"}
+              })),
+              ...(data.partyhallBookings.map((item) => {
+                return {...item,category : "Partyhall"}
+              })),
+              ...(data.fitnessBookings.map((item) => {
+                return {...item,category : "Fitness"}
+              }))
             ];
 
             setUserData({
