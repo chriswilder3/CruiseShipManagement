@@ -16,7 +16,7 @@ function PartyhallCheckout() {
   const navigate = useNavigate();
 
 
-  // Extract the data passed from FitnessCard
+  // Extract the data passed from PartyhallCard
   const bookingDetails = location.state;
 
   const { itemId, name, price, duration, imageUrl, date, timeSlot } = bookingDetails;
