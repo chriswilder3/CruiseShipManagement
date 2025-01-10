@@ -73,6 +73,8 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
       category: "Movies",
       movieId: itemId,
       name,
+      price,
+      imageUrl,
       screenNumber,
       selectedSeats,
       selectedDate,
