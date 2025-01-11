@@ -34,6 +34,8 @@ function Dashboard() {
       return <HeadCookDashboard />
     case "Supervisor":
       return <SupervisorDashboard />
+    case "Manager":
+      return 
     case "Guest":
       return <GuestDashboard />;
     default:
