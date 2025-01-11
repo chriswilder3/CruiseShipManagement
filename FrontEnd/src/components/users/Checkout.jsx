@@ -160,7 +160,9 @@ function Checkout() {
     try {
       await updateDoc(docRef, {
         ["cateringOrders"]: cateringOrders,
-        ["stationeryOrders"]: stationeryOrders
+        ["stationeryOrders"]: stationeryOrders,
+        cateringCart : [],
+        stationeryCart : []
       });
       setSuccessMsg("Success");
       setShowMsg(true);
