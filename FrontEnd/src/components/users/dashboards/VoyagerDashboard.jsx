@@ -70,7 +70,7 @@ function VoyagerDashboard() {
                       />
                       <div className="flex flex-col justify-center text-left">
                         <p className="font-semibold text-indigo-600">{item.name}</p>
-                        <p className="text-sm text-blue-600"> <span className="text-slate-500">category : </span> {item.category} </p>
+                        <p className="text-xs roboto text-blue-600"> <span className="text-slate-500">category : </span> {item.category} </p>
                         <p className="text-blue-600 text-sm"> <span className="text-slate-500">Quant :</span>  {item.quantity}</p>
                         <p className="text-green-500 font-semibold">₹{item.price}</p>
                       </div>
@@ -99,9 +99,16 @@ function VoyagerDashboard() {
                         alt={order.name}
                         className="w-16 h-16 object-cover rounded"
                       />
-                      <div>
-                        <p className="font-semibold text-gray-800">{order.name}</p>
-                        <p className="text-gray-600">₹{order.price}</p>
+                      <div className="flex flex-col justify-center text-left">
+                        <p className="font-semibold text-indigo-600">{order.name}</p>
+                        {
+                          (order.category === "Catering" || order.category === "Stationery") 
+                          && <p className="text-xs roboto text-slate-600">
+                              Quant : {order.quantity}
+                          </p>
+                        }
+                        <p className="text-xs roboto font-thin text-blue-600"> <span className="text-slate-500">category : </span> {order.category} </p>
+                        <p className="text-green-500 font-semibold">₹{order.price}</p>
                       </div>
                     </div>
                   ))
