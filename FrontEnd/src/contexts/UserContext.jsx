@@ -43,12 +43,24 @@ export function UserContextProvider({ children }) {
 
             // Combine all orders/bookings into a single array
             const totalOrders = [
-              ...(data.cateringOrders || []),
-              ...(data.stationeryOrders || []),
-              ...(data.movieBookings || []),
-              ...(data.salonBookings || []),
-              ...(data.partyhallBookings || []),
-              ...(data.fitnessBookings || []),
+              ...(data.cateringOrders.map((item) => {
+                return {...item,category : "Catering"}
+              })),
+              ...(data.stationeryOrders.map((item) => {
+                return {...item,category : "Stationery"}
+              })),
+              ...(data.movieBookings.map((item) => {
+                return {...item,category : "Movies"}
+              })),
+              ...(data.salonBookings.map((item) => {
+                return {...item,category : "Salon"}
+              })),
+              ...(data.partyhallBookings.map((item) => {
+                return {...item,category : "Partyhall"}
+              })),
+              ...(data.fitnessBookings.map((item) => {
+                return {...item,category : "Fitness"}
+              }))
             ];
 
             setUserData({

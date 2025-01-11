@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import { useAuth } from "../../../../contexts/AuthContext";
-import { collection, doc, getDoc , setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc , setDoc, updateDoc } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
 import { db } from "../../../../firebase";
 
@@ -15,6 +15,8 @@ function MovieCheckout() {
   const searchParams = new URLSearchParams(location.search);
   const movieId = searchParams.get("movieId");
   const name = searchParams.get("name");
+  const price = searchParams.get("price");
+  const imageUrl = searchParams.get("imageUrl");
   const screenNumber = searchParams.get("screenNumber");
   const selectedSeats = searchParams.get("selectedSeats")?.split(","); 
   const selectedDate = searchParams.get("selectedDate");
@@ -29,53 +31,158 @@ function MovieCheckout() {
 
       // I am confirming the movie Seatings here.
 
-      const movieDocRef = doc(collection(db, "movieSeatings"), movieId);
-      const movieDoc = await getDoc(movieDocRef);
-      const movieData = movieDoc.data();
+      let colRef = collection(db, "movieSeatings")
+      const docName = selectedDate.concat("_",selectedSlot)
+      console.log("Doc name : ",docName);
+      
+      const seatingsDoc = await getDoc(doc(colRef,docName));
+      const seatingsData = seatingsDoc.data() // Gives entire movie seatings Data
 
-      if (!movieData) {
+      const fieldName = "screen".concat(screenNumber)
+      const screenSeatingsData = seatingsData[fieldName]; // Gives data of specific screen
+
+      if (!seatingsData) {
         console.log("Movie seating data not found");
         return;
       }
+      // console.log(screenSeatingsData);
 
-      // Check for already booked seats
-      const { occupiedSeats } = movieData || {};
-      const newOccupiedSeats = new Set(occupiedSeats || []);
+      // let occupiedAlready = false;
 
-      for (const seat of selectedSeats) {
-        if (newOccupiedSeats.has(seat)) {
-          setBookingStatus("One or more seats are already booked. Please select different seats.");
-          return;
+      selectedSeats.forEach((seatNum) => {
+          if(screenSeatingsData[seatNum] !== ""){
+            // occupiedAlready = true
+
+            setBookingStatus("One or more seats are already booked. Please select different seats.");
+            return;
+          }else{
+            screenSeatingsData[seatNum] = currentUser.uid
+            console.log(screenSeatingsData);
+
+            // Update the particular screen seating with our users data.
+            updateDoc(doc(colRef,docName),{
+              [fieldName]:screenSeatingsData
+            }) 
+            .then(() => {
+
+              // Now update the user Data with booking
+              colRef = collection(db,"Users")
+              const docRef = doc(colRef,currentUser.uid)
+
+              // First get the existing booking Data in Users collection
+              getDoc(docRef)
+              .then( (userDoc) => {
+                const movieBookings =  userDoc.data().movieBookings || []
+
+                // Add the current Booking to existing Array
+                movieBookings.push({
+                  itemId : movieId,
+                  name,
+                  price,
+                  imageUrl,
+                  selectedDate,
+                  selectedSlot,
+                  screenNumber,
+                  selectedSeats
+                })
+
+                // Update that user's Bookings Accordingly
+                updateDoc(docRef,{
+                  movieBookings
+                })
+                .then( () =>{
+
+                    // Now lets add the booking to global movieBookings data.
+                    colRef = collection(db,"MovieOrders")
+
+                    addDoc(colRef, {
+                        uid : currentUser.uid,
+                        itemId : movieId,
+                        name,
+                        price,
+                        imageUrl,
+                        selectedDate,
+                        selectedSlot,
+                        screenNumber,
+                        selectedSeats
+                    })
+                    .then( () =>{
+                      setSuccessMsg("Success")
+                      setShowMsg(true)
+                      setTimeout( () => {
+                        window.open("/users/dashboard","_self")
+                      },2000)
+                      })
+                    .catch( (err) => 
+                      console.log(err)
+                    )
+
+                })
+                .catch( (err) => 
+                  console.log(err)
+                  )
+          })
+          .catch( (err) => 
+            console.log(err)
+          )
+
+          })
+          .catch ((error) => {
+            console.error("Error confirming booking:", error);
+            setBookingStatus("Failed to confirm booking. Please try again.")
+          })
+          
         }
-        newOccupiedSeats.add(seat); // Mark seat as occupied
-      }
+      }) // This is where ForEach Loop ends
 
-      // Update Firestore with newly occupied seats
-      await updateDoc(movieDocRef, { occupiedSeats: Array.from(newOccupiedSeats) });
 
-      setSuccessMsg("Booking confirmed successfully!");
-      setShowMsg(true);
 
-      setTimeout(() => {
-        setShowMsg(false);
-        setBookingStatus(null);
-      }, 3000);
+
+
+      // // Check for already booked seats
+      // const { occupiedSeats } = movieData || {};
+      // const newOccupiedSeats = new Set(occupiedSeats || []);
+
+      // for (const seat of selectedSeats) {
+      //   if (newOccupiedSeats.has(seat)) {
+      //     setBookingStatus("One or more seats are already booked. Please select different seats.");
+      //     return;
+      //   }
+      //   newOccupiedSeats.add(seat); // Mark seat as occupied
+      // }
+
+      // // Update Firestore with newly occupied seats
+      // await updateDoc(movieDocRef, { occupiedSeats: Array.from(newOccupiedSeats) });
+
+      // setSuccessMsg("Booking confirmed successfully!");
+      // setShowMsg(true);
+
+      // setTimeout(() => {
+      //   setShowMsg(false);
+      //   setBookingStatus(null);
+      // }, 3000);
     } catch (error) {
       console.error("Error confirming booking:", error);
       setBookingStatus("Failed to confirm booking. Please try again.");
     }
   };
 
+  const handleCancel = () => {
+    window.open("/services/facilities/movies","_self")
+  }
+
   useEffect(() => {
     console.log("Booking Data:", {
       movieId,
       name,
+      price,
+      imageUrl,
       screenNumber,
       selectedSeats,
       selectedDate,
       selectedSlot,
     });
-  }, [movieId, name, screenNumber, selectedSeats, selectedDate, selectedSlot]);
+  }, [movieId, name,price,imageUrl, screenNumber, selectedSeats, selectedDate, selectedSlot]);
 
   if (authLoading || userLoading) {
     return (
@@ -85,7 +192,7 @@ function MovieCheckout() {
     );
   }
 
-  if (currentUser) {
+  if (currentUser && currentUser.role !== "Guest" ) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-orange-200 via-orange-200 to-orange-100 flex flex-col items-center py-10">
         <h1 className="text-4xl font-bold text-indigo-600 mb-6 text-center capitalize">
@@ -93,11 +200,16 @@ function MovieCheckout() {
         </h1>
 
         <div className="bg-white shadow-md rounded-lg p-6 mb-3 w-11/12 max-w-4xl">
+          
+          <img src={imageUrl} alt={name} className="w-32 mx-auto rounded mb-4" />
           <p className="text-lg font-medium text-gray-700">
             <strong>Movie Name:</strong> {name}
           </p>
           <p className="text-lg font-medium text-gray-700">
             <strong>Movie ID:</strong> {movieId}
+          </p>
+          <p className="text-lg font-medium text-gray-700">
+            <strong>Price:</strong> {price}
           </p>
           <p className="text-lg font-medium text-gray-700">
             <strong>Screen Number:</strong> {screenNumber}
@@ -109,7 +221,7 @@ function MovieCheckout() {
             <strong>Date:</strong> {selectedDate}
           </p>
           <p className="text-lg font-medium text-gray-700">
-            <strong>Slot:</strong> {selectedSlot}
+            <strong>Showtime:</strong> {selectedSlot}
           </p>
         </div>
 
@@ -121,13 +233,24 @@ function MovieCheckout() {
           <p className="text-lg text-red-500 mb-3">{bookingStatus}</p>
         )}
 
-        <button
-          onClick={confirmBooking}
-          className="mt-6 px-6 py-2 bg-green-500 text-white rounded hover:opacity-90 transition"
-        >
-          Confirm Booking
-        </button>
-      </div>
+        <div className='flex gap-3'> 
+          <button
+            onClick={handleCancel}
+            className="mt-6 px-6 py-2 bg-gray-100 shadow-md text-slate-800 rounded-lg hover:opacity-90 "
+          >
+            Cancel
+          </button>
+
+
+          <button
+            onClick={confirmBooking}
+            className="mt-6 px-6 py-2 bg-green-500 shadow-md text-white rounded-lg hover:opacity-90 transition"
+          >
+            Confirm Booking
+          </button>
+        </div>
+    </div>
+      
     );
   }
 

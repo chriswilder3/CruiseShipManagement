@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { useAuth } from "../../contexts/AuthContext";
-import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 function Checkout() {
@@ -100,6 +100,81 @@ function Checkout() {
   const handleDeleteItem = (index) => {
       console.log(index, cartContents[index]);
   }
+
+  const confirmBooking = async () => {
+
+    // Current orders of users (before booking)
+    const userOrders = userData.orders.filter((item) =>
+      item.category === "Catering" || item.category === "Stationery"
+    );
+    
+    // We need to get the promises of all global Bookings
+    const addDocPromises = cartContents.map(async (currentItem) => {
+      console.log(currentItem);
+  
+      const colName = currentItem.category.concat("Orders");
+      let colRef = collection(db, colName);
+  
+      // Add to Global Orders and update local userOrders variable
+      try {
+        const docRef = await addDoc(colRef, {
+          uid: currentUser.uid,
+          ...currentItem
+        });
+  
+        userOrders.push({
+          ...currentItem,
+          orderId: docRef.id
+        });
+  
+        console.log("Was able to add to local userOrders variable");
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  
+    // Wait for all addDoc operations to complete
+    await Promise.all(addDocPromises);
+  
+    // console.log(userOrders);
+  
+    let cateringOrders = [];
+    let stationeryOrders = [];
+  
+    userOrders.forEach((orderItem) => {
+
+      if (orderItem["category"] === "Catering") {
+        cateringOrders.push(orderItem);
+
+      } else if (orderItem["category"] === "Stationery") {
+        stationeryOrders.push(orderItem);
+      }
+      
+    });
+  
+    // Log the updated arrays AFTER the loop
+    console.log("Catering Orders:", cateringOrders);
+    console.log("Stationery Orders:", stationeryOrders);
+  
+    const docRef = doc(collection(db, "Users"), currentUser.uid);
+    try {
+      await updateDoc(docRef, {
+        ["cateringOrders"]: cateringOrders,
+        ["stationeryOrders"]: stationeryOrders,
+        cateringCart : [],
+        stationeryCart : []
+      });
+      setSuccessMsg("Success");
+      setShowMsg(true);
+      // setTimeout(() => {
+      //   window.open("/users/dashboard", "_self");
+      // }, 2000);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  
   
 
   if (authLoading || userLoading) {
@@ -132,13 +207,10 @@ function Checkout() {
           </div>
         </div>
 
-        <p className={`${showMsg?"block":"hidden"} mb-3 text-lg p-2 bg-green-600 text-white rounded-lg`}>
-          Success
-        </p>
 
         {/* Cart Items */}
         <div className="flex flex-col gap-4 w-11/12 max-w-4xl overflow-y-auto max-h-96">
-          {cartContents && cartContents.length > 0 ? (
+        {cartContents && cartContents.length > 0 ? (
             cartContents.map((item, index) => (
               <div
                 key={index}
@@ -173,7 +245,28 @@ function Checkout() {
             <p className="text-center text-gray-600 text-lg">Your cart is empty.</p>
           )}
         </div>
-      </div>
+      
+      {cartContents && cartContents.length > 0 ? (
+        <div>
+          <p className={`${showMsg ? "block" : "hidden"}  mt-3 text-lg p-2 bg-green-500 text-white rounded-lg`}>
+            {successMsg}
+          </p>
+
+          {/* {bookingStatus && (
+            <p className="text-lg text-red-500 mb-3">{bookingStatus}</p>
+          )} */}
+
+
+            <button
+              onClick={confirmBooking}
+              className="mt-3 px-6 py-2 bg-indigo-600 shadow-md text-white rounded-lg hover:opacity-90 transition-all hover:scale-105 duration-100"
+            >
+              Confirm Booking
+            </button>
+          
+        </div>
+      ):""}
+    </div>
     );
   }
 

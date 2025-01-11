@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../../../../contexts/UserContext';
 import { useAuth } from '../../../../contexts/AuthContext';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../../firebase';
 
 function PartyhallCheckout() {
   const { userData, loading: userLoading } = useUser();
   const { currentUser, loading: authLoading } = useAuth();
+  const [message, setMessage] = useState('');
+  const [showMsg, setShowMsg] = useState(false)
+
 
   const location = useLocation(); // Access the passed state
   const navigate = useNavigate();
 
-  // Extract the data passed from FitnessCard
+
+  // Extract the data passed from PartyhallCard
   const bookingDetails = location.state;
+
+  const { itemId, name, price, duration, imageUrl, date, timeSlot } = bookingDetails;
+
 
   if (!bookingDetails) {
     // Redirect the user back if no data is found (optional safeguard)
@@ -20,10 +29,70 @@ function PartyhallCheckout() {
   }
 
   const confirmBooking = () => {
+      let colRef = collection(db,"Users")
+      const docRef = doc(colRef,currentUser.uid)
 
+      // First get the existing booking Data in Users collection
+      getDoc(docRef)
+      .then( (userDoc) => {
+         const partyhallBookings =  userDoc.data().partyhallBookings || []
+
+         // Add the current Booking to existing Array
+         partyhallBookings.push({
+          itemId,
+          name,
+          price,
+          duration,
+          imageUrl,
+          date,
+          timeSlot
+         })
+
+         // Update that user's Bookings Accordingly
+         updateDoc(docRef,{
+          partyhallBookings
+         })
+         .then( () =>{
+
+          // Now lets add the booking to global partyhallBookings data.
+          colRef = collection(db,"PartyhallOrders")
+
+          addDoc(colRef, {
+              uid : currentUser.uid,
+              itemId,
+              name,
+              price,
+              imageUrl,
+              duration,
+              date,
+              timeSlot
+
+          })
+          .then( () =>{
+             setMessage("Success")
+             setShowMsg(true)
+             setTimeout( () => {
+              window.open("/users/dashboard","_self")
+             },2000)
+          })
+          .catch( (err) => 
+            console.log(err)
+          )
+
+        })
+         .catch( (err) => 
+          console.log(err)
+          )
+      })
+      .catch( (err) => 
+        console.log(err)
+      )
   }
 
-  const { itemId, name, price, duration, imageUrl, date, timeSlot } = bookingDetails;
+  const handleCancel = () => {
+    window.open("/services/facilities/partyhall","_self")
+  }
+
   
   if (authLoading || userLoading ) {
     return (
@@ -40,6 +109,7 @@ function PartyhallCheckout() {
           Partyhall Service Checkout
         </h1>
 
+        
         <div className="bg-white shadow-md rounded-lg p-6 mb-3 w-11/12 max-w-4xl">
          
           <img src={imageUrl} alt={name} className="w-32 mx-auto rounded mb-4" />
@@ -68,17 +138,26 @@ function PartyhallCheckout() {
           
         </div>
 
-        {/* <p className={`${showMsg ? "block" : "hidden"} mb-3 text-lg p-2 bg-green-600 text-white rounded-lg`}>
-          {successMsg}
-        </p> */}
+        <p className={`${showMsg ? "block" : "hidden"} mb-3 text-lg p-2 bg-green-600 text-white rounded-lg`}>
+          {message}
+        </p>
+        
+        <div className='flex gap-3'> 
+          <button
+            onClick={handleCancel}
+            className="mt-6 px-6 py-2 bg-gray-100 shadow-md text-slate-800 rounded-lg hover:opacity-90 "
+          >
+            Cancel
+          </button>
 
 
-        <button
-          onClick={confirmBooking}
-          className="mt-6 px-6 py-2 bg-green-500 text-white rounded hover:opacity-90 transition"
-        >
-          Confirm Booking
-        </button>
+          <button
+            onClick={confirmBooking}
+            className="mt-6 px-6 py-2 bg-green-500 shadow-md text-white rounded-lg hover:opacity-90 transition"
+          >
+            Confirm Booking
+          </button>
+          </div>
       </div>
   )
   }
