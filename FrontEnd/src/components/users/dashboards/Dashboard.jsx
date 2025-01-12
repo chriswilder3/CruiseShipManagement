@@ -6,6 +6,7 @@ import VoyagerDashboard from "./VoyagerDashboard";
 import GuestDashboard from "./GuestDashboard";
 import HeadCookDashboard from './HeadCookDashboard';
 import SupervisorDashboard from "./SupervisorDashboard";
+import ManagerDashboard from "./ManagerDashboard";
 
 function Dashboard() {
   const { currentUser, loading: authLoading } = useAuth(); // Handle loading state for auth
@@ -35,7 +36,7 @@ function Dashboard() {
     case "Supervisor":
       return <SupervisorDashboard />
     case "Manager":
-      return 
+      return <ManagerDashboard/>
     case "Guest":
       return <GuestDashboard />;
     default:

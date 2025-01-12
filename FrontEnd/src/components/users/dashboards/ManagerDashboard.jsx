@@ -70,8 +70,14 @@ function ManagerDashboard() {
     
   },[refreshOrders, currentUser.uid])
 
-  const toggleListOrdersPopup = () => {
-    const popup = document.querySelector(".orders-popup");
+  const toggleCateringOrdersPopup = () => {
+    const popup = document.querySelector(".catering-orders-popup");
+    popup.classList.toggle("hidden");
+    popup.classList.toggle("block");
+  };
+
+  const toggleStationeryOrdersPopup = () => {
+    const popup = document.querySelector(".stationery-orders-popup");
     popup.classList.toggle("hidden");
     popup.classList.toggle("block");
   };
@@ -121,10 +127,12 @@ function ManagerDashboard() {
         </div>
       </div>
 
-      {/* HeadCook's popup showing orders  */}
-      <div className="relative">
-          {/* Popup */}
-          <div className="orders-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5 max-h-[80vh] overflow-y-auto">
+     
+        <div className="relative">
+        
+        {/* Manager's popup showing Catering Orders  */}
+
+          <div className="catering-orders-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5 max-h-[80vh] overflow-y-auto">
             <h2 className="text-2xl font-semibold text-indigo-600 mb-4 text-center">
               Catering orders
             </h2>
@@ -153,27 +161,84 @@ function ManagerDashboard() {
               ))}
             </div>
             <button
-              onClick={toggleListOrdersPopup}
+              onClick={toggleCateringOrdersPopup}
               className="w-full mt-6 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300"
             >
               Close
             </button>
           </div>
+          
+        {/* Manager's popup showing Stationery Orders  */}
+
+          <div className="stationery-orders-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white p-8 rounded-lg shadow-lg md:w-2/5 max-h-[80vh] overflow-y-auto">
+            <h2 className="text-2xl font-semibold text-indigo-600 mb-4 text-center">
+              Stationery orders
+            </h2>
+            <div className="space-y-4">
+              {/* Listing all the order requests */}
+              {stationeryOrdersData.map((order) => (
+                <div
+                  key={order.id}
+                  className="flex flex-col md:flex-row gap-2 md:gap-0 justify-between items-center p-3 rounded bg-gray-200"
+                >
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700">
+                      <span className='text-rose-400 text-base'> Order ID : </span>  {order.id}
+                    </p>
+                    <p className="text-sm font-semibold text-gray-700">
+                      <span className='text-rose-400 text-base'> User ID : </span>  {order.uid}
+                    </p>
+                    <p className="text-sm font-semibold text-gray-700">
+                      <span className='text-rose-400 text-base'> Item name : </span>  {order.name}
+                    </p>
+                    <p className="text-sm font-semibold text-gray-700">
+                      <span className='text-rose-400 text-base'> Item price : </span> {order.price}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={toggleStationeryOrdersPopup}
+              className="w-full mt-6 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300"
+            >
+              Close
+            </button>
+          </div>
+
         </div>
+
+        
+          
+        
+
+
 
 
       {/* HeadCook's duty related Buttons  */}
-      <div className="flex flex-col md:flex-row my-5 gap-5 poppins">
+        <div className="flex flex-col md:flex-row my-5 gap-5 poppins">
           <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
             <h1 className="text-xl text-rose-500"> Catering Orders</h1>
             <button
               type="button"
-              onClick={toggleListOrdersPopup}
+              onClick={toggleCateringOrdersPopup}
               className="p-2 my-2 bg-rose-500 text-white rounded-md hover:bg-rose-600"
             >
               View Details 
             </button>
           </div>
+
+          <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
+            <h1 className="text-xl text-rose-500"> Stationery Orders</h1>
+            <button
+              type="button"
+              onClick={toggleStationeryOrdersPopup}
+              className="p-2 my-2 bg-rose-500 text-white rounded-md hover:bg-rose-600"
+            >
+              View Details 
+            </button>
+          </div>
+
 
         </div>
 
