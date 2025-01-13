@@ -8,8 +8,7 @@ Welcome to **Celestia**, an all-in-one cruise ship management system designed to
 
 Below is the architecture of Celestia, designed for efficient communication between the front end, back end, and database:  
 
-![Celestia Architecture](projectArchitectureImages/celestiaArch.png)
-
+<div align="center"> <img src="projectArchitectureImages/celestiaArch.png" alt="Celestia Architecture" /> </div>
 
 ---
 
