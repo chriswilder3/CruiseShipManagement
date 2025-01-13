@@ -41,7 +41,7 @@ function Checkout() {
           setTimeout(() => {
             setShowMsg(false)
           },2000)
-          
+          location.reload()
       })
       .catch((err) => {
           console.log(err);
@@ -54,7 +54,7 @@ function Checkout() {
     const currentItem = cartContents[index]
 
     if(currentItem.quantity === changedQuantityVal){
-        console.log('No change detec  ted in quantity');
+        console.log('No change detected in quantity');
     }
     else{
       
@@ -70,8 +70,12 @@ function Checkout() {
           const changedData = data.data().cateringCart
 
           // Update the quantity of changed item 
-          changedData[index].quantity = changedQuantityVal
-          // console.log(" The data is ", changedData);
+          changedData.forEach((item)=>{
+            if(item.itemId === currentItem.itemId){
+              item.quantity = changedQuantityVal
+            }
+          })
+          console.log(" The data is ", changedData);
 
           // update the same in DB as well
           updateQuantity("cateringCart",changedData)
@@ -82,7 +86,11 @@ function Checkout() {
           const changedData = data.data().stationeryCart
 
           // Update the quantity of changed item 
-          changedData[index].quantity = changedQuantityVal
+          changedData.forEach((item)=>{
+            if(item.itemId === currentItem.itemId){
+              item.quantity = changedQuantityVal
+            }
+          })
           console.log(" The data is ", changedData);
 
           // update the same in DB as well
@@ -97,8 +105,63 @@ function Checkout() {
     }
   }
 
+
   const handleDeleteItem = (index) => {
-      console.log(index, cartContents[index]);
+      // console.log(index, cartContents[index]);
+      const currentItem = cartContents[index]
+
+      // Since Its essentially equivalent to deleting particular item
+      // from array, We will use changeQuantity again(since it updates
+      // the particular category array with passed one)
+
+      const colRef = collection(db,"Users")
+      getDoc(doc(colRef,currentUser.uid))
+      .then( (data) => {
+
+        if(currentItem.category === "Catering"){
+
+          // Get the prev values of cart data.
+          const changedData = data.data().cateringCart
+
+          // Get the index of to be deleted item 
+          let delIndex;
+          for(let i=0; i<changedData.length; i++){
+            if(changedData[i].itemId === currentItem.itemId){
+              delIndex = i;
+              break;
+            }
+          }
+          changedData.splice(delIndex,1)
+          console.log(" The data is ", changedData);
+
+          // update the same in DB as well
+          updateQuantity("cateringCart",changedData)
+        }
+        else if(currentItem.category === "Stationery"){
+
+          // Get the prev values of cart data.
+          const changedData = data.data().stationeryCart
+
+          // Get the index of to be deleted item 
+          let delIndex;
+          for(let i=0; i<changedData.length; i++){
+            if(changedData[i].itemId === currentItem.itemId){
+              delIndex = i;
+              break;
+            }
+          }
+          changedData.splice(delIndex,1)
+          console.log(" The data is ", changedData);
+
+          // update the same in DB as well
+          updateQuantity("stationeryCart",changedData)
+        }
+
+      })
+      .catch((err)=> {
+        console.log(err);
+      })
+
   }
 
   const confirmBooking = async () => {

@@ -222,9 +222,72 @@ function AdminDashboard() {
         </div>
 
 
-        {/* Here Shows the Admin's own userData.
-        This is usefull if he wants to checkout his own orders for himself. */}
-  
+    {/* Here Shows the Admin's own userData.
+      This is usefull if he wants to checkout his own orders for himself. */}
+        
+      
+        <div className="w-full max-w-4xl mt-10">
+
+          <h1 className="text-3xl font-bold text-indigo-600 mb-4 text-center capitalize">
+            Your user role content
+          </h1>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {/* Cart Section */}
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Your Cart</h2>
+                <div className="flex flex-col gap-4">
+                  {userData.cart && userData.cart.length > 0 ? (
+                    userData.cart.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center border rounded p-3 gap-4"
+                      >
+                        <img
+                          src={item.imageUrl}
+                          alt={item.name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-800">{item.name}</p>
+                          <p className="text-gray-600">₹{item.price}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">Your cart is empty.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Orders Section */}
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Your Orders</h2>
+                <div className="flex flex-col gap-4">
+                  {userData.orders && userData.orders.length > 0 ? (
+                    userData.orders.map((order, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center border rounded p-3 gap-4"
+                      >
+                        <img
+                          src={order.imageUrl}
+                          alt={order.name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-800">{order.name}</p>
+                          <p className="text-gray-600">₹{order.price}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">You have no orders yet.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
 
       </div>
     );
