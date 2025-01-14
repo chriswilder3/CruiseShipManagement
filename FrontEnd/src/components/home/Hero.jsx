@@ -15,7 +15,7 @@ function Hero() {
         
 
         <h3 className='ml-10 text-3xl playfair-display  italic my-3  p-10 rounded-md'>
-          <q> <span className='text-4xl text font-medium '> Celestia </span> is more than just a cruise. <br /> it’s a journey to an unforgettable voyage to soothe the soul and elevate your <span className='text-4xl text font-medium'>Senses. </span> </q>
+          <q> <span className='text-4xl text font-medium '> Celestia </span> is more than just a cruise. <br /> it’s an unforgettable voyage to soothe your <span className='text-4xl text font-medium'>Soul. </span> </q>
         </h3>
   </div>
   )

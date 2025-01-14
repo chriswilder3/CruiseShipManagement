@@ -200,7 +200,7 @@ function AdminDashboard() {
               View Details 
             </button>
           </div>
-          <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
+          {/* <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
             <h1 className="text-xl text-rose-500">Manage people on Celestia</h1>
             <button
               type="button"
@@ -208,7 +208,7 @@ function AdminDashboard() {
             >
               Manage People
             </button>
-          </div>
+          </div> */}
 
           <div className="flex flex-col gap-3 bg-gradient-to-tr from-slate-800 via-gray-600 to-slate-500 rounded p-5 shadow-lg">
             <h1 className="text-xl text-rose-500">Manage items and services</h1>
