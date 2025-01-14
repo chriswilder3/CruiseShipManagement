@@ -15,7 +15,7 @@ function Services() {
             Catering:
           </h1>    
           <Link to="/services/catering">
-            <img className='w-72 my-1 mb-3 hover:scale-105 rounded-md transition-transform duration-300' src="src/assets/food.png" alt="Catering Services" />
+            <img className='w-72 my-1 mb-3 hover:scale-105 rounded-md transition-transform duration-300' src="\images\home\food2.png" alt="Catering Services" />
           </Link>
           {/* <div className='flex text-lg flex-col gap-2 font-semibold text-rose-500  rounded-lg p-2'>
             <p className='hover:scale-105 transition-transform duration-75'> <Link to="/services/catering/snacks">  Snacks </Link> </p> 
@@ -31,7 +31,7 @@ function Services() {
             Stationery:
           </h1>
           <Link to='/services/stationery'>
-            <img className='w-72 my-1 rounded-md hover:scale-105 mb-3 transition-transform duration-75' src="src/assets/stationery.png" alt="Stationery Services" />
+            <img className='w-72 my-1 rounded-md hover:scale-105 mb-3 transition-transform duration-75' src="\images\home\stationery.png" alt="Stationery Services" />
           </Link>    
           {/* <div className='flex text-lg flex-col gap-2 font-semibold text-blue-500  rounded-lg p-2'>
             <p className='hover:scale-105 transition-transform duration-75'> <Link to='/services/stationery/gifts'> Gifts </Link> </p>
@@ -47,7 +47,7 @@ function Services() {
             Facilities:
           </h1>
           <Link to='/services/facilities'>
-            <img className='w-72 my-1 hover:scale-105 rounded-md mb-3 transition-transform duration-75' src="src/assets/partyhall.png" alt="Facilities Services" />
+            <img className='w-72 my-1 hover:scale-105 rounded-md mb-3 transition-transform duration-75' src="\images\home\partyhall.png" alt="Facilities Services" />
           </Link>   
           {/* <div className='flex text-lg flex-col gap-2 font-semibold text-green-500  rounded-lg p-2'>
             <p className='hover:scale-105 transition-transform duration-100'> <Link to='/services/facilities/movies'> Movie Tickets </Link> </p>

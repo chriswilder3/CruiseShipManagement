@@ -12,6 +12,10 @@ Below is the architecture of Celestia, designed for efficient communication betw
 
 ---
 
+## Deployed Site Access
+
+Access the already deployed site at : https://celestia-cruise-ship-management-service-9wq851799.vercel.app
+
 ## 🌟 Features  
 
 ### Voyager Module  
