@@ -5,7 +5,7 @@ function NavbarDropDown(  ) {
   
     return (
     <div className='bg-gray-100 shadow-md shadow-slate-400 flex flex-col gap-3 p-5 roboto rounded-md'>
-        <div className='bg-sky-500 rounded-md transition-transform duration-100 hover:scale-105'>
+        <div className='bg-sky-500 rounded-md roboto transition-transform duration-100 hover:scale-105'>
             <Link to="/services/catering">
                 <h1 className='text-xl  my-1 text-slate-100'>
                     Catering
