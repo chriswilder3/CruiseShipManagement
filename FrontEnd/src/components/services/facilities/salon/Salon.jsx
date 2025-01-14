@@ -45,22 +45,7 @@ function Salon() {
             Experience best salon experiance with our specially curated selection of beauty services.
         </p>
 
-        {/* Search Bar */}
-        <div className="flex justify-center">
-            <form className="flex w-full max-w-md items-center">
-            <input
-                type="search"
-                placeholder="Search for movies..."
-                className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 text-gray-800 focus:ring-2 focus:ring-indigo-300 focus:outline-none"
-            />
-            <button
-                type="submit"
-                className="px-6 py-2 bg-gray-400 text-white rounded-r-md hover:bg-gray-600 transition"
-            >
-                Search
-            </button>
-            </form>
-        </div>
+        
         <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
             {
                 
@@ -69,9 +54,7 @@ function Salon() {
                 )
             }
         </div>
-        <p>
-            {/* {salonItems[0].name} */}
-        </p>
+        
     </div> 
   )
 }

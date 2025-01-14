@@ -44,19 +44,7 @@ function Catering() {
             <p className="text-lg text-gray-600">
                 Explore a world of delicious offerings tailored for your voyage.
             </p>
-            <form className="flex w-full max-w-md items-center">
-                <input 
-                    type="search" 
-                    placeholder="Search items..." 
-                    className="flex-grow px-4 py-2 text-gray-800 rounded-l-md border border-gray-300 focus:ring-2 focus:ring-blue-300 focus:outline-none"
-                />
-                <button 
-                    type="submit" 
-                    className="px-6 py-2 text-white bg-blue-500 rounded-r-md hover:bg-blue-600 transition"
-                >
-                    Search
-                </button>
-            </form>
+            
         </div>
 
         {/* Food Items Grid */}

@@ -45,22 +45,7 @@ function Partyhall() {
             Experience best Partyhall experiance with our specially curated selection of beauty services.
         </p>
 
-        {/* Search Bar */}
-        <div className="flex justify-center">
-            <form className="flex w-full max-w-md items-center">
-            <input
-                type="search"
-                placeholder="Search for movies..."
-                className="flex-grow px-4 py-2 rounded-l-md border border-rose-300 text-gray-800 focus:ring-2 focus:ring-orange-300 focus:outline-none"
-            />
-            <button
-                type="submit"
-                className="px-6 py-2 bg-orange-400 text-white rounded-r-md hover:bg-orange-500 transition"
-            >
-                Search
-            </button>
-            </form>
-        </div>
+        
         <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
             {
                 
@@ -69,9 +54,7 @@ function Partyhall() {
                 )
             }
         </div>
-        <p>
-            {/* {PartyhallItems[0].name} */}
-        </p>
+        
     </div> 
   )
 }

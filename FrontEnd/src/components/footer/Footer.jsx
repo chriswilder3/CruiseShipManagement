@@ -13,13 +13,10 @@ function Footer() {
             </div>
 
             {/* Center Section - Navigation Links */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center sm:mr-5">
                 <ul className="flex flex-wrap justify-center gap-6">
                     <li>
                         <a href="/about" className="hover:text-white transition duration-300">About</a>
-                    </li>
-                    <li>
-                        <a href="#destinations" className="hover:text-white transition duration-300">Destinations</a>
                     </li>
                     <li>
                         <a href="/services" className="hover:text-white transition duration-300">Services</a>

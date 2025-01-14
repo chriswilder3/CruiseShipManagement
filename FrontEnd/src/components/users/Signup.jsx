@@ -70,7 +70,7 @@ function SignUp() {
             
           );
           navigate("/users/signin");
-        }, 2000)
+        }, 1000)
         
       } else {
         setErrorMsg(data.message || "Registration failed. Please try again.");
