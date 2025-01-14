@@ -40,19 +40,7 @@ function Stationery() {
                 <p className="text-lg text-gray-600">
                     Find all the essential stationery items for your voyage with us.
                 </p>
-                <form className="flex w-full max-w-md items-center">
-                    <input
-                        type="search"
-                        placeholder="Search stationery..."
-                        className="flex-grow px-4 py-2 text-gray-800 rounded-l-md border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none"
-                    />
-                    <button
-                        type="submit"
-                        className="px-6 py-2 text-white bg-purple-500 rounded-r-md hover:bg-purple-600 transition"
-                    >
-                        Search
-                    </button>
-                </form>
+                
             </div>
 
             {/* Stationery Items Grid */}
