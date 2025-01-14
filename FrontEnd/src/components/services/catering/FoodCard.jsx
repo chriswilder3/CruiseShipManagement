@@ -64,47 +64,7 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
               }
             })
             .catch((err) => {console.error(err);})
-
-            // Prepare the new item data
             
-            // // Add the new item to the array
-            // currentArray.push(newItem);
-
-            // // Update the user's cart or orders in Firestore
-            // updateDoc(docRef, {
-            //   [cartOrOrderArray]: currentArray,
-            // })
-            //   .then(() => {
-            //     const successMessage =
-            //       cartOrOrder === "cart"
-            //         ? "Successfully added to cart."
-            //         : "Successfully added to orders.";
-            //     setMessage(successMessage);
-            //     if(cartOrOrder !== 'cart'){
-            //         colRef = collection(db, "CateringOrders")
-            //         addDoc(colRef, { 
-            //             itemId, name, imageUrl, price, uid : currentUser.uid
-            //         }
-                        
-            //         )
-            //         .then( () => {
-            //             const successMessage =
-            //                 cartOrOrder === "cart"
-            //                     ? "Successfully added to cart."
-            //                     : "Successfully added to orders.";
-            //                 setMessage(successMessage);
-            //         })
-            //         .catch( (err) => {
-            //             console.error("Error while updating Firestore:", err);
-            //                 setMessage("Failed to add item. Please try again.");
-            //         })
-
-              //  }
-              // })
-              // .catch((err) => {
-              //   console.error("Error while updating Firestore:", err);
-              //   setMessage("Failed to add item. Please try again.");
-              // });
           } else {
             setMessage("User document not found.");
           }

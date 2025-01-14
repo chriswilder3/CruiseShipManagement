@@ -79,7 +79,7 @@ function Navbar() {
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
         </svg>
       
-    <ul className={`sm:flex sm:flex-row  ${mobileMenuOpen?"flex-col":"hidden"} gap-20 mb-10  justify-items-start px-16 pt-6 pb-1 text-blue-700 text-xl font-medium poppins`}>
+    <ul className={`sm:flex sm:flex-row  ${mobileMenuOpen?"flex-col":"hidden"} gap-20 mb-10  justify-items-start sm:items-center px-16 pt-6 pb-1 text-blue-700 text-xl font-medium poppins`}>
       <li>
         <NavLink to="/" className={({ isActive }) => `${isActive ? 'text-slate-800' : ''}`}>
           Home
@@ -123,7 +123,7 @@ function Navbar() {
          <p className='z-9 w-6 h-6  sm:w-8 sm:h-8 text-xs sm:text-base rounded-full flex items-center justify-center bg-red-500 text-white absolute left-4 -top-2 sm:left-3 sm:-top-4'> <span className='my-auto self-center'> {cartCount}</span> </p>
         </button>
 
-        <div className={`z-8 absolute ${showCartPopup?"flex flex-col gap-2 ":"hidden"} p-3 min-w-96 cartshow sm:-left-44 bg-blue-100 rounded-md shadow-lg `}
+        <div className={`z-8 absolute ${showCartPopup?"flex flex-col gap-2 ":"hidden"} p-3 min-w-96 cartshow sm:-left-44 bg-blue-100 rounded-md shadow-lg z-20 `}
            > 
           
             <div onClick={togglePopUp} className=' p-0.5 px-2 w-fit  text-md text-red-400 ml-auto rounded-md transition-transform duration-100 hover:scale-105 hover:cursor-pointer'>
