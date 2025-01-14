@@ -12,7 +12,8 @@ function AdminDashboard() {
   const [showSuccess, setShowSuccess] = useState(false); // State to control notification visibility
   const [refreshGuests, setRefreshGuests] = useState(false); // State to trigger refetching of guests
 
-  const backEndUrl = "http://localhost:5000";
+  // const backEndUrl = "http://localhost:5000";
+  const backEndUrl = "https://celestia-cruise-ship-management-service.onrender.com";
 
   // Fetch guest data whenever refreshGuests changes
   useEffect(() => {
