@@ -12,7 +12,7 @@ function Carousel() {
                 <div className='flex justify-center'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
-                        src="src/assets/food2.png" 
+                        src="\images\home\food2.png" 
                         alt="Gourmet Meal"
                     />
                 </div>
@@ -37,7 +37,7 @@ function Carousel() {
                 <div className='flex justify-center'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
-                        src="src/assets/theatre.png" 
+                        src="\images\home\theatre.png" 
                         alt="Theatre"
                     />
                 </div>
@@ -50,7 +50,7 @@ function Carousel() {
                 <div className='flex justify-center'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
-                        src="src/assets/gym.png" 
+                        src="\images\home\gym.png" 
                         alt="Fitness Equipment"
                     />
                 </div>
@@ -78,7 +78,7 @@ function Carousel() {
                 <div className='flex justify-center'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
-                        src="src/assets/partyhall.png" 
+                        src="images\home\partyhall.png" 
                         alt="Banquet Hall"
                     />
                 </div>

@@ -57,7 +57,7 @@ function Navbar() {
   const togglePopUp = () => {
     
     if(!currentUser){
-      window.open("/users/signin/","_self")
+      window.open("/users/signin","_self")
     }
 
     setShowCartPopUp((prev) => !prev)

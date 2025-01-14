@@ -11,7 +11,7 @@ function Hero() {
          Sail into Serenity with <span className='text-7xl text font-semibold text-blue-800'>Celestia </span>...
         </h2>
 
-        <img className=' w-10/12 mx-auto rounded-md ' src="src\assets\cruise6.png" alt="" />
+        <img className=' w-10/12 mx-auto rounded-md ' src="\images\home\cruise6.png" alt="" />
         
 
         <h3 className='ml-10 text-3xl playfair-display  italic my-3  p-10 rounded-md'>
