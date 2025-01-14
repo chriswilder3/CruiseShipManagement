@@ -3,7 +3,7 @@ const express = require('express')
 const bodyparser = require('body-parser')
 const cors  = require('cors')
 
-const port = 5000
+const port = process.env.PORT
 
 const app = express()
 
@@ -98,7 +98,7 @@ app.post("/approveUser", async (req, res) => {
 
 
 app.listen(port, () =>{
-    console.log('Server running on port : 5000');
+    console.log(`Server running on port : ${port}`);
 })
 
 // app.post('/getAllUserRoles', async (req, res) => {
