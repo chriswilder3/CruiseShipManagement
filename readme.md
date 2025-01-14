@@ -14,7 +14,7 @@ Below is the architecture of Celestia, designed for efficient communication betw
 
 ## Deployed Site Access
 
-Access the already deployed site at : https://celestia-cruise-ship-management-service-mw156iil0.vercel.app
+Access the already deployed site at : https://celestia-cruise-ship-management-service.vercel.app
 
 ## 🌟 Features  
 
