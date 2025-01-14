@@ -21,7 +21,7 @@ function Facilities() {
         >
           <img
             className="rounded-lg mb-4 w-40 h-40 object-cover"
-            src="/src/assets/theatre.png"
+            src="\images\home\theatre.png"
             alt="Movies"
           />
           <h2 className="text-xl font-semibold text-indigo-700">Movies</h2>
@@ -34,7 +34,7 @@ function Facilities() {
         >
           <img
             className="rounded-lg mb-4 w-40 h-40 object-cover"
-            src="/src/assets/gym.png"
+            src="\images\home\gym.png"
             alt="Fitness Center"
           />
           <h2 className="text-xl font-semibold  text-indigo-700">Fitness Center</h2>
@@ -47,7 +47,7 @@ function Facilities() {
         >
           <img
             className="rounded-lg mb-4 w-40 h-40 object-cover"
-            src="/src/assets/salon.jpg"
+            src="\images\home\salon.jpg"
             alt="Beauty Salon"
           />
           <h2 className="text-xl font-semibold text-indigo-700">Beauty Salon</h2>
@@ -60,7 +60,7 @@ function Facilities() {
         >
           <img
             className="rounded-lg mb-4 w-40 h-40 object-cover"
-            src="/src/assets/partyhall.png"
+            src="\images\home\partyhall.png"
             alt="Party Hall"
           />
           <h2 className="text-xl font-semibold text-indigo-700">Party Hall</h2>
