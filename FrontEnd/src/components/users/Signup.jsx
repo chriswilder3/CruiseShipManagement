@@ -14,7 +14,8 @@ function SignUp() {
   const handleSignUp = async function (e) {
     e.preventDefault();
 
-    const backEndUrl = "http://localhost:5000";
+    // const backEndUrl = "http://localhost:5000";
+    const backEndUrl = "https://celestia-cruise-ship-management-service.onrender.com";
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const pass = formData.get("pass");
