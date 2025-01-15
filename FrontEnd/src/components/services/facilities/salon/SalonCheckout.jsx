@@ -68,7 +68,7 @@ function SalonCheckout() {
            setMessage("Success")
            setShowMsg(true)
            setTimeout( () => {
-            window.open("/users/dashboard","_self")
+            navigate("/users/dashboard")
            },2000)
         })
         .catch( (err) => 
@@ -86,7 +86,7 @@ function SalonCheckout() {
   }
 
   const handleCancel = () => {
-    window.open("/services/facilities/salon","_self")
+    navigate("/services/facilities/salon")
   }
 
   

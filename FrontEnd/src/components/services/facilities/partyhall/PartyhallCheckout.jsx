@@ -72,7 +72,7 @@ function PartyhallCheckout() {
              setMessage("Success")
              setShowMsg(true)
              setTimeout( () => {
-              window.open("/users/dashboard","_self")
+              navigate("/users/dashboard")
              },2000)
           })
           .catch( (err) => 
@@ -90,7 +90,7 @@ function PartyhallCheckout() {
   }
 
   const handleCancel = () => {
-    window.open("/services/facilities/partyhall","_self")
+    navigate("/services/facilities/partyhall")
   }
 
   

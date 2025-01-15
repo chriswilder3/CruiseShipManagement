@@ -107,6 +107,17 @@ function VoyagerDashboard() {
                               Quant : {order.quantity}
                           </p>
                         }
+                        {
+                          (order.category === "Movies") 
+                          && <div> 
+                            <p className="text-xs roboto text-slate-600">
+                              Seats : {order.selectedSeats.length}
+                            </p>
+                            <p className="text-xs roboto text-slate-600">
+                              Screen : {order.screenNumber}
+                            </p>
+                          </div>
+                        }
                         <p className="text-xs roboto font-thin text-blue-600"> <span className="text-slate-500">category : </span> {order.category} </p>
                         <p className="text-green-500 font-semibold">₹{order.price}</p>
                       </div>

@@ -2,22 +2,24 @@ import React, { useState } from "react";
 import { db } from "../../../firebase";
 import { useAuth } from "../../../contexts/AuthContext";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 function FoodCard({ name, itemId, desc, price, imageUrl }) {
   console.log(name,itemId,price,desc,imageUrl);
   const [message, setMessage] = useState("");
   const { currentUser } = useAuth();
+  const nav = useNavigate()
 
   const handleAddCart = (e) => {
     const cartOrOrder = e.target.getAttribute("id");
 
     if (!currentUser) {
       setMessage("You are not logged in. Redirecting...");
-      setTimeout(() => window.open("/users/signin", "_self"), 2000);
+      setTimeout(() => nav("/users/signin"), 2000);
     }
     else if(currentUser.role === 'Guest'){
       setMessage("You must be voyager to use services. Redirecting...");
-      setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
+      setTimeout(() => nav("/users/dashboard"), 2000);
     }
     else{
       let colRef = collection(db, "Users");
@@ -60,7 +62,7 @@ function FoodCard({ name, itemId, desc, price, imageUrl }) {
               setMessage(successMessage);
 
               if(cartOrOrder === 'order'){
-                window.open('/users/checkout',"_self")
+                nav('/users/checkout')
               }
             })
             .catch((err) => {console.error(err);})

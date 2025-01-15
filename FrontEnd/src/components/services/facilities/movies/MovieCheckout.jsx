@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { addDoc, collection, doc, getDoc , setDoc, updateDoc } from "firebase/firestore";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../../../firebase";
 
 function MovieCheckout() {
   const { userData, loading: userLoading } = useUser();
   const { currentUser, loading: authLoading } = useAuth();
+  const nav = useNavigate()
 
   const location = useLocation();
 
@@ -110,7 +111,7 @@ function MovieCheckout() {
                       setSuccessMsg("Success")
                       setShowMsg(true)
                       setTimeout( () => {
-                        window.open("/users/dashboard","_self")
+                        nav("/users/dashboard")
                       },2000)
                       })
                     .catch( (err) => 
@@ -135,32 +136,6 @@ function MovieCheckout() {
         }
       }) // This is where ForEach Loop ends
 
-
-
-
-
-      // // Check for already booked seats
-      // const { occupiedSeats } = movieData || {};
-      // const newOccupiedSeats = new Set(occupiedSeats || []);
-
-      // for (const seat of selectedSeats) {
-      //   if (newOccupiedSeats.has(seat)) {
-      //     setBookingStatus("One or more seats are already booked. Please select different seats.");
-      //     return;
-      //   }
-      //   newOccupiedSeats.add(seat); // Mark seat as occupied
-      // }
-
-      // // Update Firestore with newly occupied seats
-      // await updateDoc(movieDocRef, { occupiedSeats: Array.from(newOccupiedSeats) });
-
-      // setSuccessMsg("Booking confirmed successfully!");
-      // setShowMsg(true);
-
-      // setTimeout(() => {
-      //   setShowMsg(false);
-      //   setBookingStatus(null);
-      // }, 3000);
     } catch (error) {
       console.error("Error confirming booking:", error);
       setBookingStatus("Failed to confirm booking. Please try again.");
@@ -168,7 +143,7 @@ function MovieCheckout() {
   };
 
   const handleCancel = () => {
-    window.open("/services/facilities/movies","_self")
+    nav("/services/facilities/movies")
   }
 
   useEffect(() => {
