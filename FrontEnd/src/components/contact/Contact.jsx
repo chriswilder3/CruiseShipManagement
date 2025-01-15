@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Contact() {
   return (
@@ -21,25 +22,25 @@ function Contact() {
         <div>
           <h2 className="text-2xl font-semibold mb-4"> Phone Numbers</h2>
           <p className="text-lg leading-relaxed">
-            <strong>Customer Support:</strong> +1 (800) 555-CELE <br />
-            <strong>Corporate Office:</strong> +1 (800) 555-1234
+            <strong>Customer Support:</strong> +91 (800) 555-CELE <br />
+            <strong>Corporate Office:</strong> +91 (800) 555-1234
           </p>
         </div>
 
         <div>
           <h2 className="text-2xl font-semibold mb-4"> Email</h2>
           <p className="text-lg leading-relaxed">
-            <strong>Support:</strong> <a href="mailto:support@celestia.com" className="text-blue-600 hover:underline">support@celestia.com</a> <br />
-            <strong>General Inquiries:</strong> <a href="mailto:info@celestia.com" className="text-blue-600 hover:underline">info@celestia.com</a>
+            <strong>Support:</strong> <Link to="#" className="text-blue-600 hover:underline">support@celestia.com</Link> <br />
+            <strong>General Inquiries:</strong> <Link to="#" className="text-blue-600 hover:underline">info@celestia.com</Link>
           </p>
         </div>
 
         <div>
           <h2 className="text-2xl font-semibold mb-4">🌐 Follow Us</h2>
           <ul className="flex flex-col gap-2">
-            {/* <li><a href="#" className="text-blue-600 hover:underline">Facebook: facebook.com/celestia</a></li> */}
-            <li><a href="#" className="text-blue-600 hover:underline">Instagram: @celestia_cruises</a></li>
-            <li><a href="#" className="text-blue-600 hover:underline">Twitter: @CelestiaCruise</a></li>
+           
+            <li><Link to="#" className="text-blue-600 hover:underline">Instagram: @celestia_cruises</Link></li>
+            <li><Link to="#" className="text-blue-600 hover:underline">Twitter: @CelestiaCruise</Link></li>
           </ul>
         </div>
       </div>

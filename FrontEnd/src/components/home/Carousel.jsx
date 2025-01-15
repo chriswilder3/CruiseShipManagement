@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 function Carousel() {
@@ -10,11 +11,13 @@ function Carousel() {
             <div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center bg-gradient-to-b from-yellow-100 via-orange-200 to-orange-300 p-8 gap-6 rounded-lg shadow-lg'>
                 {/* Image */}
                 <div className='flex justify-center'>
+                    <Link to='/services/catering'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
                         src="\images\home\food2.png" 
                         alt="Gourmet Meal"
                     />
+                    </Link>
                 </div>
                 {/* Text */}
                 <div className='flex justify-center items-center text-center'>
@@ -35,11 +38,14 @@ function Carousel() {
                 </div>
                 {/* Image */}
                 <div className='flex justify-center'>
+                    <Link to='/services/facilities/movies'>
+
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
                         src="\images\home\theatre.png" 
                         alt="Theatre"
                     />
+                    </Link>
                 </div>
             </div>
 
@@ -48,11 +54,13 @@ function Carousel() {
                                     {/* from-green-300 via-green-400 to-gray-500 */}
                 {/* Image */}
                 <div className='flex justify-center'>
+                    <Link to='/services/facilities/fitness'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
                         src="\images\home\gym.png" 
                         alt="Fitness Equipment"
                     />
+                    </Link>
                 </div>
 
                 {/* Text */}
@@ -76,11 +84,13 @@ function Carousel() {
 
                 {/* Image */}
                 <div className='flex justify-center'>
+                    <Link to='/services/facilities/partyhall'>
                     <img 
                         className='w-3/4 md:w-2/3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105' 
                         src="images\home\partyhall.png" 
                         alt="Banquet Hall"
                     />
+                    </Link>
                 </div>
             </div>
         </div>
@@ -90,10 +100,10 @@ function Carousel() {
                     <h3 className='text-3xl italic playfair-display font-medium text-gray-800 leading-relaxed'>
                         Beauty Salons, Ocean views, Luxury shopping, <br /> and much more!
                     </h3>
-                    <a href='/services' className=' text-lg font-semibold text-amber-400 bg-slate-700 px-6 py-3 poppins rounded-full 
+                    <Link to='/services' className=' text-lg font-semibold text-amber-400 bg-slate-700 px-6 py-3 poppins rounded-full 
                         transition delay-75  hover:bg-slate-950 hover:text-yellow-400 hover:scale-105 '>
                         Explore Now
-                    </a>
+                    </Link>
         </div>
 
 

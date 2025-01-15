@@ -3,10 +3,10 @@ import MovieCard from './MovieCard';
 import { db } from '../../../../firebase';
 import { getDocs, collection, setDoc, doc, getDoc } from 'firebase/firestore';
 
-const DAYS_AHEAD = 7; // Generate data for the next 7 days
-const TIME_SLOTS = ["12:00PM", "3:00PM", "6:00PM", "9:00PM"]; // Time slots per day
-const SCREEN_COUNT = 4; // Number of screens (e.g., screen1, screen2, screen3, screen4)
-const SEATS_PER_SCREEN = [40, 40, 40, 40]; // Number of seats per screen
+const DAYS_AHEAD = 7; 
+const TIME_SLOTS = ["12:00PM", "3:00PM", "6:00PM", "9:00PM"]; 
+const SCREEN_COUNT = 4; 
+const SEATS_PER_SCREEN = [40, 40, 40, 40]; 
 
 // Helper function to generate an empty seating array
 function generateEmptySeatingArray(seatCount) {
@@ -50,14 +50,15 @@ function Movies() {
   useEffect(() => {
     const fetchAllMovies = async () => {
       try {
-        // Check if 'movieSeatings' collection exists
+
+        // We need to first check if 'movieSeatings' collection exists
         const colRef = collection(db, 'movieSeatings');
         const querySnap = await getDocs(colRef);
 
         // If no documents are found, generate the seating data
         if (querySnap.empty) {
           console.log("movieSeatings collection doesn't exist. Generating data...");
-          await generateMovieSeatings(); // Generate the seating data
+          await generateMovieSeatings(); // execute the earlier function
         }
 
         // Fetch all movies

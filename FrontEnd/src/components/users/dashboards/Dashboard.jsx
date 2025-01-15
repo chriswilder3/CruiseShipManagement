@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AdminDashboard from "./AdminDashboard";
 import VoyagerDashboard from "./VoyagerDashboard";
 import GuestDashboard from "./GuestDashboard";
@@ -10,6 +10,7 @@ import ManagerDashboard from "./ManagerDashboard";
 
 function Dashboard() {
   const { currentUser, loading: authLoading } = useAuth(); // Handle loading state for auth
+  const nav = useNavigate()
 
   // Show a loading screen while `currentUser` is being fetched
   if (authLoading) {
@@ -22,7 +23,7 @@ function Dashboard() {
 
   // If no user is logged in, redirect to the sign-in page
   if (!currentUser) {
-    return <Navigate to="/users/signin" />;
+    nav("/users/signin")
   }
 
   // Render the appropriate dashboard based on the user's role

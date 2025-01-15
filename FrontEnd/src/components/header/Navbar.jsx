@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 import NavbarDropDown from './NavbarDropDown';
@@ -18,6 +18,7 @@ function Navbar() {
   const [ cartCount, setCartCount] = useState(0)
   const [ showCartPopup, setShowCartPopUp] = useState(false)
   const [ cartSubTotal, setCartSubTotal] = useState(null)
+  const nav = useNavigate()
 
   useEffect(()=>{
     if(userData){
@@ -57,7 +58,7 @@ function Navbar() {
   const togglePopUp = () => {
     
     if(!currentUser){
-      window.open("/users/signin","_self")
+      nav("/users/signin")
     }
 
     setShowCartPopUp((prev) => !prev)

@@ -13,7 +13,7 @@ function PartyhallCard({ itemId, name, desc, price, duration, imageUrl, category
   const handleBookNow = () => {
     if (!currentUser || currentUser.role === 'Guest') {
       setMessage('You must be a voyager to use services. Redirecting...');
-      setTimeout(() => window.open('/users/dashboard', '_self'), 2000);
+      setTimeout(() => navigate('/users/dashboard'), 2000);
     } else {
       setShowPopup(true); // Show the booking popup
     }

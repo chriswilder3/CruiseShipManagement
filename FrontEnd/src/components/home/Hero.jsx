@@ -14,7 +14,7 @@ function Hero() {
         <img className=' w-10/12 mx-auto rounded-md ' src="\images\home\cruise6.png" alt="" />
         
 
-        <h3 className='ml-10 text-3xl playfair-display  italic my-3  p-10 rounded-md'>
+        <h3 className='ml-10 text-3xl fira-mono  my-3  p-10 rounded-md'>
           <q> <span className='text-4xl text font-medium '> Celestia </span> is more than just a cruise. <br /> it’s an unforgettable voyage to soothe your <span className='text-4xl text font-medium'>Soul. </span> </q>
         </h3>
   </div>

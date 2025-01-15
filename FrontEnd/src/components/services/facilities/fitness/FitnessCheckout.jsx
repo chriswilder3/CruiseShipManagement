@@ -70,7 +70,7 @@ function FitnessCheckout() {
            setMessage("Success")
            setShowMsg(true)
            setTimeout( () => {
-            window.open("/users/dashboard","_self")
+            navigate("/users/dashboard")
            },2000)
         })
         .catch( (err) => 
@@ -88,7 +88,7 @@ function FitnessCheckout() {
   }
 
   const handleCancel = () => {
-    window.open("/services/facilities/fitness","_self")
+    navigate("/services/facilities/fitness")
   }
 
   

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -16,13 +17,13 @@ function Footer() {
             <div className="flex flex-col items-center sm:mr-5">
                 <ul className="flex flex-wrap justify-center gap-6">
                     <li>
-                        <a href="/about" className="hover:text-white transition duration-300">About</a>
+                        <Link to="/about" className="hover:text-white transition duration-300">About</Link>
                     </li>
                     <li>
-                        <a href="/services" className="hover:text-white transition duration-300">Services</a>
+                        <Link to="/services" className="hover:text-white transition duration-300">Services</Link>
                     </li>
                     <li>
-                        <a href="/contact" className="hover:text-white transition duration-300">Contact</a>
+                        <Link to="/contact" className="hover:text-white transition duration-300">Contact</Link>
                     </li>
                 </ul>
             </div>
@@ -31,15 +32,15 @@ function Footer() {
             <div className="flex flex-col items-center md:items-end space-y-2">
                 <p className="text-sm">Follow Us:</p>
                 <div className="flex gap-4">
-                    <a href="#" aria-label="Facebook" className="hover:text-white transition duration-300">
+                    <Link to="#" aria-label="Facebook" className="hover:text-white transition duration-300">
                         <i className="fab fa-facebook-f text-lg"></i>
-                    </a>
-                    <a href="#" aria-label="Instagram" className="hover:text-white transition duration-300">
+                    </Link>
+                    <Link to="#" aria-label="Instagram" className="hover:text-white transition duration-300">
                         <i className="fab fa-instagram text-lg"></i>
-                    </a>
-                    <a href="#" aria-label="Twitter" className="hover:text-white transition duration-300">
+                    </Link>
+                    <Link to="#" aria-label="Twitter" className="hover:text-white transition duration-300">
                         <i className="fab fa-twitter text-lg"></i>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
