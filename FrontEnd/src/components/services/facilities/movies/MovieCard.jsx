@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { doc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../../../firebase";
+import { useNavigate } from 'react-router-dom';
 
 function MovieCard({ itemId, name, description, imageUrl, duration, price, screenNumber }) {
   const { currentUser } = useAuth();
@@ -10,49 +11,20 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
+  const nav = useNavigate();
 
-  // Handle Add to Favorites
-  const handleAddToFavorites = () => {
-    if (!currentUser) {
-      setMessage("You are not logged in. Redirecting...");
-      setTimeout(() => window.open("/users/signin", "_self"), 2000);
-      return;
-    }
+  // Generate upcoming 7 days
+  const today = new Date();
+  const upcomingDates = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(today.getDate() + i);
+    return date.toISOString().split("T")[0];
+  });
 
-    const docRef = doc(db, "Users", currentUser.uid);
-
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          const existingFavorites = userData.favouriteMovies || [];
-
-          const newFavorite = { itemId, name, duration };
-          const isAlreadyFavorited = existingFavorites.some((movie) => movie.itemId === itemId);
-
-          if (isAlreadyFavorited) {
-            setMessage("Movie already in favorites.");
-          } else {
-            const updatedFavorites = [...existingFavorites, newFavorite];
-            updateDoc(docRef, { favouriteMovies: updatedFavorites })
-              .then(() => setMessage("Added to Favorites!"))
-              .catch((err) => console.error(err));
-          }
-        } else {
-          setMessage("User document not found.");
-        }
-      })
-      .catch((err) => {
-        console.error("Error while fetching user document:", err);
-        setMessage("Failed to add to favorites. Please try again.");
-      });
-  };
-
-  // Handle Booking Popup
   const handleBookingPopUp = () => {
     if (!currentUser || currentUser.role === "Guest") {
       setMessage("You are not logged in. Redirecting...");
-      setTimeout(() => window.open("/users/dashboard", "_self"), 2000);
+      setTimeout(() => nav("/users/dashboard"), 2000);
       return;
     }
     setShowBookingPopup(true);
@@ -62,7 +34,6 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
     setShowBookingPopup(false);
   };
 
-  // Handle Confirm Booking
   const handleConfirmBooking = () => {
     if (!selectedSeats.length || !selectedDate || !selectedSlot) {
       setMessage("Please select seats, a date, and a time slot to proceed.");
@@ -80,17 +51,14 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
       selectedDate,
       selectedSlot,
     };
-    console.log(bookingData);
 
-    // Redirect to FacilityCheckout with booking data
     const queryParams = new URLSearchParams(bookingData).toString();
-    window.open(`/services/facilities/movies/movieCheckout?${queryParams}`, "_self");
+    nav(`/services/facilities/movies/movieCheckout?${queryParams}`);
   };
 
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg">
       <p className="text-blue-500 text-sm my-1">{message}</p>
-
       <h2 className="text-blue-500 text-2xl font-medium poppins my-1">Screen-{screenNumber}</h2>
       <img
         className="rounded-lg mb-4 w-full h-60 object-cover"
@@ -103,16 +71,6 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
       </p>
       <p className="text-sm text-gray-500 text-center mb-4">Duration: {duration}</p>
       <p className="text-lg font-medium text-green-500">₹{price}</p>
-
-      {/* Add to Favorites Button */}
-      <button
-        onClick={handleAddToFavorites}
-        className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition text-sm mb-2"
-      >
-        Add to Favorites
-      </button>
-
-      {/* Book Now Button */}
       <button
         onClick={handleBookingPopUp}
         className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition text-sm"
@@ -121,7 +79,7 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
       </button>
 
       {showBookingPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col gap-2  justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col gap-2 justify-center items-center z-50">
           <button type="button" onClick={closeBookingPopUp} className="ml-auto mr-3 bg-white rounded-md text-red-500 p-1">
             <i className="fa fa-window-close" aria-hidden="true"></i>
           </button>
@@ -134,6 +92,7 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
             selectedSlot={selectedSlot}
             setSelectedSlot={setSelectedSlot}
             onConfirmBooking={handleConfirmBooking}
+            upcomingDates={upcomingDates} // Pass dates as a prop
           />
         </div>
       )}
@@ -142,6 +101,7 @@ function MovieCard({ itemId, name, description, imageUrl, duration, price, scree
 }
 
 export default MovieCard;
+
 
 // TicketBookingPopUp Component
 function TicketBookingPopUp({
@@ -153,32 +113,26 @@ function TicketBookingPopUp({
   selectedSlot,
   setSelectedSlot,
   onConfirmBooking,
+  upcomingDates, // New prop
 }) {
   const [seatingsLoading, setSeatingsLoading] = useState(true);
   const [seatingsArray, setSeatingsArray] = useState([]);
 
-  const today = new Date();
-  const upcomingDates = Array.from({ length: 7 }, (_, i) => {
-    const date = new Date();
-    date.setDate(today.getDate() + i);
-    return date.toISOString().split("T")[0];
-  });
-
   const availableSlots = ["12:00PM", "3:00PM", "6:00PM", "9:00PM"];
 
-  // Fetch seating data when the date or slot changes
   useEffect(() => {
     if (selectedDate && selectedSlot) {
-      const seatingDocId = `${selectedDate}_${selectedSlot}`; // Combine date and slot as docId
-      const docRef = doc(db, "movieSeatings", seatingDocId); // Fetching seating data for the specific date and slot
+      const seatingDocId = `${selectedDate}_${selectedSlot}`;
+      const docRef = doc(db, "movieSeatings", seatingDocId);
+
       getDoc(docRef)
         .then((seatingDoc) => {
           if (seatingDoc.exists()) {
             const seatingData = seatingDoc.data();
-            const screenData = seatingData[`screen${screenNumber}`]; // Fetch seating data for selected screen (e.g., screen1, screen2, etc.)
-            setSeatingsArray(screenData || []); // Set seating array based on screen number
+            const screenData = seatingData[`screen${screenNumber}`];
+            setSeatingsArray(screenData || []);
           } else {
-            setSeatingsArray([]); // If no seating data exists, set as empty
+            setSeatingsArray([]);
           }
         })
         .catch((err) => console.error("Error fetching seating data:", err))
@@ -199,12 +153,6 @@ function TicketBookingPopUp({
     <div className="bg-white p-6 rounded-lg shadow-lg w-96">
       <h2 className="text-xl text-indigo-600 mb-4 roboto text-center">Book Seats</h2>
 
-      <hr />
-      <p> Movie Screen </p>
-      <hr />
-      <br />
-
-      {/* Seat Grid */}
       {seatingsLoading ? (
         <p className="text-center text-indigo-500">Loading...</p>
       ) : (
@@ -212,7 +160,9 @@ function TicketBookingPopUp({
           {seatingsArray.map((seat, index) => (
             <div
               key={index}
-              className={`p-2 w-8 h-8 border-2 border-slate-700 rounded ${seat.occupied ? "bg-red-500" : selectedSeats.includes(index) ? "bg-yellow-500" : "bg-green-500"} cursor-pointer`}
+              className={`p-2 w-8 h-8 border-2 border-slate-700 rounded ${
+                seat.occupied ? "bg-red-500" : selectedSeats.includes(index) ? "bg-yellow-500" : "bg-green-500"
+              } cursor-pointer`}
               onClick={() => toggleSeatSelection(index)}
               title={seat.occupied ? "Occupied" : "Available"}
             >
@@ -222,7 +172,6 @@ function TicketBookingPopUp({
         </div>
       )}
 
-      {/* Date Selection */}
       <label className="block text-sm font-medium text-gray-700 mb-2">Select Date:</label>
       <select
         value={selectedDate}
@@ -239,7 +188,6 @@ function TicketBookingPopUp({
         ))}
       </select>
 
-      {/* Slot Selection */}
       <label className="block text-sm font-medium text-gray-700 mb-2">Select Slot:</label>
       <div className="grid grid-cols-2 gap-2 mb-4">
         {availableSlots.map((slot) => (
