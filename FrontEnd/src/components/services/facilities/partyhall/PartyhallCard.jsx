@@ -42,6 +42,20 @@ function PartyhallCard({ itemId, name, desc, price, duration, imageUrl, category
     });
   };
 
+  // Get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  // Get the max selectable date (7 days from today) in YYYY-MM-DD format
+  const getMaxDate = () => {
+    const today = new Date();
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 7);
+    return maxDate.toISOString().split('T')[0];
+  };
+
   return (
     <div className="flex flex-col p-5 bg-gray-200 rounded-md">
       {/* Message */}
@@ -88,6 +102,8 @@ function PartyhallCard({ itemId, name, desc, price, duration, imageUrl, category
               className="w-full px-3 py-2 border rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              min={getTodayDate()}
+              max={getMaxDate()}
             />
 
             {/* Time Slot Selection */}

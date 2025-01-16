@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../../contexts/AuthContext';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../../../../firebase';
 import { useNavigate } from 'react-router-dom';
 
 function SalonCard({ itemId, name, desc, price, duration, imageUrl }) {
@@ -11,6 +9,21 @@ function SalonCard({ itemId, name, desc, price, duration, imageUrl }) {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const navigate = useNavigate();
+
+  // We need today's date and the maximum date (7 days from today)
+  const today = new Date();
+  const maxDate = new Date(today);
+  maxDate.setDate(maxDate.getDate() + 7);
+
+  // We can write a seperate function to format the dates 
+  // to YYYY-MM-DD for the date input
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   const handleBookNow = () => {
     if (!currentUser || currentUser.role === 'Guest') {
@@ -27,21 +40,20 @@ function SalonCard({ itemId, name, desc, price, duration, imageUrl }) {
       return;
     }
 
+    setMessage('Booking Selected. Redirecting to checkout...');
 
-      setMessage('Booking Selected. Redirecting to checkout...');
-
-      // Pass the booking details to the checkout page
-      navigate('/services/facilities/salon/salonCheckout', {
-        state: {
-          itemId,
-          name,
-          price,
-          duration,
-          imageUrl,
-          date: selectedDate,
-          timeSlot: selectedTimeSlot,
-        },
-      });
+    // Pass the booking details to the checkout page
+    navigate('/services/facilities/salon/salonCheckout', {
+      state: {
+        itemId,
+        name,
+        price,
+        duration,
+        imageUrl,
+        date: selectedDate,
+        timeSlot: selectedTimeSlot,
+      },
+    });
   };
 
   return (
@@ -90,6 +102,8 @@ function SalonCard({ itemId, name, desc, price, duration, imageUrl }) {
               className="w-full px-3 py-2 border rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              min={formatDate(today)} // Restrict the minimum date to today
+              max={formatDate(maxDate)} // Restrict the maximum date to 7 days from today
             />
 
             {/* Time Slot Selection */}
