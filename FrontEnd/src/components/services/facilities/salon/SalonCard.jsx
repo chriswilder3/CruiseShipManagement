@@ -10,12 +10,14 @@ function SalonCard({ itemId, name, desc, price, duration, imageUrl }) {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const navigate = useNavigate();
 
-  // Get today's date and calculate the maximum date (7 days from today)
+  // We need today's date and the maximum date (7 days from today)
   const today = new Date();
   const maxDate = new Date(today);
   maxDate.setDate(maxDate.getDate() + 7);
 
-  // Format the dates to YYYY-MM-DD for the date input
+  // We can write a seperate function to format the dates 
+  // to YYYY-MM-DD for the date input
+
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');

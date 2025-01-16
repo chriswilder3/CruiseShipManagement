@@ -43,6 +43,17 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
       });
   };
 
+  const getTodayDate = () => {
+    const today = new Date()
+    return today.toISOString().split('T')[0]
+  }
+
+  const getMaxAllowedDate = () => {
+    const maxDate = new Date() // intialize with todays date.
+    maxDate.setDate(maxDate.getDate() + 7)
+    return maxDate.toISOString().split("T")[0]
+  }
+
   return (
     <div className="flex flex-col p-5 bg-gray-200 rounded-md">
       {/* Message */}
@@ -92,6 +103,8 @@ function FitnessCard({ itemId, name, desc, price, duration, imageUrl, equipments
               className="w-full px-3 py-2 border rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
+              min={getTodayDate()}
+              max={getMaxAllowedDate()}
             />
 
             {/* Batch Selection */}
